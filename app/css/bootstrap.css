@@ -1,0 +1,68 @@
+@font-face {
+    font-family: 'OpenSans';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/OpenSans-Regular.ttf');
+}
+@font-face {
+    font-family: 'OpenSans';
+    font-style: italic;
+    font-weight: 400;
+    src: url('../fonts/OpenSans-Italic.ttf');
+}
+@font-face {
+    font-family: 'OpenSans';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../fonts/OpenSans-Bold.ttf');
+}
+@font-face {
+    font-family: 'OpenSans';
+    font-style: italic;
+    font-weight: 700;
+    src: url('../fonts/OpenSans-BoldItalic.ttf');
+}
+
+h1 {
+  color:#f5f6fa;
+  font-family: 'OpenSans';
+  text-align: center;
+  user-select: none;
+}
+
+.copyright {
+  position: absolute;
+  color:#f5f6fa;
+  right: 1%;
+  font-family: 'OpenSans';
+  background-color: #2f3640;
+  border: 0;
+  bottom: 1%;
+}
+
+.main {
+  text-align: center;
+  font-family: 'OpenSans';
+  color: #f5f6fa;
+}
+
+.darwinlinux {
+  position: absolute;
+  font-family: 'OpenSans';
+  top: 45%;
+  bottom: 55%;
+  left: 15%;
+  right: 15%;
+}
+
+.button {
+  background-color: #e60012;
+  border: 0px;
+  border-radius: 10px;
+  color: #f5f6fa;
+  outline: none;
+  padding: 15px 30px;
+  font-family: 'OpenSans';
+  font-weight:bold;
+  font-size: 15px;
+}

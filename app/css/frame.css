@@ -1,0 +1,60 @@
+.frame-bar .frame-resizable {
+    height: 2px;
+    -webkit-app-region: no-drag;
+}
+
+.frame-bar .frame-content {
+    display: flex;
+    justify-content: space-between;
+
+    height: 20px;
+
+    -webkit-app-region: drag !important;
+}
+
+.frame-bar .frame-button {
+    background: none;
+    border: none;
+    height: 22px;
+    width: 35px;
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.frame-bar .content-win-button {
+    position: relative;
+    height: 22px;
+    top: -2px;
+    -webkit-app-region: no-drag !important;
+}
+.frame-bar .content-win-button > .frame-button:not(:first-child) {
+    margin-left: -4px;
+}
+
+.frame-bar .frame-button:hover, .frame-button:focus {
+    background: hsla(0, 0%, 100%, 0.05);
+    opacity: 1;
+}
+.frame-bar .frame-button:active {
+    background: hsla(0, 0%, 100%, 0.05);
+}
+.frame-bar .frame-button:focus {
+    outline: 0px;
+}
+
+.frame-bar .frame-drag {
+    width: 100%;
+    height: 32px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    -webkit-app-region: drag;
+}
+
+.content-win-button .frame-button#frame-button-close:hover,
+.content-win-button .frame-button#frame-button-close:focus {
+    background-color: rgba(255, 53, 53, 0.61);
+}
+.content-win-button .frame-button#frame-button-close:active {
+    background-color: rgba(235, 0, 0, 0.61);
+}

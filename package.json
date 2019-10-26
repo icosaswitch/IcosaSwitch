@@ -1,0 +1,38 @@
+{
+  "name": "IcosaSwitch",
+  "version": "1.0.0",
+  "description": "Tools for Switch Hacking",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "dist:win": "electron-builder --win",
+    "dist:linux": "electron-builder --linux",
+    "dist:darwin": "electron-builder --mac"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pharuxtan/IcosaSwitch.git"
+  },
+  "author": "Pharuxtan",
+  "license": "MIT",
+  "dependencies": {
+    "decompress-zip": "^0.2.2",
+    "ejs": "^2.6.1",
+    "ejs-electron": "^2.0.3",
+    "electron-updater": "^4.1.2",
+    "fs": "0.0.1-security",
+    "https-proxy-agent": "^3.0.1",
+    "jquery": "^3.4.0",
+    "node-fetch": "^2.6.0",
+    "path": "^0.12.7",
+    "url": "^0.11.0"
+  },
+  "devDependencies": {
+    "electron": "^4.1.4",
+    "electron-builder": "^20.40.2"
+  },
+  "bugs": {
+    "url": "https://github.com/Pharuxtan/IcosaSwitch/issues"
+  },
+  "homepage": "https://github.com/Pharuxtan/IcosaSwitch#readme"
+}
