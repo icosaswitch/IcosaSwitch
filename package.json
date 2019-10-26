@@ -25,6 +25,7 @@
     "jquery": "^3.4.0",
     "node-fetch": "^2.6.0",
     "path": "^0.12.7",
+    "platform-folders": "^0.4.1",
     "url": "^0.11.0"
   },
   "devDependencies": {
