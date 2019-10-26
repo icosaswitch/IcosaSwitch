@@ -66,3 +66,14 @@ h1 {
   font-weight:bold;
   font-size: 15px;
 }
+
+.license {
+  background-color: #3f4c5e;
+  border: 0px;
+  width: 205px;
+  height: 30px;
+  text-align: center;
+  font-family: 'OpenSans';
+  font-size: 25px;
+  color: #f5f6fa;
+}

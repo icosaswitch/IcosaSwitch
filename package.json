@@ -1,6 +1,7 @@
 {
   "name": "IcosaSwitch",
   "version": "1.0.0",
+  "productName": "IcosaSwitch",
   "description": "Tools for Switch Hacking",
   "main": "index.js",
   "scripts": {
@@ -31,6 +32,44 @@
   "devDependencies": {
     "electron": "^4.1.4",
     "electron-builder": "^20.40.2"
+  },
+  "build": {
+    "appId": "icosaswitch",
+    "productName": "IcosaSwitch",
+    "copyright": "Copyright © 2019 IcosaSwitch",
+    "directories": {
+      "buildResources": "build",
+      "output": "dist"
+    },
+    "win": {
+      "target": [{
+        "target": "nsis"
+      }],
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowElevation": true,
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "allowToChangeInstallationDirectory": true
+    },
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.utilities",
+      "icon": "build/icon.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "maintainer": "Pharuxtan",
+      "vendor": "IcosaSwitch",
+      "synopsis": "IcosaSwitch",
+      "description": "Tools for Switch Hacking",
+      "category": "Utility"
+    },
+    "compression": "maximum",
+    "asar": true
   },
   "bugs": {
     "url": "https://github.com/Pharuxtan/IcosaSwitch/issues"

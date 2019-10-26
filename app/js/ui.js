@@ -60,6 +60,10 @@ function app(){
     document.getElementById("main").innerHTML = fs.readFileSync(path.join(__dirname, "ui", "injectbin", "main.ejs"), "utf8")
     injectbin();
   });
+  $("#sxoslicense").click(() => {
+    document.getElementById("main").innerHTML = fs.readFileSync(path.join(__dirname, "ui", "sxoslicense", "main.ejs"), "utf8")
+    sxoslicense();
+  });
 }
 
 function drivers(){
@@ -334,7 +338,6 @@ function injectbin(){
         }
       }
     }
-    console.log("file");
     document.getElementById("tool").innerHTML = fs.readFileSync(path.join(__dirname, "ui", "rcm.ejs"), "utf8");
     $("#continue").click(async () => {
       if(!fs.existsSync(path.join(root, "TegraRcmSmash.exe"))){
@@ -414,4 +417,120 @@ function injectbin(){
       }
     });
   }
+}
+
+function sxoslicense(){
+  $("#mainmenu").click(() => {
+    app();
+  });
+  let file,csr_data,redeem_code,needlicense;
+  $("#select").click(async() => {
+    file = await dialog.showOpenDialog({defaultPath: platformFolders.getDocumentsFolder(), filters: [{name: "license-request", extensions: ["dat"]}], properties: ['openFile']});
+    document.getElementById("sign").setAttribute("style", 'visibility: hidden;');
+    document.getElementById("licensetext").setAttribute("style", 'visibility: hidden;');
+    if(file === undefined) return document.getElementById("file").innerHTML = "Please select your license-request.dat";
+    file = file[0];
+    let stat = fs.statSync(file);
+    if(stat.size !== 64) return document.getElementById("file").innerHTML = "Your license-request.dat is not 64 bytes size";
+    document.getElementById("file").innerHTML = file;
+    let buf = fs.readFileSync(file);
+    let ab = new ArrayBuffer(buf.length);
+    let view = new Uint8Array(ab);
+    for (var i = 0; i < buf.length; ++i) {
+      view[i] = buf[i];
+    }
+    let bytes = new Uint8Array(ab);
+    csr_data = '';
+    for(i=0; i<bytes.length; i++) {
+      csr_data += ("0" + bytes[i].toString(16)).substr(-2);
+    }
+    if (csr_data.substr(0x40, 0x40) == "0".repeat(0x40)) {
+      needlicense = true;
+      document.getElementById("licensetext").setAttribute("style", 'visibility: visible;');
+      $("#license").on("change paste keyup", function() {
+        let license = $("#license").val();
+        license = license.toUpperCase()
+        $("#license").val(license);
+        if(license.length > 12){
+          license = license.substring(0, 12);
+          $("#license").val(license);
+        }
+        if (/^[0-9A-Z]{12}$/.test(license) != true) {
+          document.getElementById("sign").setAttribute("style", 'visibility: hidden;');
+        } else {
+          redeem_code = license;
+          document.getElementById("sign").setAttribute("style", 'visibility: visible;');
+        }
+      });
+    } else {
+      needlicense = false;
+      redeem_code = null;
+      document.getElementById("sign").setAttribute("style", 'visibility: visible;');
+    }
+  });
+  $("#sign").click(async () => {
+    document.getElementById("tool").innerHTML = "<p>Signing...</p>";
+    document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
+    var o = {csr_data,redeem_code};
+    var r = await fetch('https://sx.xecuter.com/sx-api-server.php?u=sign', {method:'post',body:JSON.stringify(o),headers:{'Content-Type':'application/json'}}).then(res => res.json())
+    if ('responseJSON' in r) r = r.responseJSON;
+    if ('error' in r) {
+      if (r.error == "Invalid license code specified") {
+        return document.getElementById("tool").innerHTML = "<p>The License key is not valid</p>";
+        document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+      } else {
+        return document.getElementById("tool").innerHTML = "<p>An error occured: "+r.error+"</p>";
+        document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+      }
+    } else if('status' in r) {
+      if(r.status != "License already signed"){
+        return document.getElementById("tool").innerHTML = "<p>License key already signed</p>";
+        document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+      }
+    }
+    r = await fetch('https://sx.xecuter.com/sx-api-server.php?u=retrieve', {method:'post',body:JSON.stringify(o),headers:{'Content-Type':'application/json'}}).then(res => res.json());
+    if ('responseJSON' in r) {
+      r = r.responseJSON;
+    }
+    var license_file;
+    if ('error' in r) {
+      return document.getElementById("tool").innerHTML = "<p>An error occured: "+r.error+"</p>";
+      document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+    } else {
+      license_file = new Uint8Array(r.license.length/2);
+      for(var i=0; i<r.license.length/2; i++) {
+        license_file[i] = parseInt(r.license.substr(i*2,2),16);
+      }
+      dialog.showSaveDialog(null, {defaultPath: path.join(platformFolders.getDocumentsFolder(), 'license.dat')}, (datpath) => {
+        fs.writeFileSync(datpath, new Buffer.from(license_file), function(err){if(err) throw err});
+        document.getElementById("tool").innerHTML = '<p>'+path.basename(datpath)+' saved to<br>'+datpath+'</p><input type="button" id="openexplorer" value="Open in explorer" class="button"/>';
+        document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+        $("#openexplorer").click(() => {
+          openpath(datpath, "select");
+        });
+      });
+    }
+  });
+}
+
+async function openpath(fpath, arg){
+  let command = '';
+  fpath = fpath.replace(/[\/]/g, "\\");
+  switch (process.platform) {
+    case 'darwin':
+      command = 'open -R ' + fpath;
+      break;
+    case 'win32':
+      if (process.env.SystemRoot) {
+        command = process.env.SystemRoot+'\\explorer.exe';
+      } else {
+        command = 'explorer.exe';
+      }
+      command += ' /'+arg+',' + fpath;
+      break;
+    default:
+      fpath = path.dirname(fpath)
+      command = 'xdg-open ' + fpath;
+  }
+  require("child_process").exec(command, function(stdout) {});
 }

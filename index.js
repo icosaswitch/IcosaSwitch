@@ -11,6 +11,7 @@ app.on("ready", () => {
       width: 1280,
       height: 720,
       frame: true,
+      icon: getPlatformIcon('icon'),
       webPreferences: {
           nodeIntegration: true
       },
@@ -23,14 +24,13 @@ app.on("ready", () => {
       width: 1280,
       height: 720,
       frame: false,
+      icon: getPlatformIcon('icon'),
       webPreferences: {
           nodeIntegration: true
       },
       backgroundColor: '#2f3640'
     });
   }
-
-  frame.webContents.openDevTools({mode: "detach"})
 
   frame.loadURL(url.format({
     pathname: path.join(__dirname, 'app', 'app.ejs'),
@@ -45,3 +45,17 @@ app.on("ready", () => {
     frame = null;
   });
 });
+
+function getPlatformIcon(filename) {
+    const os = process.platform;
+    if(os === 'darwin') {
+        filename = filename + '.icns';
+    }
+    else if(os === 'win32') {
+        filename = filename + '.ico';
+    }
+    else {
+        filename = filename + '.png';
+    }
+    return path.join(__dirname, 'app', 'icons', filename);
+}
