@@ -46,7 +46,7 @@ h1 {
   color: #f5f6fa;
 }
 
-.darwinlinux {
+.middle {
   position: absolute;
   font-family: 'OpenSans';
   top: 45%;
@@ -76,4 +76,29 @@ h1 {
   font-family: 'OpenSans';
   font-size: 25px;
   color: #f5f6fa;
+}
+
+.available {
+  position: absolute;
+  font-family: 'OpenSans';
+  top: 40%;
+  bottom: 60%;
+  left: 15%;
+  right: 15%;
+}
+
+.availablebtn {
+  background-color: #e60012;
+  border: 0px;
+  border-radius: 10px;
+  color: #f5f6fa;
+  outline: none;
+  padding: 15px 30px;
+  font-family: 'OpenSans';
+  font-weight:bold;
+  font-size: 15px;
+  top: 45%;
+  bottom: 55%;
+  left: 15%;
+  right: 15%;
 }

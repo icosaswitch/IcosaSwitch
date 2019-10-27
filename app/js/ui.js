@@ -1,5 +1,5 @@
 const $ = require('jquery');
-const {remote} = require('electron');
+const {remote, ipcRenderer} = require('electron');
 const {getCurrentWindow, dialog} = remote;
 const fs = require('fs');
 const path = require('path');
@@ -31,13 +31,75 @@ function frame() {
   });
 }
 
-function verification(){
+async function verification(){
   if(process.platform !== "win32"){
-    document.getElementById("main").innerHTML = '<h2 class="darwinlinux">This software doesn\'t support OSX or Linux distribution</h4>';
+    document.getElementById("main").innerHTML = '<h2 class="middle">This software doesn\'t support OSX or Linux distribution</h2>';
   } else {
+    await updates();
     foldercreate();
     app();
   }
+}
+
+async function updates(){
+  return new Promise(function(resolve, reject){
+    ipcRenderer.on('autoUpdateNotification', (event, arg, info) => {
+        switch(arg) {
+            case 'checking-for-update': {
+              document.getElementById("main").innerHTML = '<h2 class="middle">Checking for updates...</h2>';
+              break;
+            }
+            case 'update-available': {
+              document.getElementById("main").innerHTML = '<h2 class="available">An update is available</h2><br><br><br><br><br><br><br><br><br><br><br><input type="button" class="button" id="install" value="Install Update"/>  <input type="button" class="button" id="dont" value="Don\'t install"/>';
+              $("#install").click(() => {
+                ipcRenderer.send('autoUpdateAction', 'downloadUpdate');
+              });
+              $("#dont").click(() => {
+                resolve();
+              });
+              break;
+            }
+            case 'update-not-available': {
+              resolve();
+              break;
+            }
+            case 'download-progress': {
+              document.getElementById("main").innerHTML = '<h2 class="middle">Downloading '+Math.round(info.percent)+'%</h2>';
+              break;
+            }
+            case 'update-downloaded': {
+              document.getElementById("main").innerHTML = '<h2 class="middle">Downloaded</h2>';
+              ipcRenderer.send('autoUpdateAction', 'installUpdate');
+            }
+            case 'ready': {
+              ipcRenderer.send('autoUpdateAction', 'checkForUpdate');
+              break;
+            }
+            case 'realerror': {
+              let err;
+              console.log(info)
+              if(info != null && info.name != null) {
+                if(info.name === 'ERR_UPDATER_INVALID_RELEASE_FEED') {
+                    err = 'No suitable releases found.'
+                } else if(info.name === 'ERR_XML_MISSED_ELEMENT') {
+                    err = 'No releases found.'
+                } else {
+                    err = info.name
+                }
+                document.getElementById("main").innerHTML = '<h2 class="available">An error occured: '+err+'</h2><br><br><br><br><br><br><br><br><br><br><br><input type="button" class="button" id="continue" value="Continue"/>';
+                $("#continue").click(() => {
+                  resolve();
+                });
+              }
+              break;
+            }
+            default: {
+              break;
+            }
+        }
+    });
+    ipcRenderer.send('autoUpdateAction', 'initAutoUpdater');
+  });
 }
 
 function foldercreate(){
@@ -47,6 +109,8 @@ function foldercreate(){
     fs.mkdirSync(path.join(root, "drivers"));
   } if(!fs.existsSync(path.join(root, "payload"))){
     fs.mkdirSync(path.join(root, "payload"));
+  } if(!fs.existsSync(path.join(root, "nscbuilder"))){
+    fs.mkdirSync(path.join(root, "nscbuilder"));
   }
 }
 
@@ -63,6 +127,10 @@ function app(){
   $("#sxoslicense").click(() => {
     document.getElementById("main").innerHTML = fs.readFileSync(path.join(__dirname, "ui", "sxoslicense", "main.ejs"), "utf8")
     sxoslicense();
+  });
+  $("#nscbuilder").click(() => {
+    document.getElementById("main").innerHTML = fs.readFileSync(path.join(__dirname, "ui", "nscbuilder", "main.ejs"), "utf8")
+    nscbuilder();
   });
 }
 
@@ -280,6 +348,24 @@ function injectbin(){
       filename = "atmosphere.bin"
       tagname = response.filter(r => !r.prerelease)[0].tag_name;
       file = response.filter(r => !r.prerelease)[0].assets.find(a => a.name === "fusee-primary.bin").browser_download_url;
+      document.getElementById("file").innerHTML = file;
+      document.getElementById("inject").setAttribute("style", "visibility: visible;");
+    });
+    $("#incognitorcm").click(async () => {
+      const releases = await fetch("https://api.github.com/repos/jimzrt/Incognito_RCM/releases");
+      const response = await releases.json();
+      filename = "Incognito_RCM.bin"
+      tagname = response.filter(r => !r.prerelease)[0].tag_name;
+      file = response.filter(r => !r.prerelease)[0].assets.find(a => a.name === "Incognito_RCM.bin").browser_download_url;
+      document.getElementById("file").innerHTML = file;
+      document.getElementById("inject").setAttribute("style", "visibility: visible;");
+    });
+    $("#lockpickrcm").click(async () => {
+      const releases = await fetch("https://api.github.com/repos/shchmue/Lockpick_RCM/releases");
+      const response = await releases.json();
+      filename = "Lockpick_RCM.bin"
+      tagname = response.filter(r => !r.prerelease)[0].tag_name;
+      file = response.filter(r => !r.prerelease)[0].assets.find(a => a.name === "Lockpick_RCM.bin").browser_download_url;
       document.getElementById("file").innerHTML = file;
       document.getElementById("inject").setAttribute("style", "visibility: visible;");
     });
@@ -533,4 +619,135 @@ async function openpath(fpath, arg){
       command = 'xdg-open ' + fpath;
   }
   require("child_process").exec(command, function(stdout) {});
+}
+
+async function nscbuilder(){
+  $("#mainmenu").click(() => {
+    app();
+  });
+  if(!fs.existsSync(path.join(root, "nscbuilder", "nscbuilder.version"))){
+    document.getElementById("tool").innerHTML = "<p>Downloading...</p>";
+    document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
+    const releases = await fetch("https://api.github.com/repos/julesontheroad/NSC_BUILDER/releases");
+    const response = await releases.json();
+    let tagname = response.filter(r => !r.prerelease)[0].tag_name;
+    let url = response.filter(r => !r.prerelease)[0].assets.find(a => a.name.indexOf("x86") !== -1).browser_download_url;
+    const res = await fetch(url);
+    let result;
+    await new Promise((resolve, reject) => {
+      const fileStream = fs.createWriteStream(path.join(root, "nscbuilder.zip"));
+      res.body.pipe(fileStream);
+      res.body.on("error", (err) => {
+        result = err;
+        reject();
+      });
+      fileStream.on("finish", function() {
+        result = "success"
+        resolve();
+      });
+    });
+    if(result === "success"){
+      document.getElementById("tool").innerHTML = "<p>Extracting...</p>";
+
+      let unzipper = new DecompressZip(path.join(root, "nscbuilder.zip"));
+
+      unzipper.on('error', function (err) {
+          document.getElementById("tool").innerHTML = "<p>An error occured: "+err+"</p>";
+          document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+      });
+
+      unzipper.on('extract', function (log) {
+        fs.writeFileSync(path.join(root, "nscbuilder", "nscbuilder.version"), tagname, function(err){if (err) throw err});
+        show();
+        document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+      });
+
+      unzipper.on('progress', function (fileIndex, fileCount) {
+          console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
+      });
+
+      unzipper.extract({
+          path: path.join(root, "nscbuilder"),
+          filter: function (file) {
+              return file.type !== "SymbolicLink";
+          }
+      });
+    } else {
+      document.getElementById("tool").innerHTML = "<p>An error occured: "+result+"</p>";
+      document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+    }
+  } else {
+    document.getElementById("tool").innerHTML = "<p>Checking Updates...</p>";
+    document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
+    const releases = await fetch("https://api.github.com/repos/julesontheroad/NSC_BUILDER/releases");
+    const response = await releases.json();
+    let tagname = response.filter(r => !r.prerelease)[0].tag_name;
+    let check = fs.readFileSync(path.join(root, "nscbuilder", "nscbuilder.version"), 'utf-8');
+    if(tagname === check){
+      show()
+    } else {
+      document.getElementById("tool").innerHTML = "<p>Updates...</p>";
+      let url = response.filter(r => !r.prerelease)[0].assets.find(a => a.name.indexOf("x86") !== -1).browser_download_url;
+      const res = await fetch(url);
+      let result;
+      await new Promise((resolve, reject) => {
+        const fileStream = fs.createWriteStream(path.join(root, "nscbuilder.zip"));
+        res.body.pipe(fileStream);
+        res.body.on("error", (err) => {
+          result = err;
+          reject();
+        });
+        fileStream.on("finish", function() {
+          result = "success"
+          resolve();
+        });
+      });
+      if(result === "success"){
+        document.getElementById("tool").innerHTML = "<p>Extracting...</p>";
+
+        let unzipper = new DecompressZip(path.join(root, "nscbuilder.zip"));
+
+        unzipper.on('error', function (err) {
+            document.getElementById("tool").innerHTML = "<p>An error occured: "+err+"</p>";
+            document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+        });
+
+        unzipper.on('extract', function (log) {
+          fs.writeFileSync(path.join(root, "nscbuilder", "nscbuilder.version"), tagname, function(err){if (err) throw err});
+          show();
+          document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+        });
+
+        unzipper.on('progress', function (fileIndex, fileCount) {
+            console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
+        });
+
+        unzipper.extract({
+            path: path.join(root, "nscbuilder"),
+            filter: function (file) {
+                return file.type !== "SymbolicLink";
+            }
+        });
+      } else {
+        document.getElementById("tool").innerHTML = "<p>An error occured: "+result+"</p>";
+        document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+      }
+    }
+  }
+
+  function show(){
+    document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+    document.getElementById("tool").innerHTML = "<p>Launching...</p>";
+    let nscpath = path.join(root, "nscbuilder", "x86");
+    if(!fs.existsSync(path.join(nscpath, "ztools", "keys.txt"))){
+      fs.writeFileSync(path.join(nscpath, "ztools", "keys.txt"), "", function(err){if (err) throw err});
+    }
+    const apx = exec("start " + path.join(nscpath, "NSCB.bat"), {
+      cwd: nscpath,
+      localDir: nscpath,
+      encoding: "utf8"
+    });
+
+    document.getElementById("tool").innerHTML = "<p>You have successfully launched NSC Builder</p>";
+  }
 }

@@ -1,11 +1,70 @@
-const {app, BrowserWindow} = require('electron');
+const {app, BrowserWindow, ipcMain} = require('electron');
+const {autoUpdater} = require('electron-updater');
 const path = require('path');
 const url = require('url');
 const ejse = require('ejs-electron');
 
 let frame;
+let isInitAutoUpdater = false;
+
+function initAutoUpdater(event) {
+    autoUpdater.autoDownload = false;
+    autoUpdater.allowPrerelease = true;
+
+    autoUpdater.on('update-available', info => {
+      event.sender.send('autoUpdateNotification', 'update-available', info);
+    });
+    autoUpdater.on('update-downloaded', info => {
+      event.sender.send('autoUpdateNotification', 'update-downloaded', info);
+    });
+    autoUpdater.on('download-progress', (info) => {
+      event.sender.send('autoUpdateNotification', 'download-progress', info);
+    });
+    autoUpdater.on('update-not-available', info => {
+      event.sender.send('autoUpdateNotification', 'update-not-available', info);
+    });
+    autoUpdater.on('checking-for-update', () => {
+      event.sender.send('autoUpdateNotification', 'checking-for-update');
+    });
+    autoUpdater.on('error', (err) => {
+      event.sender.send('autoUpdateNotification', 'realerror', err);
+    });
+}
+
+app.disableHardwareAcceleration();
 
 app.on("ready", () => {
+  ipcMain.on('autoUpdateAction', async (event, arg, data) => {
+      switch(arg) {
+          case 'initAutoUpdater': {
+              if(!isInitAutoUpdater) {
+                  initAutoUpdater(event);
+                  isInitAutoUpdater = true;
+              }
+              event.sender.send('autoUpdateNotification', 'ready');
+              break;
+          }
+          case 'checkForUpdate': {
+              autoUpdater.checkForUpdates().catch(err => {
+                  event.sender.send('autoUpdateNotification', 'realerror', err);
+              });
+              break;
+          }
+          case 'downloadUpdate': {
+            console.log("download");
+              autoUpdater.downloadUpdate();
+              break;
+          }
+          case 'installUpdate': {
+              autoUpdater.quitAndInstall();
+              break;
+          }
+          default: {
+              console.log('Unknown argument', arg);
+              break;
+          }
+      }
+  });
   if(process.platform === "darwin"){
     frame = new BrowserWindow({
       width: 1280,
@@ -37,6 +96,8 @@ app.on("ready", () => {
     protocol: 'file:',
     slashes: true
   }));
+
+  frame.webContents.openDevTools({mode: "detach"})
 
   frame.setMenu(null);
   frame.setResizable(false);

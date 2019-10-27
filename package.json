@@ -1,6 +1,6 @@
 {
   "name": "IcosaSwitch",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "productName": "IcosaSwitch",
   "description": "Tools for Switch Hacking",
   "main": "index.js",
@@ -17,10 +17,11 @@
   "author": "Pharuxtan",
   "license": "MIT",
   "dependencies": {
+    "cross-spawn": "^7.0.1",
     "decompress-zip": "^0.2.2",
     "ejs": "^2.6.1",
     "ejs-electron": "^2.0.3",
-    "electron-updater": "^4.1.2",
+    "electron-updater": "^4.0.6",
     "fs": "0.0.1-security",
     "https-proxy-agent": "^3.0.1",
     "jquery": "^3.4.0",
@@ -36,15 +37,18 @@
   "build": {
     "appId": "icosaswitch",
     "productName": "IcosaSwitch",
+    "artifactName": "${productName}-${version}.${ext}",
     "copyright": "Copyright © 2019 IcosaSwitch",
     "directories": {
       "buildResources": "build",
       "output": "dist"
     },
     "win": {
-      "target": [{
-        "target": "nsis"
-      }],
+      "target": [
+        {
+          "target": "nsis"
+        }
+      ],
       "icon": "build/icon.ico"
     },
     "nsis": {
@@ -68,6 +72,9 @@
       "description": "Tools for Switch Hacking",
       "category": "Utility"
     },
+    "files": [
+      "!{dist,dev-app-update.yml}"
+    ],
     "compression": "maximum",
     "asar": true
   },
