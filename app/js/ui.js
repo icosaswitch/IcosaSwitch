@@ -742,7 +742,7 @@ async function nscbuilder(){
     if(!fs.existsSync(path.join(nscpath, "ztools", "keys.txt"))){
       fs.writeFileSync(path.join(nscpath, "ztools", "keys.txt"), "", function(err){if (err) throw err});
     }
-    const apx = exec("start " + path.join(nscpath, "NSCB.bat"), {
+    const apx = exec("start C:\\Windows\\system32\\cmd.exe /c\"" + path.join(nscpath, "NSCB.bat") + "\"", {
       cwd: nscpath,
       localDir: nscpath,
       encoding: "utf8"
