@@ -1,4 +1,4 @@
-const {app, BrowserWindow, ipcMain} = require('electron');
+const {app, BrowserWindow, ipcMain, Menu} = require('electron');
 const {autoUpdater} = require('electron-updater');
 const path = require('path');
 const url = require('url');
@@ -7,6 +7,7 @@ process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;
 
 let frame;
 let isInitAutoUpdater = false;
+Menu.setApplicationMenu(null);
 
 function initAutoUpdater(event) {
     autoUpdater.autoDownload = false;
@@ -100,7 +101,6 @@ app.on("ready", () => {
 
   frame.webContents.openDevTools({mode: "detach"})
 
-  frame.setMenu(null);
   frame.setResizable(false);
 
   frame.on('closed', () => {
