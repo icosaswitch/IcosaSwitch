@@ -2,5 +2,7 @@
   <input type="button" class="button" id="drivers" value="Switch Drivers"/>
   <input type="button" class="button" id="injectbin" value="Payload Injection"/>
   <input type="button" class="button" id="sxoslicense" value="SXOS License"/>
-  <input type="button" class="button" id="nscbuilder" value="NSC Builder"/>
+  <% if(process.platform === "win32"){ %>
+    <input type="button" class="button" id="nscbuilder" value="NSC Builder"/>
+  <% } %>
 </section>

@@ -3,6 +3,7 @@ const {autoUpdater} = require('electron-updater');
 const path = require('path');
 const url = require('url');
 const ejse = require('ejs-electron');
+process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;
 
 let frame;
 let isInitAutoUpdater = false;

@@ -1,6 +1,10 @@
 <h2>Payload Injection</h2>
 <div id="tool">
-  <p>This tool will Inject payload bin in you're switch with TegraRcmSmash</p>
+  <% if(process.platform === "win32"){ %>
+    <p>This tool will Inject payload bin in your switch with TegraRcmSmash</p>
+  <% } else { %>
+    <p>This tool will Inject payload bin in your switch with fusee-launcher</p>
+  <% } %>
   <p>How do you want to Inject payload</p>
   <section>
     <input class="button" type="button" value="Online" id="online"/>

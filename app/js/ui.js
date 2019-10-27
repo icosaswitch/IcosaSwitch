@@ -3,11 +3,12 @@ const {remote, ipcRenderer} = require('electron');
 const {getCurrentWindow, dialog} = remote;
 const fs = require('fs');
 const path = require('path');
+const ejs = require('ejs');
 const {exec, spawn} = require('child_process');
 const platformFolders = require("platform-folders");
 const fetch = require('node-fetch');
 const DecompressZip = require('decompress-zip');
-const root = (process.platform == "win32") ? path.join(process.env.LOCALAPPDATA, "IcosaSwitch") : '';
+const root = (process.platform == "win32") ? path.join(process.env.LOCALAPPDATA, "IcosaSwitch") : (process.platform == "darwin") ? process.env.HOME + '/Library/Application Support' : '';
 
 $(function() {
   console.log('JQuery Initialized.');
@@ -32,10 +33,10 @@ function frame() {
 }
 
 async function verification(){
-  if(process.platform !== "win32"){
-    document.getElementById("main").innerHTML = '<h2 class="middle">This software doesn\'t support OSX or Linux distribution</h2>';
+  if(process.platform !== "win32" && process.platform !== "darwin"){
+    document.getElementById("main").innerHTML = '<h2 class="middle">This software doesn\'t support Linux distribution</h2>';
   } else {
-    await updates();
+    //await updates();
     foldercreate();
     app();
   }
@@ -109,19 +110,17 @@ function foldercreate(){
     fs.mkdirSync(path.join(root, "drivers"));
   } if(!fs.existsSync(path.join(root, "payload"))){
     fs.mkdirSync(path.join(root, "payload"));
-  } if(!fs.existsSync(path.join(root, "nscbuilder"))){
-    fs.mkdirSync(path.join(root, "nscbuilder"));
   }
 }
 
 function app(){
-  document.getElementById("main").innerHTML = fs.readFileSync(path.join(__dirname, "ui", "main.ejs"), "utf8");
+  document.getElementById("main").innerHTML = ejs.render(fs.readFileSync(path.join(__dirname, "ui", "main.ejs"), "utf8"));
   $("#drivers").click(() => {
-    document.getElementById("main").innerHTML = fs.readFileSync(path.join(__dirname, "ui", "drivers", "main.ejs"), "utf8")
+    document.getElementById("main").innerHTML = ejs.render(fs.readFileSync(path.join(__dirname, "ui", "drivers", "main.ejs"), "utf8"));
     drivers();
   });
   $("#injectbin").click(() => {
-    document.getElementById("main").innerHTML = fs.readFileSync(path.join(__dirname, "ui", "injectbin", "main.ejs"), "utf8")
+    document.getElementById("main").innerHTML = ejs.render(fs.readFileSync(path.join(__dirname, "ui", "injectbin", "main.ejs"), "utf8"));
     injectbin();
   });
   $("#sxoslicense").click(() => {
@@ -139,18 +138,34 @@ function drivers(){
   $("#mainmenu").click(() => {
     app();
   });
-  $("#automatic").click(() => {
-    select = "automatic";
-    rcm();
-  });
-  $("#zadig").click(() => {
-    select = "zadig";
-    rcm();
-  });
-  $("#manager").click(() => {
-    select = "manager";
-    rcm();
-  });
+  if(process.platform === "win32"){
+    $("#automatic").click(() => {
+      select = "automatic";
+      rcm();
+    });
+    $("#zadig").click(() => {
+      select = "zadig";
+      rcm();
+    });
+    $("#manager").click(() => {
+      select = "manager";
+      rcm();
+    });
+  } else {
+    $("#continue").click(() => {
+      if(process.platform === "darwin"){
+        document.getElementById("tool").innerHTML = '<h3>Install Homebrew</h3><p>Open terminal and type command:</p><p>/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"</p><input class="button" type="button" value="When finish, Continue" id="continue"/>';
+        $("#continue").click(() => {
+          document.getElementById("tool").innerHTML = '<h3>Install Dependencies</h3><p>In the terminal type commands:</p><p>brew install python libusb<br>python3 -mpip install pyusb<br>python3 -mpip install tkinter<br>brew link --overwrite libusb</p><input class="button" type="button" value="When finish, Continue" id="continue"/>';
+          $("#continue").click(() => {
+            document.getElementById("tool").innerHTML = '<p>You successfully installed drivers</p>'
+          });
+        });
+      } else {
+        select = "unix";
+      }
+    });
+  }
   function rcm(){
     document.getElementById("tool").innerHTML = fs.readFileSync(path.join(__dirname, "ui", "rcm.ejs"), "utf8");
     $("#continue").click(async () => {
@@ -264,7 +279,7 @@ function drivers(){
           document.getElementById("tool").innerHTML = '<p>Select the installation via Zadig and accept the privilege increase request that may appear.<br>In the menu bar, click on "Options" then on "List All Devices".<br>In the list at the top of the screen, select "APX" and in the "WCID" section, select "libusbK (v3.0.7.0.0)" (the version may be different) using the "+" button next to it.<br>Finally, click on "Install drivers" or "Replace Driver".<br>Once the driver is installed, Zadig can be closed.</p>';
           exec(path.join(root, "drivers", "zadig.exe"));
         }
-      } else {
+      } else if(select === "manager") {
         if(!fs.existsSync(path.join(root, "drivers", "devicemanager"))){
           document.getElementById("tool").innerHTML = "<p>Downloading...</p>";
           document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
@@ -425,25 +440,58 @@ function injectbin(){
       }
     }
     document.getElementById("tool").innerHTML = fs.readFileSync(path.join(__dirname, "ui", "rcm.ejs"), "utf8");
+    //https://github.com/Qyriad/fusee-launcher/archive/1.0.zip
     $("#continue").click(async () => {
-      if(!fs.existsSync(path.join(root, "TegraRcmSmash.exe"))){
-        document.getElementById("tool").innerHTML = "<p>Downloading...</p>";
-        document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
-        const res = await fetch('https://github.com/Pharuxtan/IcosaSwitch/releases/download/files/TegraRcmSmash.exe');
-        let result;
-        await new Promise((resolve, reject) => {
-          const fileStream = fs.createWriteStream(path.join(root, "TegraRcmSmash.exe"));
-          res.body.pipe(fileStream);
-          res.body.on("error", (err) => {
-            result = err;
-            reject();
+      if(process.platform === "win32"){
+        if(!fs.existsSync(path.join(root, "TegraRcmSmash.exe"))){
+          document.getElementById("tool").innerHTML = "<p>Downloading...</p>";
+          document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
+          const res = await fetch('https://github.com/Pharuxtan/IcosaSwitch/releases/download/files/TegraRcmSmash.exe');
+          let result;
+          await new Promise((resolve, reject) => {
+            const fileStream = fs.createWriteStream(path.join(root, "TegraRcmSmash.exe"));
+            res.body.pipe(fileStream);
+            res.body.on("error", (err) => {
+              result = err;
+              reject();
+            });
+            fileStream.on("finish", function() {
+              result = "success"
+              resolve();
+            });
           });
-          fileStream.on("finish", function() {
-            result = "success"
-            resolve();
-          });
-        });
-        if(result === "success"){
+          if(result === "success"){
+            document.getElementById("tool").innerHTML = '<p>Injecting...</p><input class="button" type="button" value="Cancel" id="cancel"/>';
+            const inj = spawn(path.join(root, "TegraRcmSmash.exe"), ["-w", `${file}`]);
+
+            let error = false;
+            let cancel = false;
+
+            inj.stderr.on('data', (data) => {
+              error = true;
+              document.getElementById("tool").innerHTML = "<p>An error occured: "+data.toString()+"</p>";
+              document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+            });
+
+            inj.on('close', (code) => {
+              if(error || cancel) return;
+              document.getElementById("tool").innerHTML = "<p>Your payload is correctly inject</p>";
+              document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+            });
+
+            $("#cancel").click(() => {
+              cancel = true;
+              inj.stdin.pause();
+              inj.kill();
+              document.getElementById("tool").innerHTML = "<p>You cancelled the injection</p>";
+              document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+            });
+          } else {
+            document.getElementById("tool").innerHTML = "<p>An error occured: "+result+"</p>";
+            document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+          }
+        } else {
+          document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
           document.getElementById("tool").innerHTML = '<p>Injecting...</p><input class="button" type="button" value="Cancel" id="cancel"/>';
           const inj = spawn(path.join(root, "TegraRcmSmash.exe"), ["-w", `${file}`]);
 
@@ -469,37 +517,106 @@ function injectbin(){
             document.getElementById("tool").innerHTML = "<p>You cancelled the injection</p>";
             document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
           });
-        } else {
-          document.getElementById("tool").innerHTML = "<p>An error occured: "+result+"</p>";
-          document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
         }
       } else {
-        document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
-        document.getElementById("tool").innerHTML = '<p>Injecting...</p><input class="button" type="button" value="Cancel" id="cancel"/>';
-        const inj = spawn(path.join(root, "TegraRcmSmash.exe"), ["-w", `${file}`]);
+        if(!fs.existsSync(path.join(root, "drivers", "fuseelauncher"))){
+          document.getElementById("tool").innerHTML = "<p>Downloading...</p>";
+          document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
+          const res = await fetch('https://github.com/Qyriad/fusee-launcher/archive/1.0.zip');
+          let result;
+          await new Promise((resolve, reject) => {
+            const fileStream = fs.createWriteStream(path.join(root, "fusee-launcher.zip"));
+            res.body.pipe(fileStream);
+            res.body.on("error", (err) => {
+              result = err;
+              reject();
+            });
+            fileStream.on("finish", function() {
+              result = "success"
+              resolve();
+            });
+          });
+          if(result === "success"){
+            document.getElementById("tool").innerHTML = "<p>Extracting...</p>";
 
-        let error = false;
-        let cancel = false;
+            let unzipper = new DecompressZip(path.join(root, "fusee-launcher.zip"));
 
-        inj.stderr.on('data', (data) => {
-          error = true;
-          document.getElementById("tool").innerHTML = "<p>An error occured: "+data.toString()+"</p>";
-          document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
-        });
+            unzipper.on('error', function (err) {
+                document.getElementById("tool").innerHTML = "<p>An error occured: "+err+"</p>";
+                document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+            });
 
-        inj.on('close', (code) => {
-          if(error || cancel) return;
-          document.getElementById("tool").innerHTML = "<p>Your payload is correctly inject</p>";
-          document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
-        });
+            unzipper.on('extract', function (log) {
+              document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
+              document.getElementById("tool").innerHTML = '<p>Injecting...</p><input class="button" type="button" value="Cancel" id="cancel"/>';
+              const inj = spawn(path.join(root, "fuseelauncher", "fusee-launcher.py"), [`${file}`]);
 
-        $("#cancel").click(() => {
-          cancel = true;
-          inj.stdin.pause();
-          inj.kill();
-          document.getElementById("tool").innerHTML = "<p>You cancelled the injection</p>";
-          document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
-        });
+              let error = false;
+              let cancel = false;
+
+              inj.stderr.on('data', (data) => {
+                error = true;
+                document.getElementById("tool").innerHTML = "<p>An error occured: "+data.toString()+"</p>";
+                document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+              });
+
+              inj.on('close', (code) => {
+                if(error || cancel) return;
+                document.getElementById("tool").innerHTML = "<p>Your payload is correctly inject</p>";
+                document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+              });
+
+              $("#cancel").click(() => {
+                cancel = true;
+                inj.stdin.pause();
+                inj.kill();
+                document.getElementById("tool").innerHTML = "<p>You cancelled the injection</p>";
+                document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+              });
+            });
+
+            unzipper.on('progress', function (fileIndex, fileCount) {
+                console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
+            });
+
+            unzipper.extract({
+                path: path.join(root, "fuseelauncher"),
+                filter: function (file) {
+                    return file.type !== "SymbolicLink";
+                }
+            });
+          } else {
+            document.getElementById("tool").innerHTML = "<p>An error occured: "+result+"</p>";
+            document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+          }
+        } else {
+          document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
+          document.getElementById("tool").innerHTML = '<p>Injecting...</p><input class="button" type="button" value="Cancel" id="cancel"/>';
+          const inj = spawn(path.join(root, "fuseelauncher", "fusee-launcher.py"), [`${file}`]);
+
+          let error = false;
+          let cancel = false;
+
+          inj.stderr.on('data', (data) => {
+            error = true;
+            document.getElementById("tool").innerHTML = "<p>An error occured: "+data.toString()+"</p>";
+            document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+          });
+
+          inj.on('close', (code) => {
+            if(error || cancel) return;
+            document.getElementById("tool").innerHTML = "<p>Your payload is correctly inject</p>";
+            document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+          });
+
+          $("#cancel").click(() => {
+            cancel = true;
+            inj.stdin.pause();
+            inj.kill();
+            document.getElementById("tool").innerHTML = "<p>You cancelled the injection</p>";
+            document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+          });
+        }
       }
     });
   }
