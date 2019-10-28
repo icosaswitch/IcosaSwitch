@@ -99,8 +99,6 @@ app.on("ready", () => {
     slashes: true
   }));
 
-  frame.webContents.openDevTools({mode: "detach"})
-
   frame.resizable = false;
 
   frame.on('closed', () => {
