@@ -1,6 +1,6 @@
 const $ = require('jquery');
 const {remote, ipcRenderer} = require('electron');
-const {getCurrentWindow, dialog} = remote;
+const {getCurrentWindow, dialog, shell} = remote;
 const fs = require('fs');
 const path = require('path');
 const ejs = require('ejs');
@@ -8,7 +8,7 @@ const {exec, spawn} = require('child_process');
 const platformFolders = require("platform-folders");
 const fetch = require('node-fetch');
 const DecompressZip = require('decompress-zip');
-const root = (process.platform == "win32") ? path.join(process.env.LOCALAPPDATA, "IcosaSwitch") : (process.platform == "darwin") ? process.env.HOME + '/Library/Application Support' : '';
+const root = (process.platform == "win32") ? path.join(process.env.LOCALAPPDATA, "IcosaSwitch") : (process.platform == "darwin") ? process.env.HOME + '/Library/Application Support' : path.join(process.env.HOME, '.config', 'IcosaSwitch');
 
 $(function() {
   console.log('JQuery Initialized.');
@@ -33,8 +33,8 @@ function frame() {
 }
 
 async function verification(){
-  if(process.platform !== "win32" && process.platform !== "darwin"){
-    document.getElementById("main").innerHTML = '<h2 class="middle">This software doesn\'t support Linux distribution</h2>';
+  if(process.platform !== "win32" && process.platform !== "darwin" && process.platform !== "linux"){
+    document.getElementById("main").innerHTML = '<h2 class="middle">This software only support Windows, MacOS and Linux Distributions</h2>';
   } else {
     //await updates();
     foldercreate();
@@ -162,7 +162,10 @@ function drivers(){
           });
         });
       } else {
-        select = "unix";
+        document.getElementById("tool").innerHTML = '<h3>Install Dependencies</h3><p>Open the terminal and type commands:</p><p>sudo apt install python3 libusb<br>python3 -mpip install pyusb<br>python3 -mpip install tkinter</p><input class="button" type="button" value="When finish, Continue" id="continue"/>';
+        $("#continue").click(() => {
+          document.getElementById("tool").innerHTML = '<p>You successfully installed drivers</p>'
+        });
       }
     });
   }
@@ -629,9 +632,10 @@ function sxoslicense(){
   let file,csr_data,redeem_code,needlicense;
   $("#select").click(async() => {
     file = await dialog.showOpenDialog({defaultPath: platformFolders.getDocumentsFolder(), filters: [{name: "license-request", extensions: ["dat"]}], properties: ['openFile']});
+    file = file.filePaths;
     document.getElementById("sign").setAttribute("style", 'visibility: hidden;');
     document.getElementById("licensetext").setAttribute("style", 'visibility: hidden;');
-    if(file === undefined) return document.getElementById("file").innerHTML = "Please select your license-request.dat";
+    if(file.length === 0) return document.getElementById("file").innerHTML = "Please select your license-request.dat";
     file = file[0];
     let stat = fs.statSync(file);
     if(stat.size !== 64) return document.getElementById("file").innerHTML = "Your license-request.dat is not 64 bytes size";
@@ -686,7 +690,7 @@ function sxoslicense(){
         document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
       }
     } else if('status' in r) {
-      if(r.status != "License already signed"){
+      if(r.status == "License already signed"){
         return document.getElementById("tool").innerHTML = "<p>License key already signed</p>";
         document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
       }
@@ -704,38 +708,15 @@ function sxoslicense(){
       for(var i=0; i<r.license.length/2; i++) {
         license_file[i] = parseInt(r.license.substr(i*2,2),16);
       }
-      dialog.showSaveDialog(null, {defaultPath: path.join(platformFolders.getDocumentsFolder(), 'license.dat')}, (datpath) => {
-        fs.writeFileSync(datpath, new Buffer.from(license_file), function(err){if(err) throw err});
-        document.getElementById("tool").innerHTML = '<p>'+path.basename(datpath)+' saved to<br>'+datpath+'</p><input type="button" id="openexplorer" value="Open in explorer" class="button"/>';
-        document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
-        $("#openexplorer").click(() => {
-          openpath(datpath, "select");
-        });
+      let datpath = dialog.showSaveDialogSync(null, {defaultPath: path.join(platformFolders.getDocumentsFolder(), 'license.dat')})
+      fs.writeFileSync(datpath, new Buffer.from(license_file), function(err){if(err) throw err});
+      document.getElementById("tool").innerHTML = '<p>'+path.basename(datpath)+' saved to<br>'+datpath+'</p><input type="button" id="openexplorer" value="Open in explorer" class="button"/>';
+      document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+      $("#openexplorer").click(() => {
+        shell.showItemInFolder(datpath);
       });
     }
   });
-}
-
-async function openpath(fpath, arg){
-  let command = '';
-  fpath = fpath.replace(/[\/]/g, "\\");
-  switch (process.platform) {
-    case 'darwin':
-      command = 'open -R ' + fpath;
-      break;
-    case 'win32':
-      if (process.env.SystemRoot) {
-        command = process.env.SystemRoot+'\\explorer.exe';
-      } else {
-        command = 'explorer.exe';
-      }
-      command += ' /'+arg+',' + fpath;
-      break;
-    default:
-      fpath = path.dirname(fpath)
-      command = 'xdg-open ' + fpath;
-  }
-  require("child_process").exec(command, function(stdout) {});
 }
 
 async function nscbuilder(){

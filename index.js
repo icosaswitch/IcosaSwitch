@@ -101,7 +101,7 @@ app.on("ready", () => {
 
   frame.webContents.openDevTools({mode: "detach"})
 
-  frame.setResizable(false);
+  frame.resizable = false;
 
   frame.on('closed', () => {
     frame = null;
