@@ -36,7 +36,7 @@ async function verification(){
   if(process.platform !== "win32" && process.platform !== "darwin" && process.platform !== "linux"){
     document.getElementById("main").innerHTML = '<h2 class="middle">This software only support Windows, MacOS and Linux Distributions</h2>';
   } else {
-    //await updates();
+    await updates();
     foldercreate();
     app();
   }
