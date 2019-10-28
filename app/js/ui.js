@@ -880,7 +880,9 @@ function switchpatch(){
       serial = serial.substring(0, 14);
       $("#serial").val(serial);
     }
-    if(!new RegExp(/[X][A-Z]{2}[0-9]{7,11}/g).test(serial)){
+    if(serial === ""){
+      document.getElementById("ispatch").innerHTML = "";
+    } else if(!new RegExp(/[X][A-Z]{2}[0-9]{7,11}/g).test(serial)){
       console.log("not")
       document.getElementById("ispatch").innerHTML = "Not a Switch Serial Number";
       document.getElementById("ispatch").setAttribute("style", "color: #f5f6fa;");
