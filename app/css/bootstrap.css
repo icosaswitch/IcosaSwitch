@@ -102,3 +102,14 @@ h1 {
   left: 15%;
   right: 15%;
 }
+
+.serial {
+  background-color: #3f4c5e;
+  border: 0px;
+  width: 215px;
+  height: 30px;
+  text-align: center;
+  font-family: 'OpenSans';
+  font-size: 25px;
+  color: #f5f6fa;
+}

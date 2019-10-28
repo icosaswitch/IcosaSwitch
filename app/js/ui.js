@@ -131,6 +131,10 @@ function app(){
     document.getElementById("main").innerHTML = fs.readFileSync(path.join(__dirname, "ui", "nscbuilder", "main.ejs"), "utf8")
     nscbuilder();
   });
+  $("#switchpatch").click(() => {
+    document.getElementById("main").innerHTML = fs.readFileSync(path.join(__dirname, "ui", "switchpatch", "main.ejs"), "utf8")
+    switchpatch();
+  });
 }
 
 function drivers(){
@@ -443,7 +447,6 @@ function injectbin(){
       }
     }
     document.getElementById("tool").innerHTML = fs.readFileSync(path.join(__dirname, "ui", "rcm.ejs"), "utf8");
-    //https://github.com/Qyriad/fusee-launcher/archive/1.0.zip
     $("#continue").click(async () => {
       if(process.platform === "win32"){
         if(!fs.existsSync(path.join(root, "TegraRcmSmash.exe"))){
@@ -683,16 +686,16 @@ function sxoslicense(){
     if ('responseJSON' in r) r = r.responseJSON;
     if ('error' in r) {
       if (r.error == "Invalid license code specified") {
-        return document.getElementById("tool").innerHTML = "<p>The License key is not valid</p>";
-        document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+        document.getElementById("tool").innerHTML = "<p>The License key is not valid</p>";
+        return document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
       } else {
-        return document.getElementById("tool").innerHTML = "<p>An error occured: "+r.error+"</p>";
-        document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+        document.getElementById("tool").innerHTML = "<p>An error occured: "+r.error+"</p>";
+        return document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
       }
     } else if('status' in r) {
       if(r.status == "License already signed"){
-        return document.getElementById("tool").innerHTML = "<p>License key already signed</p>";
-        document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+        document.getElementById("tool").innerHTML = "<p>License key already signed</p>";
+        return document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
       }
     }
     r = await fetch('https://sx.xecuter.com/sx-api-server.php?u=retrieve', {method:'post',body:JSON.stringify(o),headers:{'Content-Type':'application/json'}}).then(res => res.json());
@@ -701,8 +704,8 @@ function sxoslicense(){
     }
     var license_file;
     if ('error' in r) {
-      return document.getElementById("tool").innerHTML = "<p>An error occured: "+r.error+"</p>";
-      document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+      document.getElementById("tool").innerHTML = "<p>An error occured: "+r.error+"</p>";
+      return document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
     } else {
       license_file = new Uint8Array(r.license.length/2);
       for(var i=0; i<r.license.length/2; i++) {
@@ -846,4 +849,120 @@ async function nscbuilder(){
 
     document.getElementById("tool").innerHTML = "<p>You have successfully launched NSC Builder</p>";
   }
+}
+
+function switchpatch(){
+  $("#mainmenu").click(() => {
+    app();
+  });
+  let serial,prefix,number;
+  function safeResult() {
+    document.getElementById("ispatch").innerHTML = "Unpatched";
+    document.getElementById("ispatch").setAttribute("style", "color: #7cfc00;");
+  }
+  function possiblyPatchedResult() {
+    document.getElementById("ispatch").innerHTML = "Possibly Patched";
+    document.getElementById("ispatch").setAttribute("style", "color: #ffa500;");
+  }
+  function patchedResult() {
+    document.getElementById("ispatch").innerHTML = "Patched";
+    document.getElementById("ispatch").setAttribute("style", "color: #ff4500;");
+  }
+  function unknownResult(){
+    document.getElementById("ispatch").innerHTML = "Serial Unknown";
+    document.getElementById("ispatch").setAttribute("style", "color: #f5f6fa;");
+  }
+  $("#serial").on("change paste keyup", function() {
+    serial = $("#serial").val();
+    serial = serial.toUpperCase()
+    $("#serial").val(serial);
+    if(serial.length > 14){
+      serial = serial.substring(0, 14);
+      $("#serial").val(serial);
+    }
+    if(!new RegExp(/[X][A-Z]{2}[0-9]{7,11}/g).test(serial)){
+      console.log("not")
+      document.getElementById("ispatch").innerHTML = "Not a Switch Serial Number";
+      document.getElementById("ispatch").setAttribute("style", "color: #f5f6fa;");
+      return
+    } else {
+      document.getElementById("ispatch").innerHTML = "";
+    }
+    prefix = serial.substring(0, 4);
+    number = parseInt(serial.substring(4, 10));
+    if(prefix.startsWith("XKW") && prefix.startsWith("XKJ")){
+      return patchedResult();
+    } else if(prefix.startsWith("XAK")){
+      return possiblyPatchedResult();
+    }
+    switch(prefix){
+      case "XAW1": {
+        if(number <= 7499){
+          safeResult();
+        } else if(number >= 7500 && number <= 12000){
+          possiblyPatchedResult();
+        } else {
+          patchedResult();
+        }
+        break;
+      }
+      case "XAW4": {
+        if(number <= 1100){
+          safeResult();
+        } else if(number > 1100 && number <= 1200){
+          possiblyPatchedResult();
+        } else {
+          patchedResult();
+        }
+        break;
+      }
+      case "XAW7": {
+        if(number <= 1780){
+          safeResult();
+        } else if(number > 1780 && number <= 3000){
+          possiblyPatchedResult();
+        } else {
+          patchedResult();
+        }
+        break;
+      }
+      case "XAJ1": {
+        if(number <= 2000){
+          safeResult();
+        } else if(number > 2000 && number <= 3000){
+          possiblyPatchedResult();
+        } else {
+          patchedResult();
+        }
+        break;
+      }
+      case "XAJ4": {
+        if(number <= 4600){
+          safeResult();
+        } else if(number > 4600 && number <= 8300){
+          possiblyPatchedResult();
+        } else {
+          patchedResult();
+        }
+        break;
+      }
+      case "XAJ7": {
+        if(number <= 4000){
+          safeResult();
+        } else if(number > 4000 && number <= 5000){
+          possiblyPatchedResult();
+        } else {
+          patchedResult();
+        }
+        break;
+      }
+      case "XAW9": {
+        patchedResult();
+        break;
+      }
+      default: {
+        unknownResult();
+      }
+    }
+  });
 }
