@@ -8,7 +8,7 @@ const {exec, spawn} = require('child_process');
 const platformFolders = require("platform-folders");
 const fetch = require('node-fetch');
 const DecompressZip = require('decompress-zip');
-const root = (process.platform == "win32") ? path.join(process.env.LOCALAPPDATA, "IcosaSwitch") : (process.platform == "darwin") ? process.env.HOME + '/Library/Application Support' : path.join(process.env.HOME, '.config', 'IcosaSwitch');
+const root = (process.platform == "win32") ? path.join(process.env.LOCALAPPDATA, "IcosaSwitch") : (process.platform == "darwin") ? process.env.HOME + '/Library/Application Support/IcosaSwitch' : path.join(process.env.HOME, '.config', 'IcosaSwitch');
 
 $(function() {
   console.log('JQuery Initialized.');
@@ -156,7 +156,7 @@ function drivers(){
       if(process.platform === "darwin"){
         document.getElementById("tool").innerHTML = '<h3>Install Homebrew</h3><p>Open terminal and type command:</p><p>/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"</p><input class="button" type="button" value="When finish, Continue" id="continue"/>';
         $("#continue").click(() => {
-          document.getElementById("tool").innerHTML = '<h3>Install Dependencies</h3><p>In the terminal type commands:</p><p>brew install python libusb<br>python3 -mpip install pyusb<br>python3 -mpip install tkinter<br>brew link --overwrite libusb</p><input class="button" type="button" value="When finish, Continue" id="continue"/>';
+          document.getElementById("tool").innerHTML = '<h3>Install Dependencies</h3><p>In the terminal type commands:</p><p>brew install python libusb<br>python3 -mpip install pyusb<br>brew link --overwrite libusb</p><input class="button" type="button" value="When finish, Continue" id="continue"/>';
           $("#continue").click(() => {
             document.getElementById("tool").innerHTML = '<p>You successfully installed drivers</p>'
           });
@@ -552,7 +552,7 @@ function injectbin(){
             unzipper.on('extract', function (log) {
               document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
               document.getElementById("tool").innerHTML = '<p>Injecting...</p><input class="button" type="button" value="Cancel" id="cancel"/>';
-              const inj = spawn(path.join(root, "fuseelauncher", "fusee-launcher.py"), [`${file}`]);
+              const inj = spawn("python3", [path.join(root, "fuseelauncher", "fusee-launcher-1.0", "fusee-launcher.py"), `${file}`]);
 
               let error = false;
               let cancel = false;
@@ -595,7 +595,7 @@ function injectbin(){
         } else {
           document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
           document.getElementById("tool").innerHTML = '<p>Injecting...</p><input class="button" type="button" value="Cancel" id="cancel"/>';
-          const inj = spawn(path.join(root, "fuseelauncher", "fusee-launcher.py"), [`${file}`]);
+          const inj = spawn("python3", [path.join(root, "fuseelauncher", "fusee-launcher-1.0", "fusee-launcher.py"), `${file}`]);
 
           let error = false;
           let cancel = false;

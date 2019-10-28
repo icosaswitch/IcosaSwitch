@@ -7,7 +7,6 @@ process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;
 
 let frame;
 let isInitAutoUpdater = false;
-Menu.setApplicationMenu(null);
 
 function initAutoUpdater(event) {
     autoUpdater.autoDownload = false;
