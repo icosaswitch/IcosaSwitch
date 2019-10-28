@@ -1,4 +1,4 @@
-const {app, BrowserWindow, ipcMain, Menu} = require('electron');
+const {app, BrowserWindow, ipcMain, Menu, globalShortcut} = require('electron');
 const {autoUpdater} = require('electron-updater');
 const path = require('path');
 const url = require('url');
@@ -98,6 +98,15 @@ app.on("ready", () => {
     protocol: 'file:',
     slashes: true
   }));
+
+  const command = (process.platform === 'darwin') ? 'Alt+Cmd+I' : 'Ctrl+Shift+I';
+  globalShortcut.register(command, () => {
+    if(frame.webContents.isDevToolsOpened()){
+      frame.webContents.closeDevTools();
+    } else {
+      frame.webContents.openDevTools();
+    }
+  });
 
   frame.resizable = false;
 
