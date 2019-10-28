@@ -43,63 +43,117 @@ async function verification(){
 }
 
 async function updates(){
-  return new Promise(function(resolve, reject){
-    ipcRenderer.on('autoUpdateNotification', (event, arg, info) => {
-        switch(arg) {
-            case 'checking-for-update': {
-              document.getElementById("main").innerHTML = '<h2 class="middle">Checking for updates...</h2>';
-              break;
-            }
-            case 'update-available': {
-              document.getElementById("main").innerHTML = '<h2 class="available">An update is available</h2><br><br><br><br><br><br><br><br><br><br><br><input type="button" class="button" id="install" value="Install Update"/>  <input type="button" class="button" id="dont" value="Don\'t install"/>';
-              $("#install").click(() => {
-                ipcRenderer.send('autoUpdateAction', 'downloadUpdate');
-              });
-              $("#dont").click(() => {
-                resolve();
-              });
-              break;
-            }
-            case 'update-not-available': {
-              resolve();
-              break;
-            }
-            case 'download-progress': {
-              document.getElementById("main").innerHTML = '<h2 class="middle">Downloading '+Math.round(info.percent)+'%</h2>';
-              break;
-            }
-            case 'update-downloaded': {
-              document.getElementById("main").innerHTML = '<h2 class="middle">Downloaded</h2>';
-              ipcRenderer.send('autoUpdateAction', 'installUpdate');
-            }
-            case 'ready': {
-              ipcRenderer.send('autoUpdateAction', 'checkForUpdate');
-              break;
-            }
-            case 'realerror': {
-              let err;
-              console.log(info)
-              if(info != null && info.name != null) {
-                if(info.name === 'ERR_UPDATER_INVALID_RELEASE_FEED') {
-                    err = 'No suitable releases found.'
-                } else if(info.name === 'ERR_XML_MISSED_ELEMENT') {
-                    err = 'No releases found.'
-                } else {
-                    err = info.name
-                }
-                document.getElementById("main").innerHTML = '<h2 class="available">An error occured: '+err+'</h2><br><br><br><br><br><br><br><br><br><br><br><input type="button" class="button" id="continue" value="Continue"/>';
-                $("#continue").click(() => {
+  return new Promise(async function(resolve, reject){
+    if(process.platform !== "darwin"){
+      ipcRenderer.on('autoUpdateNotification', (event, arg, info) => {
+          switch(arg) {
+              case 'checking-for-update': {
+                document.getElementById("main").innerHTML = '<h2 class="middle">Checking for updates...</h2>';
+                break;
+              }
+              case 'update-available': {
+                document.getElementById("main").innerHTML = '<h2 class="available">An update is available</h2><br><br><br><br><br><br><br><br><br><br><br><input type="button" class="button" id="install" value="Install Update"/>  <input type="button" class="button" id="dont" value="Don\'t install"/>';
+                $("#install").click(() => {
+                  ipcRenderer.send('autoUpdateAction', 'downloadUpdate');
+                });
+                $("#dont").click(() => {
                   resolve();
                 });
+                break;
               }
-              break;
+              case 'update-not-available': {
+                resolve();
+                break;
+              }
+              case 'download-progress': {
+                document.getElementById("main").innerHTML = '<h2 class="middle">Downloading '+Math.round(info.percent)+'%</h2>';
+                break;
+              }
+              case 'update-downloaded': {
+                document.getElementById("main").innerHTML = '<h2 class="middle">Downloaded</h2>';
+                ipcRenderer.send('autoUpdateAction', 'installUpdate');
+              }
+              case 'ready': {
+                ipcRenderer.send('autoUpdateAction', 'checkForUpdate');
+                break;
+              }
+              case 'realerror': {
+                let err;
+                console.log(info)
+                if(info != null && info.name != null) {
+                  if(info.name === 'ERR_UPDATER_INVALID_RELEASE_FEED') {
+                      err = 'No suitable releases found.'
+                  } else if(info.name === 'ERR_XML_MISSED_ELEMENT') {
+                      err = 'No releases found.'
+                  } else {
+                      err = info.name
+                  }
+                  document.getElementById("main").innerHTML = '<h2 class="available">An error occured: '+err+'</h2><br><br><br><br><br><br><br><br><br><br><br><input type="button" class="button" id="continue" value="Continue"/>';
+                  $("#continue").click(() => {
+                    resolve();
+                  });
+                }
+                break;
+              }
+              default: {
+                break;
+              }
+          }
+      });
+      ipcRenderer.send('autoUpdateAction', 'initAutoUpdater');
+    } else {
+      document.getElementById("main").innerHTML = '<h2 class="middle">Checking for updates...</h2>';
+      let github = await fetch("https://api.github.com/repos/Pharuxtan/IcosaSwitch/releases");
+      github = await github.json();
+      let ver = github[0].tag_name.replace("v", "");
+      let packagejson = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "package.json"), "utf8"));
+      let packagever = packagejson.version;
+      if(packagever === ver){
+        resolve()
+      } else {
+        document.getElementById("main").innerHTML = '<h2 class="available">An update is available</h2><br><br><br><br><br><br><br><br><br><br><br><input type="button" class="button" id="install" value="Install Update"/>  <input type="button" class="button" id="dont" value="Don\'t install"/>';
+        $("#install").click(async () => {
+          let zip = "https://github.com/Pharuxtan/IcosaSwitch/releases/download/v"+ver+"/IcosaSwitch-"+ver+".dmg";
+          let filename = "IcosaSwitch-"+ver+".dmg";
+          if(!fs.existsSync(path.join(root, filename))){
+            document.getElementById("main").innerHTML = '<h2 class="middle">Downloading...</h2>';
+            const res = await fetch(zip);
+            let result;
+            await new Promise((resolve, reject) => {
+              const fileStream = fs.createWriteStream(path.join(root, filename));
+              res.body.pipe(fileStream);
+              res.body.on("error", (err) => {
+                result = err;
+                reject();
+              });
+              fileStream.on("finish", function() {
+                result = "success"
+                resolve();
+              });
+            });
+            if(result === "success"){
+              install();
+            } else {
+              document.getElementById("main").innerHTML = '<h2 class="available">An error occured: '+result+'</h2><br><br><br><br><br><br><br><br><br><br><br><input type="button" class="button" id="continue" value="Continue"/>';
+              $("#continue").click(() => {
+                resolve();
+              });
             }
-            default: {
-              break;
-            }
-        }
-    });
-    ipcRenderer.send('autoUpdateAction', 'initAutoUpdater');
+          } else {
+            install();
+          }
+          async function install(){
+            document.getElementById("main").innerHTML = '<h2 class="middle">Installing...</h2>';
+            spawn("/System/Library/CoreServices/DiskImageMounter.app/Contents/MacOS/DiskImageMounter", [path.join(root, filename)]);
+            const window = getCurrentWindow();
+            window.close();
+          }
+        });
+        $("#dont").click(() => {
+          resolve();
+        });
+      }
+    }
   });
 }
 
