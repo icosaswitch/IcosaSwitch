@@ -5,11 +5,11 @@
       <h3>Frame</h3>
       <input class="frameselbtn" type="button" value="Windows" id="win" style="background-color: <% if(options.config.frame === "win"){ %>#e60012<% } else { %>#860012<% } %>"/><input class="frameselbtn" type="button" value="MacOS" id="osx" style="background-color: <% if(options.config.frame === "osx"){ %>#e60012<% } else { %>#860012<% } %>"/>
     </section>
-    <section>
-      <h3 id="lang"><%- options.lang.options.lang %></h3>
-      <input class="frameselbtn" type="button" value="English" id="en" style="background-color: <% if(options.config.lang === "en"){ %>#e60012<% } else { %>#860012<% } %>"/><input class="frameselbtn" type="button" value="Français" id="fr" style="background-color: <% if(options.config.lang === "fr"){ %>#e60012<% } else { %>#860012<% } %>"/>
-    </section>
   <% } %>
+  <section>
+    <h3 id="lang"><%- options.lang.options.lang %></h3>
+    <input class="frameselbtn" type="button" value="English" id="en" style="background-color: <% if(options.config.lang === "en"){ %>#e60012<% } else { %>#860012<% } %>"/><input class="frameselbtn" type="button" value="Français" id="fr" style="background-color: <% if(options.config.lang === "fr"){ %>#e60012<% } else { %>#860012<% } %>"/>
+  </section>
 </div>
 <br>
 <input class="button" type="button" value="<%- options.lang.mainmenu %>" id="mainmenu" style="visibility: visible;"/>
