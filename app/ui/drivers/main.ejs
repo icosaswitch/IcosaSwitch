@@ -1,16 +1,16 @@
 <h2>Switch Drivers</h2>
 <div id="tool">
-  <p>This tool will install RCM Drivers for your switch</p>
+  <p><%- options.lang.drivers.desc %></p>
   <% if(process.platform === "win32"){ %>
-    <p>How do you want to install the Drivers ?</p>
+    <p><%- options.lang.drivers.win.how %></p>
     <section>
-      <input class="button" type="button" value="Automatic mode" id="automatic"/>
+      <input class="button" type="button" value="<%- options.lang.drivers.win.auto %>" id="automatic"/>
       <input class="button" type="button" value="Zadig" id="zadig"/>
-      <input class="button" type="button" value="Device Manager" id="manager"/>
+      <input class="button" type="button" value="<%- options.lang.drivers.win.device %>" id="manager"/>
     </section>
   <% } else { %>
     <input class="button" type="button" value="Continue" id="continue"/>
   <% } %>
 </div>
 <br>
-<input class="button" type="button" value="Main Menu" id="mainmenu" style="visibility: visible;"/>
+<input class="button" type="button" value="<%- options.lang.mainmenu %>" id="mainmenu" style="visibility: visible;"/>

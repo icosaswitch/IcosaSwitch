@@ -23,6 +23,35 @@
     src: url('../fonts/OpenSans-BoldItalic.ttf');
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 7.5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #2f3640;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+div#tool {
+    margin:4px, 4px;
+    padding:4px;
+    width: 100%;
+    height: 62.5%;
+    overflow-x: hidden;
+    overflow-x: auto;
+}
+
 h1 {
   color:#f5f6fa;
   font-family: 'OpenSans';
@@ -33,15 +62,17 @@ h1 {
 .copyright {
   position: absolute;
   color:#f5f6fa;
-  right: 1%;
+  right: 5px;
   font-family: 'OpenSans';
   background-color: #2f3640;
   border: 0;
-  bottom: 1%;
+  bottom: 5px;
 }
 
 .main {
   text-align: center;
+  margin-left: auto;
+  margin-right: auto;
   font-family: 'OpenSans';
   color: #f5f6fa;
 }
@@ -87,6 +118,13 @@ h1 {
   right: 15%;
 }
 
+.availablediv {
+  position: absolute;
+  top: 47.5%;
+  left: 15%;
+  right: 15%;
+}
+
 .availablebtn {
   background-color: #e60012;
   border: 0px;
@@ -97,10 +135,6 @@ h1 {
   font-family: 'OpenSans';
   font-weight:bold;
   font-size: 15px;
-  top: 45%;
-  bottom: 55%;
-  left: 15%;
-  right: 15%;
 }
 
 .serial {
@@ -112,4 +146,38 @@ h1 {
   font-family: 'OpenSans';
   font-size: 25px;
   color: #f5f6fa;
+}
+
+.credits {
+  background-color: #e60012;
+  border: 0px;
+  border-radius: 5px;
+  color: #f5f6fa;
+  outline: none;
+  padding: 7.5px 15px;
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  font-family: 'OpenSans';
+  font-weight:bold;
+  font-size: 15px;
+}
+
+.options {
+  background-color: #e60012;
+  border: 0px;
+  border-radius: 5px;
+  color: #f5f6fa;
+  outline: none;
+  padding: 7.5px 15px;
+  position: absolute;
+  bottom: 5px;
+  left: 90px;
+  font-family: 'OpenSans';
+  font-weight:bold;
+  font-size: 15px;
+}
+
+a {
+  color: #f5f6fa
 }

@@ -1,0 +1,11 @@
+.frameselbtn {
+  background-color: #e60012;
+  border: 0px;
+  color: #f5f6fa;
+  cursor: pointer;
+  outline: none;
+  padding: 7.5px 15px;
+  font-family: 'OpenSans';
+  font-weight:bold;
+  font-size: 15px;
+}

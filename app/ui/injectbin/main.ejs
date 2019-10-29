@@ -1,15 +1,15 @@
 <h2>Payload Injection</h2>
 <div id="tool">
   <% if(process.platform === "win32"){ %>
-    <p>This tool will Inject payload bin in your switch with TegraRcmSmash</p>
+    <p><%- options.lang.payload.desc %> TegraRcmSmash</p>
   <% } else { %>
-    <p>This tool will Inject payload bin in your switch with fusee-launcher</p>
+    <p><%- options.lang.payload.desc %> fusee-launcher</p>
   <% } %>
-  <p>How do you want to Inject payload</p>
+  <p><%- options.lang.payload.how %></p>
   <section>
-    <input class="button" type="button" value="Online" id="online"/>
-    <input class="button" type="button" value="Local File" id="local"/>
+    <input class="button" type="button" value="<%- options.lang.payload.online %>" id="online"/>
+    <input class="button" type="button" value="<%- options.lang.payload.file %>" id="local"/>
   </section>
 </div>
 <br>
-<input class="button" type="button" value="Main Menu" id="mainmenu" style="visibility: visible;"/>
+<input class="button" type="button" value="<%- options.lang.mainmenu %>" id="mainmenu" style="visibility: visible;"/>

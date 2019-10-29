@@ -1,0 +1,20 @@
+<% let credits = [
+  "https://github.com/Atmosphere-NX/Atmosphere",
+  "https://github.com/shchmue/Lockpick_RCM",
+  "https://github.com/jimzrt/Incognito_RCM",
+  "https://github.com/rajkosto/TegraRcmSmash",
+  "https://github.com/julesontheroad/NSC_BUILDER"
+] %>
+<h2>Credits</h2>
+<div id="tool">
+  <p><%- credits.map((val, n) => {
+    let a = `<a href="${val}">${val}</a>`;
+    if(n === (credits.length-1)){
+      return a
+    } else {
+      return a+"<br>";
+    }
+  }).join("") %></p>
+</div>
+<br>
+<input class="button" type="button" value="<%- options.lang.mainmenu %>" id="mainmenu" style="visibility: visible;"/><br>

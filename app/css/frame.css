@@ -21,9 +21,58 @@
     cursor: pointer;
 }
 
-.frame-bar .content-win-button {
+.frame-bar .content-darwin-button {
     position: relative;
     height: 22px;
+    top: -2px;
+    -webkit-app-region: no-drag !important;
+}
+
+.frame-bar .frame-button.frame-darwin-button {
+    border-radius: 50%;
+    height: 12px;
+    width: 12px;
+    opacity: 1;
+    margin: 5px 8px;
+}
+.frame-bar .content-darwin-button > .frame-darwin-button:not(:first-child) {
+    margin-left: -4px;
+}
+
+.frame-darwin-button#frame-button-close {
+    background-color: #e74c32;
+}
+.frame-darwin-button#frame-button-close:hover,
+.frame-darwin-button#frame-button-close:focus {
+    background-color: #FF9A8A;
+}
+.frame-darwin-button#frame-button-close:active {
+    background-color: #ff8d7b;
+}
+.frame-darwin-button#frame-button-minimize {
+    background-color: #fed045;
+}
+.frame-darwin-button#frame-button-minimize:hover,
+.frame-darwin-button#frame-button-minimize:focus {
+    background-color: #FFE9A9;
+}
+.frame-darwin-button#frame-button-minimize:active {
+    background-color: #ffde7b;
+}
+.frame-darwin-button#frame-button-restoredown {
+    background-color: #96e734;
+}
+.frame-darwin-button#frame-button-restoredown:hover,
+.frame-darwin-button#frame-button-restoredown:focus {
+    background-color: #D6FFA6;
+}
+.frame-darwin-button#frame-button-restoredown:active {
+    background-color: #bfff76;
+}
+
+
+.frame-bar .content-win-button {
+    position: relative;
     top: -2px;
     -webkit-app-region: no-drag !important;
 }
@@ -46,7 +95,7 @@
     width: 100%;
     height: 32px;
     position: absolute;
-    top: 0;
+    top: 2px;
     left: 0;
     -webkit-app-region: drag;
 }

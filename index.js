@@ -70,19 +70,22 @@ app.on("ready", () => {
     frame = new BrowserWindow({
       width: 1280,
       height: 720,
+      minWidth: 1280,
+      minHeight: 720,
       frame: true,
       icon: getPlatformIcon('icon'),
       webPreferences: {
           nodeIntegration: true
       },
       titleBarStyle: "hiddenInset",
-      backgroundColor: '#2f3640',
-      maximizable: false
+      backgroundColor: '#2f3640'
     });
   } else {
     frame = new BrowserWindow({
       width: 1280,
       height: 720,
+      minWidth: 1280,
+      minHeight: 720,
       frame: false,
       icon: getPlatformIcon('icon'),
       webPreferences: {
@@ -106,8 +109,6 @@ app.on("ready", () => {
       frame.webContents.openDevTools();
     }
   });
-
-  frame.resizable = false;
 
   frame.on('closed', () => {
     frame = null;
