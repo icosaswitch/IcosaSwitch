@@ -47,7 +47,9 @@
     "injecting": "Injecting",
     "cancel": "Cancel",
     "success": "Your payload is correctly inject",
-    "cancell": "You cancelled the injection"
+    "cancell": "You cancelled the injection",
+    "biskey": "You have successfully Dump your BIS Key in",
+    "biskeydesc": "This tool will Dump your Switch BIS Key"
   },
   "sxoslicense": {
     "desc": "This tool will sign your SXOS license-request.dat",

@@ -47,7 +47,9 @@
     "injecting": "Injection",
     "cancel": "Annuler",
     "success": "Votre payload est correctement injectée",
-    "cancell": "Vous avez annulé l'injection"
+    "cancell": "Vous avez annulé l'injection",
+    "biskey": "Vous avez réussi à récupérer vos clé BIS dans",
+    "biskeydesc": "Cet outil va récupérer les clé BIS de votre switch"
   },
   "sxoslicense": {
     "desc": "Cet outil signera votre SXOS license-request.dat",

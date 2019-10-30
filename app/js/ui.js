@@ -254,6 +254,10 @@ function app(){
     document.getElementById("main").innerHTML = ejs.render(fs.readFileSync(path.join(__dirname, "ui", "switchpatch", "main.ejs"), "utf8"));
     switchpatch();
   });
+  $("#biskeydump").click(() => {
+    document.getElementById("main").innerHTML = ejs.render(fs.readFileSync(path.join(__dirname, "ui", "biskeydump", "main.ejs"), "utf8"));
+    biskeydump();
+  });
 }
 
 function credits(){
@@ -1127,4 +1131,179 @@ function switchpatch(){
       }
     }
   });
+}
+
+function biskeydump(){
+  $("#mainmenu").click(() => {
+    app();
+  });
+  $("#continue").click(async () => {
+    if(process.platform === "win32"){
+      if(!fs.existsSync(path.join(root, "TegraRcmSmash.exe"))){
+        document.getElementById("tool").innerHTML = "<p>"+options.lang.downloading+"...</p>";
+        document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
+        const res = await fetch('https://github.com/Pharuxtan/IcosaSwitch/releases/download/files/TegraRcmSmash.exe');
+        let result;
+        await new Promise((resolve, reject) => {
+          const fileStream = fs.createWriteStream(path.join(root, "TegraRcmSmash.exe"));
+          res.body.pipe(fileStream);
+          res.body.on("error", (err) => {
+            result = err;
+            reject();
+          });
+          fileStream.on("finish", function() {
+            result = "success"
+            resolve();
+          });
+        });
+        if(result === "success"){
+          biskeydl();
+        } else {
+          document.getElementById("tool").innerHTML = "<p>"+options.lang.error+": "+result+"</p>";
+          document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+        }
+      } else {
+        biskeydl();
+      }
+    } else {
+      if(!fs.existsSync(path.join(root, "drivers", "fuseelauncher"))){
+        document.getElementById("tool").innerHTML = "<p>"+options.lang.downloading+"...</p>";
+        document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
+        const res = await fetch('https://github.com/Qyriad/fusee-launcher/archive/1.0.zip');
+        let result;
+        await new Promise((resolve, reject) => {
+          const fileStream = fs.createWriteStream(path.join(root, "fusee-launcher.zip"));
+          res.body.pipe(fileStream);
+          res.body.on("error", (err) => {
+            result = err;
+            reject();
+          });
+          fileStream.on("finish", function() {
+            result = "success"
+            resolve();
+          });
+        });
+        if(result === "success"){
+          document.getElementById("tool").innerHTML = "<p>"+options.lang.extracting+"...</p>";
+
+          let unzipper = new DecompressZip(path.join(root, "fusee-launcher.zip"));
+
+          unzipper.on('error', function (err) {
+              document.getElementById("tool").innerHTML = "<p>"+options.lang.error+": "+err+"</p>";
+              document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+          });
+
+          unzipper.on('extract', function (log) {
+            biskeydl();
+          });
+
+          unzipper.on('progress', function (fileIndex, fileCount) {
+              console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
+          });
+
+          unzipper.extract({
+              path: path.join(root, "fuseelauncher"),
+              filter: function (file) {
+                  return file.type !== "SymbolicLink";
+              }
+          });
+        } else {
+          document.getElementById("tool").innerHTML = "<p>"+options.lang.error+": "+result+"</p>";
+          document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+        }
+      } else {
+        biskeydl();
+      }
+    }
+  });
+  async function biskeydl(){
+    if(!fs.existsSync(path.join(root, "biskeydump.bin"))){
+      document.getElementById("tool").innerHTML = "<p>"+options.lang.downloading+"...</p>";
+      document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
+      const res = await fetch('https://github.com/Pharuxtan/IcosaSwitch/releases/download/files/biskeydump.bin');
+      let result;
+      await new Promise((resolve, reject) => {
+        const fileStream = fs.createWriteStream(path.join(root, "biskeydump.bin"));
+        res.body.pipe(fileStream);
+        res.body.on("error", (err) => {
+          result = err;
+          reject();
+        });
+        fileStream.on("finish", function() {
+          result = "success"
+          resolve();
+        });
+      });
+      if(result === "success"){
+        install();
+      } else {
+        document.getElementById("tool").innerHTML = "<p>"+options.lang.error+": "+result+"</p>";
+        document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+      }
+    } else {
+      install();
+    }
+  }
+  function install(){
+    if(process.platform === "win32"){
+      document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
+      document.getElementById("tool").innerHTML = '<p>'+options.lang.payload.injecting+'...</p><input class="button" type="button" value="'+options.lang.payload.cancel+'" id="cancel"/>';
+      const inj = exec(`${path.join(root, "TegraRcmSmash.exe")} -w ${path.join(root, "biskeydump.bin")} > ${path.join(root, "biskeydump.txt")}`);
+
+      let error = false;
+      let cancel = false;
+
+      inj.stderr.on('data', (data) => {
+        error = true;
+        document.getElementById("tool").innerHTML = "<p>"+options.lang.error+": "+data.toString()+"</p>";
+        document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+      });
+
+      inj.on('close', (code) => {
+        if(error || cancel) return;
+        document.getElementById("tool").innerHTML = "<p>"+options.lang.payload.biskey+"</p><p>"+path.join(root, "biskeydump.txt")+"</p>"+'<input type="button" id="openexplorer" value="'+options.lang.sxoslicense.explorer+'" class="button"/>';
+        document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+        $("#openexplorer").click(() => {
+          shell.showItemInFolder(path.join(root, "biskeydump.txt"));
+        });
+      });
+
+      $("#cancel").click(() => {
+        cancel = true;
+        spawn("taskkill", ["/pid", inj.pid, '/f', '/t']);
+        document.getElementById("tool").innerHTML = "<p>"+options.lang.payload.cancell+"</p>";
+        document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+      });
+    } else {
+      document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
+      document.getElementById("tool").innerHTML = '<p>'+options.lang.payload.injecting+'...</p><input class="button" type="button" value="'+options.lang.payload.cancel+'" id="cancel"/>';
+      const inj = exec(`python3 ${path.join(root, "fuseelauncher", "fusee-launcher-1.0", "fusee-launcher.py")} ${path.join(root, "biskeydump.bin")} > ${path.join(root, "biskeydump.txt")}`);
+
+      let error = false;
+      let cancel = false;
+
+      inj.stderr.on('data', (data) => {
+        error = true;
+        document.getElementById("tool").innerHTML = "<p>"+options.lang.error+": "+data.toString()+"</p>";
+        document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+      });
+
+      inj.on('close', (code) => {
+        if(error || cancel) return;
+        document.getElementById("tool").innerHTML = "<p>"+options.lang.payload.biskey+"</p><p>"+path.join(root, "biskeydump.txt")+"</p>"+'<input type="button" id="openexplorer" value="'+options.lang.sxoslicense.explorer+'" class="button"/>';
+        document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+        $("#openexplorer").click(() => {
+          shell.showItemInFolder(path.join(root, "biskeydump.txt"));
+        });
+      });
+
+      $("#cancel").click(() => {
+        cancel = true;
+        inj.stdin.pause();
+        inj.kill();
+        document.getElementById("tool").innerHTML = "<p>"+options.lang.payload.cancell+"</p>";
+        document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+      });
+    }
+  }
 }

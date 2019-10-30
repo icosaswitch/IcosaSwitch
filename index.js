@@ -101,15 +101,6 @@ app.on("ready", () => {
     slashes: true
   }));
 
-  const command = (process.platform === 'darwin') ? 'Alt+Cmd+I' : 'Ctrl+Shift+I';
-  globalShortcut.register(command, () => {
-    if(frame.webContents.isDevToolsOpened()){
-      frame.webContents.closeDevTools();
-    } else {
-      frame.webContents.openDevTools();
-    }
-  });
-
   frame.on('closed', () => {
     frame = null;
   });
