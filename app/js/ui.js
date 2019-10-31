@@ -1248,7 +1248,7 @@ function biskeydump(){
     if(process.platform === "win32"){
       document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
       document.getElementById("tool").innerHTML = '<p>'+options.lang.payload.injecting+'...</p><input class="button" type="button" value="'+options.lang.payload.cancel+'" id="cancel"/>';
-      const inj = exec(`${path.join(root, "TegraRcmSmash.exe")} -w ${path.join(root, "biskeydump.bin")} > ${path.join(root, "biskeydump.txt")}`);
+      const inj = exec(`"${path.join(root, "TegraRcmSmash.exe")}" -w "${path.join(root, "biskeydump.bin")}" > "${path.join(root, "biskeydump.txt")}"`);
 
       let error = false;
       let cancel = false;
@@ -1277,7 +1277,7 @@ function biskeydump(){
     } else {
       document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
       document.getElementById("tool").innerHTML = '<p>'+options.lang.payload.injecting+'...</p><input class="button" type="button" value="'+options.lang.payload.cancel+'" id="cancel"/>';
-      const inj = exec(`python3 ${path.join(root, "fuseelauncher", "fusee-launcher-1.0", "fusee-launcher.py")} ${path.join(root, "biskeydump.bin")} > ${path.join(root, "biskeydump.txt")}`);
+      const inj = exec(`python3 "${path.join(root, "fuseelauncher", "fusee-launcher-1.0", "fusee-launcher.py")}" "${path.join(root, "biskeydump.bin")}" > "${path.join(root, "biskeydump.txt")}"`);
 
       let error = false;
       let cancel = false;
