@@ -10,9 +10,9 @@
 
 | Platform | File Download |
 | -------- | ---- |
-| Windows x64 | [`IcosaSwitch-1.5.0.exe`](https://github.com/Pharuxtan/IcosaSwitch/releases/download/v1.5.0/IcosaSwitch-1.5.0.exe) |
-| macOS | [`IcosaSwitch-1.5.0.dmg`](https://github.com/Pharuxtan/IcosaSwitch/releases/download/v1.5.0/IcosaSwitch-1.5.0.dmg) |
-| Linux x64 | [`IcosaSwitch-1.5.0.AppImage`](https://github.com/Pharuxtan/IcosaSwitch/releases/download/v1.5.0/IcosaSwitch-1.5.0.AppImage) |
+| Windows x64 | [`IcosaSwitch-1.5.1.exe`](https://github.com/Pharuxtan/IcosaSwitch/releases/download/v1.5.1/IcosaSwitch-1.5.1.exe) |
+| macOS | [`IcosaSwitch-1.5.1.dmg`](https://github.com/Pharuxtan/IcosaSwitch/releases/download/v1.5.1/IcosaSwitch-1.5.1.dmg) |
+| Linux x64 | [`IcosaSwitch-1.5.1.AppImage`](https://github.com/Pharuxtan/IcosaSwitch/releases/download/v1.5.1/IcosaSwitch-1.5.1.AppImage) |
 
 ## Build from source
 
