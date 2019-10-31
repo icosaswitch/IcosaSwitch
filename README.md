@@ -3,7 +3,7 @@
 <h1 align="center">IcosaSwitch</h1>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Version-1.5.0-%23e60012?style=for-the-badge" alt="version"> 
+  <img src="https://img.shields.io/badge/Version-1.5.1-%23e60012?style=for-the-badge" alt="version"> 
 </p>
 
 ## Download
