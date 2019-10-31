@@ -1,5 +1,5 @@
 {
-  "mainmenu": "Menu principale",
+  "mainmenu": "Menu principal",
   "downloading": "Téléchargement",
   "extracting": "Extraction",
   "error": "Une erreur est survenue",
@@ -39,7 +39,7 @@
     "desc": "Cet outil injectera un payload sur votre switch avec",
     "how": "Comment voulez-vous injecter le payload",
     "online": "En ligne",
-    "file": "Fichier locale",
+    "file": "Fichier local",
     "select": "Selectionnez un fichier",
     "please": "Veuillez sélectionner un fichier",
     "inject": "Injecter",
@@ -48,15 +48,15 @@
     "cancel": "Annuler",
     "success": "Votre payload est correctement injectée",
     "cancell": "Vous avez annulé l'injection",
-    "biskey": "Vous avez réussi à récupérer vos clé BIS dans",
-    "biskeydesc": "Cet outil va récupérer les clé BIS de votre switch"
+    "biskey": "Vous avez réussi à récupérer vos clés BIS dans",
+    "biskeydesc": "Cet outil va récupérer les clés BIS de votre switch"
   },
   "sxoslicense": {
-    "desc": "Cet outil signera votre SXOS license-request.dat",
+    "desc": "Cet outil signera votre license SX OS (license-request.dat)",
     "select": "Sélectionnez votre lisence-request.dat",
     "license": "Votre licence ici",
     "please": "Veuillez selectionner votre license-request.dat",
-    "64": "Votre fichier license-request.dat ne fais pas 64 octets",
+    "64": "Votre fichier license-request.dat ne fait pas 64 octets",
     "sign": "Signer",
     "signing": "En cours",
     "key": "La clé de licence n'est pas valide",
@@ -65,23 +65,23 @@
     "explorer": "Ouvrir dans l'explorateur"
   },
   "nscbuilder": {
-    "checking": "Rechrche de mises à jour",
+    "checking": "Recherche de mise à jour",
     "updates": "Mise à jour",
     "launching": "Lancement",
     "success": "Vous avez lancé NSC Builder avec succès"
   },
   "imsp": {
-    "desc": "Cet outil permet de vérifier si votre commutateur est patché ou non.",
+    "desc": "Cet outil permet de vérifier si votre Switch est patchée ou non.",
     "give": "Indiquez ici votre numéro de série (Exemple: XAW10074000000)",
-    "unpatched": "Non patché",
-    "possibly": "Possiblement patché",
-    "patched": "Patché",
-    "unknown": "Numéro de série Inconnu",
+    "unpatched": "Non patchée",
+    "possibly": "Possiblement patchée",
+    "patched": "Patchée",
+    "unknown": "Numéro de série inconnu",
     "not": "Ce numéro de série ne provient pas d'une switch"
   },
   "updater": {
-    "checking": "Recherche de mises à jour",
-    "downloaded": "Mise à jour téléchargé",
+    "checking": "Recherche de mise à jour",
+    "downloaded": "Mise à jour téléchargée",
     "available": "Une mise à jour est disponible",
     "install": "Installer la mise à jour",
     "dont": "Ne pas l'installer",
