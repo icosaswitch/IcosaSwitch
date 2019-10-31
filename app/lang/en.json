@@ -2,7 +2,7 @@
   "mainmenu": "Main Menu",
   "downloading": "Downloading",
   "extracting": "Extracting",
-  "only": "This software only support Windows, MacOS and Linux Distributions",
+  "only": "This software only supports Windows, MacOS and Linux Distributions",
   "error": "An error occured",
   "options": {
     "lang": "Language"
@@ -52,7 +52,7 @@
     "biskeydesc": "This tool will Dump your Switch BIS Key"
   },
   "sxoslicense": {
-    "desc": "This tool will sign your SXOS license-request.dat",
+    "desc": "This tool will sign your SXOS license (license-request.dat)",
     "select": "Select your license-request.dat",
     "license": "Your license code here",
     "please": "Please select your license-request.dat",
@@ -71,7 +71,7 @@
     "success": "You have successfully launched NSC Builder"
   },
   "imsp": {
-    "desc": "This tool is for verify if your switch is patched or not",
+    "desc": "This tool let you know if your switch is patched or not",
     "give": "Give your serial number here (Example: XAW10074000000)",
     "unpatched": "Unpatched",
     "possibly": "Possibly Patched",
