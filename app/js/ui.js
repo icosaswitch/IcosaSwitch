@@ -16,6 +16,7 @@ $(function() {
 })
 
 function init() {
+  foldercreate();
   options.init();
   frame();
   verification();
@@ -94,7 +95,6 @@ async function verification(){
     document.getElementById("main").innerHTML = '<h2 class="middle">'+options.lang.only+'</h2>';
   } else {
     await updates();
-    foldercreate();
     app();
   }
 }
@@ -160,7 +160,7 @@ async function updates(){
       ipcRenderer.send('autoUpdateAction', 'initAutoUpdater');
     } else {
       document.getElementById("main").innerHTML = '<h2 class="middle">'+options.lang.updater.checking+'...</h2>';
-      let github = await fetch("https://api.github.com/repos/IcosaSwitch/IcosaSwitch/releases");
+      let github = await fetch("https://api.github.com/repos/Pharuxtan/IcosaSwitch/releases");
       github = await github.json();
       let ver = github[0].tag_name.replace("v", "");
       let packagejson = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "package.json"), "utf8"));
@@ -170,7 +170,7 @@ async function updates(){
       } else {
         document.getElementById("main").innerHTML = '<h2 class="available">'+options.lang.updater.available+'</h2><div class="availablediv"><input type="button" class="availablebtn" id="install" value="'+options.lang.updater.install+'"/>  <input type="button" class="availablebtn" id="dont" value="'+options.lang.updater.dont+'"/></div>';
         $("#install").click(async () => {
-          let zip = "https://github.com/IcosaSwitch/IcosaSwitch/releases/download/v"+ver+"/IcosaSwitch-"+ver+".dmg";
+          let zip = "https://github.com/Pharuxtan/IcosaSwitch/releases/download/v"+ver+"/IcosaSwitch-"+ver+".dmg";
           let filename = "IcosaSwitch-"+ver+".dmg";
           if(!fs.existsSync(path.join(root, filename))){
             document.getElementById("main").innerHTML = '<h2 class="middle">'+options.lang.downloading+'...</h2>';
@@ -257,6 +257,10 @@ function app(){
   $("#biskeydump").click(() => {
     document.getElementById("main").innerHTML = ejs.render(fs.readFileSync(path.join(__dirname, "ui", "biskeydump", "main.ejs"), "utf8"));
     biskeydump();
+  });
+  $("#ulaunch").click(() => {
+    document.getElementById("main").innerHTML = ejs.render(fs.readFileSync(path.join(__dirname, "ui", "ulaunch", "main.ejs"), "utf8"));
+    ulaunch();
   });
 }
 
@@ -345,7 +349,7 @@ function drivers(){
         if(!fs.existsSync(path.join(root, "drivers", "apx_drivers"))){
           document.getElementById("tool").innerHTML = "<p>"+options.lang.downloading+"...</p>";
           document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
-          const res = await fetch('https://github.com/IcosaSwitch/IcosaSwitch/releases/download/files/apx_drivers.zip');
+          const res = await fetch('https://github.com/Pharuxtan/IcosaSwitch/releases/download/files/apx_drivers.zip');
           let result;
           await new Promise((resolve, reject) => {
             const fileStream = fs.createWriteStream(path.join(root, "drivers", "apx_drivers.zip"));
@@ -455,7 +459,7 @@ function drivers(){
         if(!fs.existsSync(path.join(root, "drivers", "devicemanager"))){
           document.getElementById("tool").innerHTML = "<p>"+options.lang.downloading+"...</p>";
           document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
-          const res = await fetch('https://github.com/IcosaSwitch/IcosaSwitch/releases/download/files/devicemanager.zip');
+          const res = await fetch('https://github.com/Pharuxtan/IcosaSwitch/releases/download/files/devicemanager.zip');
           let result;
           await new Promise((resolve, reject) => {
             const fileStream = fs.createWriteStream(path.join(root, "drivers", "devicemanager.zip"));
@@ -617,7 +621,7 @@ function injectbin(){
         if(!fs.existsSync(path.join(root, "TegraRcmSmash.exe"))){
           document.getElementById("tool").innerHTML = "<p>"+options.lang.downloading+"...</p>";
           document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
-          const res = await fetch('https://github.com/IcosaSwitch/IcosaSwitch/releases/download/files/TegraRcmSmash.exe');
+          const res = await fetch('https://github.com/Pharuxtan/IcosaSwitch/releases/download/files/TegraRcmSmash.exe');
           let result;
           await new Promise((resolve, reject) => {
             const fileStream = fs.createWriteStream(path.join(root, "TegraRcmSmash.exe"));
@@ -1142,7 +1146,7 @@ function biskeydump(){
       if(!fs.existsSync(path.join(root, "TegraRcmSmash.exe"))){
         document.getElementById("tool").innerHTML = "<p>"+options.lang.downloading+"...</p>";
         document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
-        const res = await fetch('https://github.com/IcosaSwitch/IcosaSwitch/releases/download/files/TegraRcmSmash.exe');
+        const res = await fetch('https://github.com/Pharuxtan/IcosaSwitch/releases/download/files/TegraRcmSmash.exe');
         let result;
         await new Promise((resolve, reject) => {
           const fileStream = fs.createWriteStream(path.join(root, "TegraRcmSmash.exe"));
@@ -1220,7 +1224,7 @@ function biskeydump(){
     if(!fs.existsSync(path.join(root, "biskeydump.bin"))){
       document.getElementById("tool").innerHTML = "<p>"+options.lang.downloading+"...</p>";
       document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
-      const res = await fetch('https://github.com/IcosaSwitch/IcosaSwitch/releases/download/files/biskeydump.bin');
+      const res = await fetch('https://github.com/Pharuxtan/IcosaSwitch/releases/download/files/biskeydump.bin');
       let result;
       await new Promise((resolve, reject) => {
         const fileStream = fs.createWriteStream(path.join(root, "biskeydump.bin"));
@@ -1306,4 +1310,81 @@ function biskeydump(){
       });
     }
   }
+}
+
+async function ulaunch(){
+  document.getElementById("tool").innerHTML = '<h2 class="middle">'+options.lang.ulaunch.loading+'...</h2>';
+  document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
+  let tool = "";
+  let themes = await fetch("https://raw.githubusercontent.com/IcosaSwitch/uLaunch-Themes/master/themes.json").then(res => res.json());
+  for(var i=0; i<themes.length; i++){
+    let num = i;
+    let theme = themes[num];
+    let over = 37+377*(num+1);
+    let field = 37+377*num;
+    num = `dl${num}`;
+    tool += ejs.render(fs.readFileSync(path.join(__dirname, "ui", "ulaunch", "theme.ejs"), "utf8"), {num,theme,over,field});
+  }
+  document.getElementById("tool").innerHTML = tool;
+  document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+  $("#mainmenu").click(() => {
+    app();
+  });
+  let downloading = new Set();
+  $(document).on('click', 'input[id^="dl"]', async function(event) {
+    let id = parseInt(this.id.replace("dl", ""));
+    if(downloading.has(id)){
+      if(this.value.indexOf("Open") !== -1 || this.value.indexOf("Ouvrir") !== -1){
+        let documents = path.join(platformFolders.getDocumentsFolder(), "IcosaSwitch", "ulaunch");
+        let files = themes[id].files;
+        let folder = Object.keys(files)[0];
+        shell.showItemInFolder(path.join(documents, folder));
+        return
+      } else {
+        return
+      }
+    };
+    downloading.add(id);
+    this.value = options.lang.downloading+"..."
+    let documents = path.join(platformFolders.getDocumentsFolder(), "IcosaSwitch");
+    let files = themes[id].files;
+    let folder = Object.keys(files)[0];
+    if(!fs.existsSync(documents)){
+      fs.mkdirSync(documents);
+    }
+    documents = path.join(documents, "ulaunch");
+    if(!fs.existsSync(documents)){
+      fs.mkdirSync(documents);
+    }
+    if(!fs.existsSync(path.join(documents, folder))){
+      fs.mkdirSync(path.join(documents, folder));
+    }
+    let folders = Object.keys(files[folder]);
+    for(var f=0; f<folders.length; f++){
+      let fold = folders[f];
+      if(!fs.existsSync(path.join(documents, folder, fold))){
+        fs.mkdirSync(path.join(documents, folder, fold));
+      }
+      let file = files[folder][fold];
+      let filespath = path.join(documents, folder, fold);
+      for(var ur=0; ur<file.length; ur++){
+        let url = file[ur]
+        let filename = url.split("/").slice(-1)[0];
+        const res = await fetch(url);
+        let result;
+        await new Promise((resolve, reject) => {
+          const fileStream = fs.createWriteStream(path.join(filespath, filename));
+          res.body.pipe(fileStream);
+          res.body.on("error", (err) => {
+            console.log(err);
+            reject();
+          });
+          fileStream.on("finish", function() {
+            resolve();
+          });
+        });
+      }
+    }
+    this.value = options.lang.ulaunch.explorer;
+  });
 }

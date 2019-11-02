@@ -46,7 +46,7 @@
 div#tool {
     margin:4px, 4px;
     padding:4px;
-    width: 100%;
+    width: 99.5%;
     height: 62.5%;
     overflow-x: hidden;
     overflow-x: auto;
@@ -184,4 +184,30 @@ h1 {
 
 a {
   color: #f5f6fa
+}
+
+.bgtheme {
+  background-color: #555;
+  border: 0px;
+  border-radius: 10px;
+  outline: none;
+  width: 360;
+  height: 335;
+  font-family: 'OpenSans';
+  font-weight:bold;
+  font-size: 15px;
+}
+
+.tdl {
+  background-color: #e60012;
+  border: 0px;
+  cursor: pointer;
+  border-radius: 10px;
+  color: #f5f6fa;
+  outline: none;
+  padding: 15px 30px;
+  font-family: 'OpenSans';
+  font-weight:bold;
+  font-size: 15px;
+  width: 225;
 }

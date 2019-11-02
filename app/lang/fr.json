@@ -62,7 +62,7 @@
     "key": "La clé de licence n'est pas valide",
     "already": "Clé de licence déjà signée",
     "saved": "enregistré dans",
-    "explorer": "Ouvrir dans l'explorateur"
+    "explorer": "Ouvrir dans l'exploreur"
   },
   "nscbuilder": {
     "checking": "Recherche de mise à jour",
@@ -87,5 +87,10 @@
     "dont": "Ne pas l'installer",
     "installing": "Installation",
     "continue": "Continuer"
+  },
+  "ulaunch": {
+    "loading": "Chargement des Thèmes",
+    "download": "Télécharger",
+    "explorer": "Ouvrir dans l'exploreur"
   }
 }

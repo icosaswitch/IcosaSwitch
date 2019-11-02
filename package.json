@@ -1,6 +1,6 @@
 {
   "name": "IcosaSwitch",
-  "version": "1.5.2",
+  "version": "1.6.0",
   "productName": "IcosaSwitch",
   "description": "Tools for Switch Hacking",
   "main": "index.js",
@@ -63,14 +63,6 @@
       "target": "dmg",
       "category": "public.app-category.utilities",
       "icon": "build/icon.icns"
-    },
-    "dmg": {
-      "backgroundColor": "#2f3640",
-      "icon": "build/icon.icns",
-      "window": {
-        "width": 550,
-        "height": 400
-      }
     },
     "linux": {
       "target": "AppImage",

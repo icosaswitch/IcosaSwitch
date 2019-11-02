@@ -87,5 +87,10 @@
     "dont": "Don't install",
     "installing": "Installing",
     "continue": "Continue"
+  },
+  "ulaunch": {
+    "loading": "Loading Themes",
+    "download": "Download",
+    "explorer": "Open in explorer"
   }
 }
