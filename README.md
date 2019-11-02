@@ -17,7 +17,7 @@
 ## Build from source
 
 ```console
-> git clone https://github.com/Pharuxtan/IcosaSwitch.git
+> git clone https://github.com/IcosaSwitch/IcosaSwitch.git
 > cd IcosaSwitch
 > npm install
 > npm start
