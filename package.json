@@ -64,6 +64,14 @@
       "category": "public.app-category.utilities",
       "icon": "build/icon.icns"
     },
+    "dmg": {
+      "backgroundColor": "#2f3640",
+      "icon": "build/icon.icns",
+      "window": {
+        "width": 550,
+        "height": 400
+      }
+    },
     "linux": {
       "target": "AppImage",
       "maintainer": "Pharuxtan",
