@@ -1324,6 +1324,23 @@ async function ulaunch(){
     let theme = themes[num];
     let ui = theme.ui;
     let mainmenu = ui["main_menu"];
+    if(mainmenu["top_menu_bg"]["visible"]){mainmenu["top_menu_bg"]["visible"] = "visible"}else{mainmenu["top_menu_bg"]["visible"] = "hidden"}
+    if(mainmenu["banner_image"]["visible"]){mainmenu["banner_image"]["visible"] = "visible"}else{mainmenu["banner_image"]["visible"] = "hidden"}
+    if(mainmenu["logo_icon"]["visible"]){mainmenu["logo_icon"]["visible"] = "visible"}else{mainmenu["logo_icon"]["visible"] = "hidden"}
+    if(mainmenu["connection_icon"]["visible"]){mainmenu["connection_icon"]["visible"] = "visible"}else{mainmenu["connection_icon"]["visible"] = "hidden"}
+    if(mainmenu["user_icon"]["visible"]){mainmenu["user_icon"]["visible"] = "visible"}else{mainmenu["user_icon"]["visible"] = "hidden"}
+    if(mainmenu["web_icon"]["visible"]){mainmenu["web_icon"]["visible"] = "visible"}else{mainmenu["web_icon"]["visible"] = "hidden"}
+    if(mainmenu["time_text"]["visible"]){mainmenu["time_text"]["visible"] = "visible"}else{mainmenu["time_text"]["visible"] = "hidden"}
+    if(mainmenu["battery_text"]["visible"]){mainmenu["battery_text"]["visible"] = "visible"}else{mainmenu["battery_text"]["visible"] = "hidden"}
+    if(mainmenu["battery_icon"]["visible"]){mainmenu["battery_icon"]["visible"] = "visible"}else{mainmenu["battery_icon"]["visible"] = "hidden"}
+    if(mainmenu["settings_icon"]["visible"]){mainmenu["settings_icon"]["visible"] = "visible"}else{mainmenu["settings_icon"]["visible"] = "hidden"}
+    if(mainmenu["themes_icon"]["visible"]){mainmenu["themes_icon"]["visible"] = "visible"}else{mainmenu["themes_icon"]["visible"] = "hidden"}
+    if(mainmenu["firmware_text"]["visible"]){mainmenu["firmware_text"]["visible"] = "visible"}else{mainmenu["firmware_text"]["visible"] = "hidden"}
+    if(mainmenu["menu_toggle_button"]["visible"]){mainmenu["menu_toggle_button"]["visible"] = "visible"}else{mainmenu["menu_toggle_button"]["visible"] = "hidden"}
+    if(mainmenu["banner_name_text"]["visible"]){mainmenu["banner_name_text"]["visible"] = "visible"}else{mainmenu["top_menu_bg"]["banner_name_text"] = "hidden"}
+    if(mainmenu["banner_author_text"]["visible"]){mainmenu["banner_author_text"]["visible"] = "visible"}else{mainmenu["banner_author_text"]["visible"] = "hidden"}
+    if(mainmenu["banner_version_text"]["visible"]){mainmenu["banner_version_text"]["visible"] = "visible"}else{mainmenu["banner_version_text"]["visible"] = "hidden"}
+    console.log(mainmenu);
     let textcolor = (ui["text_color"]) ? ui["text_color"] : def["text_color"];
     let over = 37+377*(num+1);
     let field = 37+377*num;
