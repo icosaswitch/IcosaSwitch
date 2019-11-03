@@ -1320,10 +1320,106 @@ async function ulaunch(){
   for(var i=0; i<themes.length; i++){
     let num = i;
     let theme = themes[num];
+    let ui,mainmenu = {};
+    let def = JSON.parse(fs.readFileSync(path.join(__dirname, "ui", "ulaunch", "default.json"), "utf8"));
+    if(theme.preview.ui){
+      ui = await fetch(theme.preview.ui).then(res => res.json());
+    }
+    if(ui["main_menu"]){
+      let uimain = ui["main_menu"];
+      let demain = def["main_menu"];
+      mainmenu["top_menu_bg"] = {
+        "x": (uimain["top_menu_bg"]) ? ((uimain["top_menu_bg"]["x"]) ? uimain["top_menu_bg"]["x"] : demain["top_menu_bg"]["x"]) : demain["top_menu_bg"]["x"],
+        "y": (uimain["top_menu_bg"]) ? ((uimain["top_menu_bg"]["y"]) ? uimain["top_menu_bg"]["y"] : demain["top_menu_bg"]["y"]) : demain["top_menu_bg"]["y"],
+        "visible": (uimain["top_menu_bg"]) ? ((uimain["top_menu_bg"]["visible"]) ? uimain["top_menu_bg"]["visible"] : demain["top_menu_bg"]["visible"]) : demain["top_menu_bg"]["visible"]
+      }
+      mainmenu["banner_image"] = {
+        "x": (uimain["banner_image"]) ? ((uimain["banner_image"]["x"]) ? uimain["banner_image"]["x"] : demain["banner_image"]["x"]) : demain["banner_image"]["x"],
+        "y": (uimain["banner_image"]) ? ((uimain["banner_image"]["y"]) ? uimain["banner_image"]["y"] : demain["banner_image"]["y"]) : demain["banner_image"]["y"],
+        "visible": (uimain["banner_image"]) ? ((uimain["banner_image"]["visible"]) ? uimain["banner_image"]["visible"] : demain["banner_image"]["visible"]) : demain["banner_image"]["visible"]
+      }
+      mainmenu["logo_icon"] = {
+        "x": (uimain["logo_icon"]) ? ((uimain["logo_icon"]["x"]) ? uimain["logo_icon"]["x"] : demain["logo_icon"]["x"]) : demain["logo_icon"]["x"],
+        "y": (uimain["logo_icon"]) ? ((uimain["logo_icon"]["y"]) ? uimain["logo_icon"]["y"] : demain["logo_icon"]["y"]) : demain["logo_icon"]["y"],
+        "visible": (uimain["logo_icon"]) ? ((uimain["logo_icon"]["visible"]) ? uimain["logo_icon"]["visible"] : demain["logo_icon"]["visible"]) : demain["logo_icon"]["visible"]
+      }
+      mainmenu["connection_icon"] = {
+        "x": (uimain["connection_icon"]) ? ((uimain["connection_icon"]["x"]) ? uimain["connection_icon"]["x"] : demain["connection_icon"]["x"]) : demain["connection_icon"]["x"],
+        "y": (uimain["connection_icon"]) ? ((uimain["connection_icon"]["y"]) ? uimain["connection_icon"]["y"] : demain["connection_icon"]["y"]) : demain["connection_icon"]["y"],
+        "visible": (uimain["connection_icon"]) ? ((uimain["connection_icon"]["visible"]) ? uimain["connection_icon"]["visible"] : demain["connection_icon"]["visible"]) : demain["connection_icon"]["visible"]
+      }
+      mainmenu["user_icon"] = {
+        "x": (uimain["user_icon"]) ? ((uimain["user_icon"]["x"]) ? uimain["user_icon"]["x"] : demain["user_icon"]["x"]) : demain["user_icon"]["x"],
+        "y": (uimain["user_icon"]) ? ((uimain["user_icon"]["y"]) ? uimain["user_icon"]["y"] : demain["user_icon"]["y"]) : demain["user_icon"]["y"],
+        "visible": (uimain["user_icon"]) ? ((uimain["user_icon"]["visible"]) ? uimain["user_icon"]["visible"] : demain["user_icon"]["visible"]) : demain["user_icon"]["visible"]
+      }
+      mainmenu["web_icon"] = {
+        "x": (uimain["web_icon"]) ? ((uimain["web_icon"]["x"]) ? uimain["web_icon"]["x"] : demain["web_icon"]["x"]) : demain["web_icon"]["x"],
+        "y": (uimain["web_icon"]) ? ((uimain["web_icon"]["y"]) ? uimain["web_icon"]["y"] : demain["web_icon"]["y"]) : demain["web_icon"]["y"],
+        "visible": (uimain["web_icon"]) ? ((uimain["web_icon"]["visible"]) ? uimain["web_icon"]["visible"] : demain["web_icon"]["visible"]) : demain["web_icon"]["visible"]
+      }
+      mainmenu["time_text"] = {
+        "x": (uimain["time_text"]) ? ((uimain["time_text"]["x"]) ? uimain["time_text"]["x"] : demain["time_text"]["x"]) : demain["time_text"]["x"],
+        "y": (uimain["time_text"]) ? ((uimain["time_text"]["y"]) ? uimain["time_text"]["y"] : demain["time_text"]["y"]) : demain["time_text"]["y"],
+        "visible": (uimain["time_text"]) ? ((uimain["time_text"]["visible"]) ? uimain["time_text"]["visible"] : demain["time_text"]["visible"]) : demain["time_text"]["visible"]
+      }
+      mainmenu["battery_text"] = {
+        "x": (uimain["battery_text"]) ? ((uimain["battery_text"]["x"]) ? uimain["battery_text"]["x"] : demain["battery_text"]["x"]) : demain["battery_text"]["x"],
+        "y": (uimain["battery_text"]) ? ((uimain["battery_text"]["y"]) ? uimain["battery_text"]["y"] : demain["battery_text"]["y"]) : demain["battery_text"]["y"],
+        "visible": (uimain["battery_text"]) ? ((uimain["battery_text"]["visible"]) ? uimain["battery_text"]["visible"] : demain["battery_text"]["visible"]) : demain["battery_text"]["visible"]
+      }
+      mainmenu["battery_icon"] = {
+        "x": (uimain["battery_icon"]) ? ((uimain["battery_icon"]["x"]) ? uimain["battery_icon"]["x"] : demain["battery_icon"]["x"]) : demain["battery_icon"]["x"],
+        "y": (uimain["battery_icon"]) ? ((uimain["battery_icon"]["y"]) ? uimain["battery_icon"]["y"] : demain["battery_icon"]["y"]) : demain["battery_icon"]["y"],
+        "visible": (uimain["battery_icon"]) ? ((uimain["battery_icon"]["visible"]) ? uimain["battery_icon"]["visible"] : demain["battery_icon"]["visible"]) : demain["battery_icon"]["visible"]
+      }
+      mainmenu["settings_icon"] = {
+        "x": (uimain["settings_icon"]) ? ((uimain["settings_icon"]["x"]) ? uimain["settings_icon"]["x"] : demain["settings_icon"]["x"]) : demain["settings_icon"]["x"],
+        "y": (uimain["settings_icon"]) ? ((uimain["settings_icon"]["y"]) ? uimain["settings_icon"]["y"] : demain["settings_icon"]["y"]) : demain["settings_icon"]["y"],
+        "visible": (uimain["settings_icon"]) ? ((uimain["settings_icon"]["visible"]) ? uimain["settings_icon"]["visible"] : demain["settings_icon"]["visible"]) : demain["settings_icon"]["visible"]
+      }
+      mainmenu["themes_icon"] = {
+        "x": (uimain["themes_icon"]) ? ((uimain["themes_icon"]["x"]) ? uimain["themes_icon"]["x"] : demain["themes_icon"]["x"]) : demain["themes_icon"]["x"],
+        "y": (uimain["themes_icon"]) ? ((uimain["themes_icon"]["y"]) ? uimain["themes_icon"]["y"] : demain["themes_icon"]["y"]) : demain["themes_icon"]["y"],
+        "visible": (uimain["themes_icon"]) ? ((uimain["themes_icon"]["visible"]) ? uimain["themes_icon"]["visible"] : demain["themes_icon"]["visible"]) : demain["themes_icon"]["visible"]
+      }
+      mainmenu["firmware_text"] = {
+        "x": (uimain["firmware_text"]) ? ((uimain["firmware_text"]["x"]) ? uimain["firmware_text"]["x"] : demain["firmware_text"]["x"]) : demain["firmware_text"]["x"],
+        "y": (uimain["firmware_text"]) ? ((uimain["firmware_text"]["y"]) ? uimain["firmware_text"]["y"] : demain["firmware_text"]["y"]) : demain["firmware_text"]["y"],
+        "visible": (uimain["firmware_text"]) ? ((uimain["firmware_text"]["visible"]) ? uimain["firmware_text"]["visible"] : demain["firmware_text"]["visible"]) : demain["firmware_text"]["visible"]
+      }
+      mainmenu["menu_toggle_button"] = {
+        "x": (uimain["menu_toggle_button"]) ? ((uimain["menu_toggle_button"]["x"]) ? uimain["menu_toggle_button"]["x"] : demain["menu_toggle_button"]["x"]) : demain["menu_toggle_button"]["x"],
+        "y": (uimain["menu_toggle_button"]) ? ((uimain["menu_toggle_button"]["y"]) ? uimain["menu_toggle_button"]["y"] : demain["menu_toggle_button"]["y"]) : demain["menu_toggle_button"]["y"],
+        "visible": (uimain["menu_toggle_button"]) ? ((uimain["menu_toggle_button"]["visible"]) ? uimain["menu_toggle_button"]["visible"] : demain["menu_toggle_button"]["visible"]) : demain["menu_toggle_button"]["visible"]
+      }
+      mainmenu["banner_name_text"] = {
+        "x": (uimain["banner_name_text"]) ? ((uimain["banner_name_text"]["x"]) ? uimain["banner_name_text"]["x"] : demain["banner_name_text"]["x"]) : demain["banner_name_text"]["x"],
+        "y": (uimain["banner_name_text"]) ? ((uimain["banner_name_text"]["y"]) ? uimain["banner_name_text"]["y"] : demain["banner_name_text"]["y"]) : demain["banner_name_text"]["y"],
+        "visible": (uimain["banner_name_text"]) ? ((uimain["banner_name_text"]["visible"]) ? uimain["banner_name_text"]["visible"] : demain["banner_name_text"]["visible"]) : demain["banner_name_text"]["visible"]
+      }
+      mainmenu["banner_author_text"] = {
+        "x": (uimain["banner_author_text"]) ? ((uimain["banner_author_text"]["x"]) ? uimain["banner_author_text"]["x"] : demain["banner_author_text"]["x"]) : demain["banner_author_text"]["x"],
+        "y": (uimain["banner_author_text"]) ? ((uimain["banner_author_text"]["y"]) ? uimain["banner_author_text"]["y"] : demain["banner_author_text"]["y"]) : demain["banner_author_text"]["y"],
+        "visible": (uimain["banner_author_text"]) ? ((uimain["banner_author_text"]["visible"]) ? uimain["banner_author_text"]["visible"] : demain["banner_author_text"]["visible"]) : demain["banner_author_text"]["visible"]
+      }
+      mainmenu["banner_version_text"] = {
+        "x": (uimain["banner_version_text"]) ? ((uimain["banner_version_text"]["x"]) ? uimain["banner_version_text"]["x"] : demain["banner_version_text"]["x"]) : demain["banner_version_text"]["x"],
+        "y": (uimain["banner_version_text"]) ? ((uimain["banner_version_text"]["y"]) ? uimain["banner_version_text"]["y"] : demain["banner_version_text"]["y"]) : demain["banner_version_text"]["y"],
+        "visible": (uimain["banner_version_text"]) ? ((uimain["banner_version_text"]["visible"]) ? uimain["banner_version_text"]["visible"] : demain["banner_version_text"]["visible"]) : demain["banner_version_text"]["visible"]
+      }
+      mainmenu["items_menu"] = {
+        "y": (uimain["items_menu"]) ? ((uimain["items_menu"]["y"]) ? uimain["items_menu"]["y"] : demain["items_menu"]["y"]) : demain["items_menu"]["y"],
+      }
+    } else {
+      mainmenu = def["main_menu"];
+    }
+    let textcolor = (ui["text_color"]) ? ui["text_color"] : def["text_color"];
     let over = 37+377*(num+1);
     let field = 37+377*num;
+    let font = `@font-face { font-family: 'Custom'; font-style: normal; src: url('${theme.preview.font}'); }`;
     num = `dl${num}`;
-    tool += ejs.render(fs.readFileSync(path.join(__dirname, "ui", "ulaunch", "theme.ejs"), "utf8"), {num,theme,over,field});
+    tool += ejs.render(fs.readFileSync(path.join(__dirname, "ui", "ulaunch", "theme.ejs"), "utf8"), {num,theme,over,field,mainmenu,textcolor,font});
   }
   document.getElementById("tool").innerHTML = tool;
   document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');

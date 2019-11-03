@@ -91,6 +91,7 @@
   "ulaunch": {
     "loading": "Loading Themes",
     "download": "Download",
-    "explorer": "Open in explorer"
+    "explorer": "Open in explorer",
+    "by": "By"
   }
 }
