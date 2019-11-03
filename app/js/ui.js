@@ -1313,11 +1313,13 @@ function biskeydump(){
 }
 
 async function ulaunch(){
-  document.getElementById("tool").innerHTML = '<h2 class="middle">'+options.lang.ulaunch.loading+'...</h2>';
+  document.getElementById("tool").innerHTML = '<h2 class="middle">'+options.lang.ulaunch.loading+'</h2>';
   document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
   let tool = "";
   let themes = await fetch("https://raw.githubusercontent.com/IcosaSwitch/uLaunch-Themes/master/themes.json").then(res => res.json());
+  document.getElementById("tool").innerHTML = '<h2 class="middle">'+options.lang.ulaunch.loading+' 0/'+themes.length+'</h2>';
   for(var i=0; i<themes.length; i++){
+    document.getElementById("tool").innerHTML = '<h2 class="middle">'+options.lang.ulaunch.loading+' '+(i+1)+'/'+themes.length+'</h2>';
     let num = i;
     let theme = themes[num];
     let ui,mainmenu = {};
@@ -1441,7 +1443,9 @@ async function ulaunch(){
       }
     };
     downloading.add(id);
-    this.value = options.lang.downloading+"..."
+    this.value = options.lang.downloading+" (0%)"
+    let maxed = 0;
+    let dldo = 0;
     let documents = path.join(platformFolders.getDocumentsFolder(), "IcosaSwitch");
     let files = themes[id].files;
     let folder = Object.keys(files)[0];
@@ -1456,6 +1460,18 @@ async function ulaunch(){
       fs.mkdirSync(path.join(documents, folder));
     }
     let folders = Object.keys(files[folder]);
+    for(var f=0; f<folders.length; f++){
+      let fold = folders[f];
+      if(!fs.existsSync(path.join(documents, folder, fold))){
+        fs.mkdirSync(path.join(documents, folder, fold));
+      }
+      let file = files[folder][fold];
+      let filespath = path.join(documents, folder, fold);
+      for(var ur=0; ur<file.length; ur++){
+        let url = file[ur];
+        maxed++
+      }
+    }
     for(var f=0; f<folders.length; f++){
       let fold = folders[f];
       if(!fs.existsSync(path.join(documents, folder, fold))){
@@ -1479,6 +1495,8 @@ async function ulaunch(){
             resolve();
           });
         });
+        dldo++
+        this.value = options.lang.downloading+" ("+Math.trunc((100*dldo)/maxed)+"%)";
       }
     }
     this.value = options.lang.ulaunch.explorer;
