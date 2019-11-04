@@ -1340,13 +1340,13 @@ async function ulaunch(){
     if(mainmenu["banner_name_text"]["visible"]){mainmenu["banner_name_text"]["visible"] = "visible"}else{mainmenu["top_menu_bg"]["banner_name_text"] = "hidden"}
     if(mainmenu["banner_author_text"]["visible"]){mainmenu["banner_author_text"]["visible"] = "visible"}else{mainmenu["banner_author_text"]["visible"] = "hidden"}
     if(mainmenu["banner_version_text"]["visible"]){mainmenu["banner_version_text"]["visible"] = "visible"}else{mainmenu["banner_version_text"]["visible"] = "hidden"}
-    console.log(mainmenu);
-    let textcolor = (ui["text_color"]) ? ui["text_color"] : def["text_color"];
+    size = theme.size;
+    let textcolor = ui["text_color"];
     let over = 37+377*(num+1);
     let field = 37+377*num;
     let font = `@font-face { font-family: 'Custom'; font-style: normal; src: url('${theme.preview.font}'); }`;
     num = `dl${num}`;
-    tool += ejs.render(fs.readFileSync(path.join(__dirname, "ui", "ulaunch", "theme.ejs"), "utf8"), {num,theme,over,field,mainmenu,textcolor,font});
+    tool += ejs.render(fs.readFileSync(path.join(__dirname, "ui", "ulaunch", "theme.ejs"), "utf8"), {num,theme,over,field,mainmenu,textcolor,font,size});
   }
   document.getElementById("tool").innerHTML = tool;
   document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
