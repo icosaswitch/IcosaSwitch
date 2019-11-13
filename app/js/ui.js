@@ -816,13 +816,16 @@ function sxoslicense(){
     let ab = new ArrayBuffer(buf.length);
     let view = new Uint8Array(ab);
     for (var i = 0; i < buf.length; ++i) {
-      view[i] = buf[i];
+        view[i] = buf[i];
     }
-    let bytes = new Uint8Array(ab);
+    let bytes = new Uint8Array(view);
+    console.log(bytes);
     csr_data = '';
     for(i=0; i<bytes.length; i++) {
       csr_data += ("0" + bytes[i].toString(16)).substr(-2);
     }
+    console.log(csr_data.substr(0x40, 0x40));
+    console.log("0".repeat(0x40));
     if (csr_data.substr(0x40, 0x40) == "0".repeat(0x40)) {
       needlicense = true;
       document.getElementById("licensetext").setAttribute("style", 'visibility: visible;');
@@ -850,7 +853,12 @@ function sxoslicense(){
   $("#sign").click(async () => {
     document.getElementById("tool").innerHTML = "<p>"+options.lang.sxoslicense.signing+"...</p>";
     document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
-    var o = {csr_data,redeem_code};
+    let o;
+    if(redeem_code === null){
+      o = {csr_data};
+    } else {
+      o = {csr_data,redeem_code};
+    }
     var r = await fetch('https://sx.xecuter.com/sx-api-server.php?u=sign', {method:'post',body:JSON.stringify(o),headers:{'Content-Type':'application/json'}}).then(res => res.json())
     if ('responseJSON' in r) r = r.responseJSON;
     if ('error' in r) {
@@ -1315,8 +1323,9 @@ function biskeydump(){
 async function ulaunch(){
   document.getElementById("tool").innerHTML = '<h2 class="middle">'+options.lang.ulaunch.loading+'</h2>';
   document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
-  let tool = "";
   let themes = await fetch("https://raw.githubusercontent.com/IcosaSwitch/uLaunch-Themes/master/themes.json").then(res => res.json());
+  let tool = "";
+  let style = "";
   document.getElementById("tool").innerHTML = '<h2 class="middle">'+options.lang.ulaunch.loading+' 0/'+themes.length+'</h2>';
   for(var i=0; i<themes.length; i++){
     document.getElementById("tool").innerHTML = '<h2 class="middle">'+options.lang.ulaunch.loading+' '+(i+1)+'/'+themes.length+'</h2>';
@@ -1342,12 +1351,23 @@ async function ulaunch(){
     if(mainmenu["banner_version_text"]["visible"]){mainmenu["banner_version_text"]["visible"] = "visible"}else{mainmenu["banner_version_text"]["visible"] = "hidden"}
     size = theme.size;
     let textcolor = ui["text_color"];
+    let folderstyle = {
+      x: ui["menu_folder_text_x"],
+      y: ui["menu_folder_text_y"],
+      size: ui["menu_folder_text_size"]
+    }
+    if(theme.description.length > 50){
+      theme.description = theme.description.substring(0, 50) + "...";
+    }
     let over = 37+377*(num+1);
     let field = 37+377*num;
-    let font = `@font-face { font-family: 'Custom'; font-style: normal; src: url('${theme.preview.font}'); }`;
+    let gameimg = path.join(__dirname, "ui", "ulaunch", "game.png");
+    let font = theme.pathname.replace(/\s/g, "").replace(/'/g, "").replace(/-/g, "");
     num = `dl${num}`;
-    tool += ejs.render(fs.readFileSync(path.join(__dirname, "ui", "ulaunch", "theme.ejs"), "utf8"), {num,theme,over,field,mainmenu,textcolor,font,size});
+    style += `@font-face { font-family: '${font}'; font-style: normal; src: url('${theme.preview.font}'); }`;
+    tool += ejs.render(fs.readFileSync(path.join(__dirname, "ui", "ulaunch", "theme.ejs"), "utf8"), {num,theme,over,field,mainmenu,textcolor,size,font,gameimg,folderstyle});
   }
+  $("#fonts").html(style);
   document.getElementById("tool").innerHTML = tool;
   document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
   $("#mainmenu").click(() => {

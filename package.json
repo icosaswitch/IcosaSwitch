@@ -1,6 +1,6 @@
 {
   "name": "IcosaSwitch",
-  "version": "1.6.4",
+  "version": "1.7.0",
   "productName": "IcosaSwitch",
   "description": "Tools for Switch Hacking",
   "main": "index.js",
@@ -81,7 +81,7 @@
       "category": "Utility"
     },
     "files": [
-      "!{dist,dev-app-update.yml}"
+      "!{dist,dev-app-update.yml,ulaunch,icosaswitch.png,package-lock.json,README.md,.gitignore}"
     ],
     "compression": "maximum",
     "asar": true
