@@ -117,5 +117,5 @@ function getPlatformIcon(filename) {
     else {
         filename = filename + '.png';
     }
-    return path.join(__dirname, 'app', 'icons', filename);
+    return path.join(__dirname, 'build', filename);
 }
