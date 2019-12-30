@@ -88,10 +88,19 @@
     "installing": "Installing",
     "continue": "Continue"
   },
-  "ulaunch": {
-    "loading": "Loading Themes",
+  "appstore": {
+    "loading": "Loading",
+    "search": "Search",
     "download": "Download",
-    "explorer": "Open in explorer",
-    "by": "By"
+    "source": "Source",
+    "additional": "Additional information",
+    "changelog": "Changelog",
+    "return": "Return",
+    "author": "Author",
+    "version": "Version",
+    "updated": "Updated",
+    "filesize": "ZIP size",
+    "extracted": "Extracted Size",
+    "license": "License"
   }
 }

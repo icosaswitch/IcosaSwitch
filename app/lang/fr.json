@@ -88,10 +88,19 @@
     "installing": "Installation",
     "continue": "Continuer"
   },
-  "ulaunch": {
-    "loading": "Chargement des Thèmes",
+  "appstore": {
+    "loading": "Chargement",
+    "search": "Rechercher",
     "download": "Télécharger",
-    "explorer": "Ouvrir dans l'explorateur",
-    "by": "Par"
+    "source": "Source",
+    "additional": "Informations complémentaires",
+    "changelog": "Changelog",
+    "return": "Retour",
+    "author": "Autheur",
+    "version": "Version",
+    "updated": "Mis à jour",
+    "filesize": "Taille du ZIP",
+    "extracted": "Taille du contenu",
+    "license": "Licence"
   }
 }

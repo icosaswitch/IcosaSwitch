@@ -3,6 +3,8 @@ const {remote, ipcRenderer} = require('electron');
 const {getCurrentWindow, dialog, shell} = remote;
 const fs = require('fs');
 const path = require('path');
+const FuzzySearch = require(path.join(__dirname, "js", "fuzzy.js"));
+const pretty = require('pretty-size').prettySize;
 const ejs = require('ejs');
 const {exec, spawn} = require('child_process');
 const platformFolders = require("platform-folders");
@@ -101,6 +103,7 @@ async function verification(){
 
 async function updates(){
   return new Promise(async function(resolve, reject){
+    return resolve();
     if(process.platform !== "darwin"){
       ipcRenderer.on('autoUpdateNotification', (event, arg, info) => {
           switch(arg) {
@@ -258,9 +261,9 @@ function app(){
     document.getElementById("main").innerHTML = ejs.render(fs.readFileSync(path.join(__dirname, "ui", "biskeydump", "main.ejs"), "utf8"));
     biskeydump();
   });
-  $("#ulaunch").click(() => {
-    document.getElementById("main").innerHTML = ejs.render(fs.readFileSync(path.join(__dirname, "ui", "ulaunch", "main.ejs"), "utf8"));
-    ulaunch();
+  $("#appstore").click(() => {
+    document.getElementById("main").innerHTML = ejs.render(fs.readFileSync(path.join(__dirname, "ui", "appstore", "main.ejs"), "utf8"));
+    appstore();
   });
 }
 
@@ -1320,130 +1323,132 @@ function biskeydump(){
   }
 }
 
-async function ulaunch(){
-  document.getElementById("tool").innerHTML = '<h2 class="middle">'+options.lang.ulaunch.loading+'</h2>';
-  document.getElementById("mainmenu").setAttribute("style", 'visibility: hidden;');
-  let themes = await fetch("https://raw.githubusercontent.com/IcosaSwitch/uLaunch-Themes/master/themes.json").then(res => res.json());
-  let tool = "";
-  let style = "";
-  document.getElementById("tool").innerHTML = '<h2 class="middle">'+options.lang.ulaunch.loading+' 0/'+themes.length+'</h2>';
-  for(var i=0; i<themes.length; i++){
-    document.getElementById("tool").innerHTML = '<h2 class="middle">'+options.lang.ulaunch.loading+' '+(i+1)+'/'+themes.length+'</h2>';
-    let num = i;
-    let theme = themes[num];
-    let ui = theme.ui;
-    let mainmenu = ui["main_menu"];
-    if(mainmenu["top_menu_bg"]["visible"]){mainmenu["top_menu_bg"]["visible"] = "visible"}else{mainmenu["top_menu_bg"]["visible"] = "hidden"}
-    if(mainmenu["banner_image"]["visible"]){mainmenu["banner_image"]["visible"] = "visible"}else{mainmenu["banner_image"]["visible"] = "hidden"}
-    if(mainmenu["logo_icon"]["visible"]){mainmenu["logo_icon"]["visible"] = "visible"}else{mainmenu["logo_icon"]["visible"] = "hidden"}
-    if(mainmenu["connection_icon"]["visible"]){mainmenu["connection_icon"]["visible"] = "visible"}else{mainmenu["connection_icon"]["visible"] = "hidden"}
-    if(mainmenu["user_icon"]["visible"]){mainmenu["user_icon"]["visible"] = "visible"}else{mainmenu["user_icon"]["visible"] = "hidden"}
-    if(mainmenu["web_icon"]["visible"]){mainmenu["web_icon"]["visible"] = "visible"}else{mainmenu["web_icon"]["visible"] = "hidden"}
-    if(mainmenu["time_text"]["visible"]){mainmenu["time_text"]["visible"] = "visible"}else{mainmenu["time_text"]["visible"] = "hidden"}
-    if(mainmenu["battery_text"]["visible"]){mainmenu["battery_text"]["visible"] = "visible"}else{mainmenu["battery_text"]["visible"] = "hidden"}
-    if(mainmenu["battery_icon"]["visible"]){mainmenu["battery_icon"]["visible"] = "visible"}else{mainmenu["battery_icon"]["visible"] = "hidden"}
-    if(mainmenu["settings_icon"]["visible"]){mainmenu["settings_icon"]["visible"] = "visible"}else{mainmenu["settings_icon"]["visible"] = "hidden"}
-    if(mainmenu["themes_icon"]["visible"]){mainmenu["themes_icon"]["visible"] = "visible"}else{mainmenu["themes_icon"]["visible"] = "hidden"}
-    if(mainmenu["firmware_text"]["visible"]){mainmenu["firmware_text"]["visible"] = "visible"}else{mainmenu["firmware_text"]["visible"] = "hidden"}
-    if(mainmenu["menu_toggle_button"]["visible"]){mainmenu["menu_toggle_button"]["visible"] = "visible"}else{mainmenu["menu_toggle_button"]["visible"] = "hidden"}
-    if(mainmenu["banner_name_text"]["visible"]){mainmenu["banner_name_text"]["visible"] = "visible"}else{mainmenu["top_menu_bg"]["banner_name_text"] = "hidden"}
-    if(mainmenu["banner_author_text"]["visible"]){mainmenu["banner_author_text"]["visible"] = "visible"}else{mainmenu["banner_author_text"]["visible"] = "hidden"}
-    if(mainmenu["banner_version_text"]["visible"]){mainmenu["banner_version_text"]["visible"] = "visible"}else{mainmenu["banner_version_text"]["visible"] = "hidden"}
-    size = theme.size;
-    let textcolor = ui["text_color"];
-    let folderstyle = {
-      x: ui["menu_folder_text_x"],
-      y: ui["menu_folder_text_y"],
-      size: ui["menu_folder_text_size"]
-    }
-    if(theme.description.length > 50){
-      theme.description = theme.description.substring(0, 50) + "...";
-    }
-    let over = 37+377*(num+1);
-    let field = 37+377*num;
-    let gameimg = path.join(__dirname, "ui", "ulaunch", "game.png");
-    let font = theme.pathname.replace(/\s/g, "").replace(/'/g, "").replace(/-/g, "");
-    num = `dl${num}`;
-    style += `@font-face { font-family: '${font}'; font-style: normal; src: url('${theme.preview.font}'); }`;
-    tool += ejs.render(fs.readFileSync(path.join(__dirname, "ui", "ulaunch", "theme.ejs"), "utf8"), {num,theme,over,field,mainmenu,textcolor,size,font,gameimg,folderstyle});
-  }
-  $("#fonts").html(style);
-  document.getElementById("tool").innerHTML = tool;
-  document.getElementById("mainmenu").setAttribute("style", 'visibility: visible;');
+async function appstore(){
+  let interval = null;
   $("#mainmenu").click(() => {
+    clearInterval(interval);
     app();
   });
-  let downloading = new Set();
-  $(document).on('click', 'input[id^="dl"]', async function(event) {
-    let id = parseInt(this.id.replace("dl", ""));
-    if(downloading.has(id)){
-      if(this.value.indexOf("Open") !== -1 || this.value.indexOf("Ouvrir") !== -1){
-        let documents = path.join(platformFolders.getDocumentsFolder(), "IcosaSwitch", "ulaunch");
-        let files = themes[id].files;
-        let folder = Object.keys(files)[0];
-        shell.showItemInFolder(path.join(documents, folder));
-        return
-      } else {
-        return
-      }
-    };
-    downloading.add(id);
-    this.value = options.lang.downloading+" (0%)"
-    let maxed = 0;
-    let dldo = 0;
-    let documents = path.join(platformFolders.getDocumentsFolder(), "IcosaSwitch");
-    let files = themes[id].files;
-    let folder = Object.keys(files)[0];
-    if(!fs.existsSync(documents)){
-      fs.mkdirSync(documents);
+  interval = setInterval(() => {
+    let w = $("#tool").width()-50;
+    let width = parseInt(`${w/266}`);
+    width = width*266+10*width
+    $(".appGrid").get(0).setAttribute("style", `width: ${width}`);
+    let style = `input.search {width: ${width-20}}`;
+    if($("#main style").get(0).innerHTML != style) $("#main style").get(0).innerHTML = style;
+  }, 50);
+  $("#tool").append('<h2 class="middle">'+options.lang.appstore.loading+'...</h2>')
+  $(document).on('click', 'a[href^="http"]', function(event) {
+      event.preventDefault();
+      shell.openExternal(this.href);
+  });
+  let json = await fetch("https://switchbru.com/appstore/repo.json");
+  let packages = (await json.json()).packages.map(package => {
+    return {
+      "category": package.category,
+      "updated": package.updated,
+      "name": package.name,
+      "author": package.author,
+      "license": package.license,
+      "title": package.title,
+      "extracted": parseInt(package.extracted)*1024,
+      "filesize": parseInt(package.filesize)*1024,
+      "description": package.description,
+      "details": package.details,
+      "version": package.version,
+      "changelog": package.changelog,
+      "updated": package.updated,
+      "icon": `https://switchbru.com/appstore/packages/${package.name}/icon.png`,
+      "screen": `https://switchbru.com/appstore/packages/${package.name}/screen.png`,
+      "download": `https://switchbru.com/appstore/zips/${package.name}.zip`,
+      "source": package.url
     }
-    documents = path.join(documents, "ulaunch");
-    if(!fs.existsSync(documents)){
-      fs.mkdirSync(documents);
+  });
+  $(".middle").remove();
+  $("#main label").show();
+  let searchtitle = [];
+  let searchauthor = [];
+  packages.map(async (package, i) => {
+    $(".appGrid").append(`<div class="appGrid__item"><div id="package${i}"><a class="card card--app"><img src="${package.icon}" onerror="this.src='${path.join(__dirname, "ui", "appstore", "404.png")}'" class="app__image"><div class="card__head">${package.title}</div><div class="card__body"><div class="app__desc">${package.version}</div><div class="app__author">${package.author}</div></div></a></div></div>`);
+    $(`#package${i}`).click((e) => {
+      click(e.currentTarget.id.replace("package", ""));
+    });
+    searchtitle.push(package.title.toLowerCase());
+    searchauthor.push(package.author.toLowerCase());
+  });
+  let result = null;
+  function click(id){
+    let package = packages[id];
+    let items = $(".appGrid").get(0).childNodes;
+    for(var i=0; i<items.length; i++){
+      let item = items[i]
+      $(item).hide();
     }
-    if(!fs.existsSync(path.join(documents, folder))){
-      fs.mkdirSync(path.join(documents, folder));
+    $("#main label").hide();
+    $("#title").html(package.title);
+    $("#image").get(0).setAttribute("src", package.screen);
+    $("#desc").html(package.description);
+    $("#author").html(`${options.lang.appstore.author}:<br>${package.author}`);
+    $("#download").get(0).setAttribute("href", package.download);
+    if(package.source.toLowerCase() != "n/a"){
+      $("#source").get(0).setAttribute("href", package.source);
+    } else {
+      $("#source").hide();
     }
-    let folders = Object.keys(files[folder]);
-    for(var f=0; f<folders.length; f++){
-      let fold = folders[f];
-      if(!fs.existsSync(path.join(documents, folder, fold))){
-        fs.mkdirSync(path.join(documents, folder, fold));
+    $("#details").html(`${package.details}`.replace(/\\n/g, "<br />"));
+    $("#additional").html(`${options.lang.appstore.additional}:<br>${options.lang.appstore.version}: ${package.version}<br>${options.lang.appstore.updated}: ${package.updated}<br>${options.lang.appstore.filesize}: ${pretty(package.filesize)}<br>${options.lang.appstore.extracted}: ${pretty(package.extracted)}<br>${options.lang.appstore.license}: ${package.license}`);
+    $("#changelog").html(`${options.lang.appstore.changelog}:<br><br>${package.changelog.replace(/\\n/g, "<br />")}`);
+    $("#tool").get(0).scrollTop = 0;
+    $("#return").show();
+    $("#appInfo").show();
+  }
+  $("#return").click(() => {
+    $("#source").show();
+    $("#appInfo").hide();
+    $("#return").hide();
+    $("#tool").get(0).scrollTop = 0;
+    if(result == null){
+      let items = $(".appGrid").get(0).childNodes;
+      for(var i=0; i<items.length; i++){
+        let item = items[i]
+        $(item).show();
       }
-      let file = files[folder][fold];
-      let filespath = path.join(documents, folder, fold);
-      for(var ur=0; ur<file.length; ur++){
-        let url = file[ur];
-        maxed++
-      }
-    }
-    for(var f=0; f<folders.length; f++){
-      let fold = folders[f];
-      if(!fs.existsSync(path.join(documents, folder, fold))){
-        fs.mkdirSync(path.join(documents, folder, fold));
-      }
-      let file = files[folder][fold];
-      let filespath = path.join(documents, folder, fold);
-      for(var ur=0; ur<file.length; ur++){
-        let url = file[ur]
-        let filename = url.split("/").slice(-1)[0];
-        const res = await fetch(url);
-        let result;
-        await new Promise((resolve, reject) => {
-          const fileStream = fs.createWriteStream(path.join(filespath, filename));
-          res.body.pipe(fileStream);
-          res.body.on("error", (err) => {
-            console.log(err);
-            reject();
-          });
-          fileStream.on("finish", function() {
-            resolve();
-          });
-        });
-        dldo++
-        this.value = options.lang.downloading+" ("+Math.trunc((100*dldo)/maxed)+"%)";
+    } else {
+      let items = $(".appGrid").get(0).childNodes;
+      for(var i=0; i<items.length; i++){
+        let item = items[i]
+        if(result.includes(i)){
+          $(item).show();
+        } else {
+          $(item).hide();
+        }
       }
     }
-    this.value = options.lang.ulaunch.explorer;
+    $("#main label").show();
+    $("#image").get(0).setAttribute("src", path.join(__dirname, "ui", "appstore", "noscreen.png"));
+  });
+  $('#search').on('input',function(e){
+    let search = e.currentTarget.value.toLowerCase();
+    if(search != ""){
+      let resulttitle = FuzzySearch(searchtitle, [], {}, search);
+      let resultauthor = FuzzySearch(searchauthor, [], {}, search);
+      result = resulttitle.concat(resultauthor);
+      let items = $(".appGrid").get(0).childNodes;
+      for(var i=0; i<items.length; i++){
+        let item = items[i]
+        if(result.includes(i)){
+          $(item).show();
+        } else {
+          $(item).hide();
+        }
+      }
+    } else {
+      result = null;
+      let items = $(".appGrid").get(0).childNodes;
+      for(var i=0; i<items.length; i++){
+        let item = items[i]
+        $(item).show();
+      }
+    }
   });
 }

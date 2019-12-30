@@ -5,12 +5,19 @@
   "https://github.com/rajkosto/TegraRcmSmash",
   "https://github.com/Qyriad/fusee-launcher",
   "https://github.com/julesontheroad/NSC_BUILDER",
-  "https://github.com/rajkosto/biskeydump"
+  "https://github.com/rajkosto/biskeydump",
+  "https://github.com/vgmoose/hb-appstore",
+  ["https://switchbru.com/appstore", "https://switchbru.com/appstore (Pwsincd, Vgmoose., Roman, Jaames)"]
 ] %>
 <h2>Credits</h2>
 <div id="tool">
   <p><%- credits.map((val, n) => {
-    let a = `<a href="${val}">${val}</a>`;
+    let a;
+    if(typeof val == "string"){
+      a = `<a href="${val}">${val}</a>`;
+    } else {
+      a = `<a href="${val[0]}">${val[1]}</a>`
+    }
     if(n === (credits.length-1)){
       return a
     } else {

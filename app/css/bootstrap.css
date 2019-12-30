@@ -47,9 +47,7 @@ div#tool {
     margin:4px, 4px;
     padding:4px;
     width: 99.5%;
-    height: 62.5%;
-    overflow-x: hidden;
-    overflow-x: auto;
+    height: 65.5%;
 }
 
 h1 {
@@ -210,4 +208,139 @@ a {
   font-weight:bold;
   font-size: 15px;
   width: 250;
+}
+
+/* ~95% take from https://switchbru.com/appstore/css/main.css */
+
+.appGrid {
+  list-style-type: none;
+  position:relative;
+  left: 50%;
+  transform: translate(-50%);
+  background: var(--appgrid);
+}
+
+.appGrid::before, .appGrid::after {
+  content: ' ';
+  display: table;
+}
+
+.appGrid::after {
+  clear: both;
+}
+
+.appGrid__item {
+  padding: 5px;
+  float: left;
+  -webkit-transition-timing-function: ease-in-out;
+  transition-timing-function: ease-in-out;
+  transition: 0.5s;
+  width:266;
+  height:222;
+}
+
+.card {
+  display: block;
+  overflow: hidden;
+  border-radius: 1px;
+  background: #2f3640;
+  box-shadow: 0 2px 0 0 #4f5660;
+}
+
+.card__head, .card__body {
+  font-size: 16px;
+}
+
+.card__head::before, .card__head::after, .card__body::before, .card__body::after {
+  content: ' ';
+  display: table;
+}
+
+.card__head::after, .card__body::after {
+  clear: both;
+}
+
+.card.card--app {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+  transition: transform 0.3s, -webkit-transform 0.3s;
+}
+
+.card.card--app .card__head {
+  padding: 4px 4px 0 4px;
+  font-weight: bold;
+  color: var(--sidemenu);
+  text-align: right;
+
+}
+
+.card.card--app .card__body {
+  font-size: 12px;
+  padding: 0 4px 4px 4px;
+  text-align: right;
+  color:var(--header);
+}
+
+.card.card--app:hover {
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+          background:#98989838;
+}
+
+.app__image {
+  width: 256px;
+  height:150px;
+  object-fit: cover;
+  min-height: 96px;
+  background: #efefef;
+}
+
+.app__desc {
+  color: #8a8a8a;
+}
+
+.card--app .card__head {
+  line-height: 32px;
+  height: 32px;
+  overflow: hidden;
+  color:black;
+}
+
+.card--app .app__desc {
+  position: relative;
+  line-height: 22px;
+  height: 22px;
+  overflow: hidden;
+  float: left;
+}
+
+/* END */
+
+label.search {
+  position: relative;
+}
+
+label.search:before {
+  content: "";
+  position: absolute;
+  left: 2.5px;
+  top: 2;
+  bottom: 0;
+  width: 30px;
+  background: url("data:image/svg+xml,%3Csvg%20focusable=%22false%22%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2024%2024%22%3E%3Cpath%20d=%22M15.5%2014h-.79l-.28-.27A6.471%206.471%200%200%200%2016%209.5%206.5%206.5%200%201%200%209.5%2016c1.61%200%203.09-.59%204.23-1.57l.27.28v.79l5%204.99L20.49%2019l-4.99-5zm-6%200C7.01%2014%205%2011.99%205%209.5S7.01%205%209.5%205%2014%207.01%2014%209.5%2011.99%2014%209.5%2014z%22%3E%3C/path%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+input.search {
+  margin-bottom: 7px;
+  background-color: #3f4c5e;
+  border: 0px;
+  outline:none;
+  text-align: center;
+  font-family: 'OpenSans';
+  font-size: 15;
+  color: #f5f6fa;
+  padding: 10px 30px;
 }
