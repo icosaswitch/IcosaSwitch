@@ -15,11 +15,13 @@ jobs:
           node-version: 12
       - run: npm i
       - run: npm run dist:win
-      - run: move dist/IcosaSwitch-*.exe dist/IcosaSwitch.exe
+      - run: mkdir dist/IcosaSwitch
+      - run: move dist/IcosaSwitch-*.exe dist/IcosaSwitch/IcosaSwitch.exe
+      - run: move dist/latest.yml dist/IcosaSwitch/latest.yml
       - uses: actions/upload-artifact@master
         with:
           name: IcosaSwitch-Windows
-          path: dist/IcosaSwitch.exe
+          path: dist/IcosaSwitch
   
   build-osx:
     runs-on: macOS-latest
@@ -45,9 +47,11 @@ jobs:
           node-version: 12
       - run: npm i
       - run: npm run dist:linux
-      - run: mv dist/IcosaSwitch-*.AppImage dist/IcosaSwitch.AppImage
+      - run: mkdir dist/IcosaSwitch
+      - run: move dist/IcosaSwitch-*.AppImage dist/IcosaSwitch/IcosaSwitch.AppImage
+      - run: move dist/latest-linux.yml dist/IcosaSwitch/latest-linux.yml
       - uses: actions/upload-artifact@master
         with:
           name: IcosaSwitch-Linux
-          path: dist/IcosaSwitch.AppImage
+          path: dist/IcosaSwitch
          
