@@ -48,8 +48,8 @@ jobs:
       - run: npm i
       - run: npm run dist:linux
       - run: mkdir dist/IcosaSwitch
-      - run: move dist/IcosaSwitch-*.AppImage dist/IcosaSwitch/IcosaSwitch.AppImage
-      - run: move dist/latest-linux.yml dist/IcosaSwitch/latest-linux.yml
+      - run: mv dist/IcosaSwitch-*.AppImage dist/IcosaSwitch/IcosaSwitch.AppImage
+      - run: mv dist/latest-linux.yml dist/IcosaSwitch/latest-linux.yml
       - uses: actions/upload-artifact@master
         with:
           name: IcosaSwitch-Linux
