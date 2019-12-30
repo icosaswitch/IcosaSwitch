@@ -1,0 +1,53 @@
+name: IcosaSwitch Build
+
+on: 
+  push:
+    branches: 
+      - master
+
+jobs:
+  build-win:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: npm ci
+      - run: npm run dist:win
+      - run: move dist/IcosaSwitch-*.exe dist/IcosaSwitch.exe
+      - uses: actions/upload-artifact@master
+        with:
+          name: IcosaSwitch-Windows
+          path: dist/IcosaSwitch.exe
+  
+  build-osx:
+    runs-on: macOS-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: npm ci
+      - run: npm run dist:darwin
+      - run: mv dist/IcosaSwitch-*.dmg dist/IcosaSwitch.dmg
+      - uses: actions/upload-artifact@master
+        with:
+          name: IcosaSwitch-macOS
+          path: dist/IcosaSwitch.dmg
+  
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: npm ci
+      - run: npm run dist:linux
+      - run: mv dist/IcosaSwitch-*.AppImage dist/IcosaSwitch.AppImage
+      - uses: actions/upload-artifact@master
+        with:
+          name: IcosaSwitch-Linux
+          path: dist/IcosaSwitch.AppImage
+         
