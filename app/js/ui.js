@@ -1424,7 +1424,7 @@ async function appstore(){
       }
     }
     $("#main label").show();
-    $("#image").get(0).setAttribute("src", `data:image/png;base64,${fs.readFileSync(path.join(__dirname, "ui", "appstore", "noscreen.png")).toString("base64")}`));
+    $("#image").get(0).setAttribute("src", `data:image/png;base64,${fs.readFileSync(path.join(__dirname, "ui", "appstore", "noscreen.png")).toString("base64")}`);
   });
   $('#search').on('input',function(e){
     let search = e.currentTarget.value.toLowerCase();
