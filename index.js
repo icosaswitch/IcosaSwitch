@@ -101,8 +101,6 @@ app.on("ready", () => {
     slashes: true
   }));
 
-  frame.webContents.openDevTools({mode: "detach"});
-
   frame.on('closed', () => {
     frame = null;
   });

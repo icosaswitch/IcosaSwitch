@@ -103,7 +103,6 @@ async function verification(){
 
 async function updates(){
   return new Promise(async function(resolve, reject){
-    return resolve();
     if(process.platform !== "darwin"){
       ipcRenderer.on('autoUpdateNotification', (event, arg, info) => {
           switch(arg) {
