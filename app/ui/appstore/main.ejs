@@ -5,7 +5,7 @@
   <div class="appGrid" style="width:1112"></div>
   <div id="appInfo" style="display:none">
     <h3 style="margin: 0 0 10 0" id="title"></h3>
-    <img id="image" width="727" height="178" src="<%- path.join(__dirname, "ui", "appstore", "noscreen.png") %>" onerror="this.src='<%- path.join(__dirname, "ui", "appstore", "noscreen.png") %>'">
+    <img id="image" width="727" height="178" src="<%- `data:image/png;base64,${fs.readFileSync(path.join(__dirname, "ui", "appstore", "noscreen.png")).toString("base64")}` %>" onerror="this.src='<%- `data:image/png;base64,${fs.readFileSync(path.join(__dirname, "ui", "appstore", "noscreen.png")).toString("base64")}` %>'">
     <h4 style="margin: 10 0 5 0" id="desc"></h4>
     <h4 style="margin: 0 0 10 0" id="author"></h4>
     <section style="margin: 20 0 25 0">

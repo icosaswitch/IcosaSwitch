@@ -1368,7 +1368,7 @@ async function appstore(){
   let searchtitle = [];
   let searchauthor = [];
   packages.map(async (package, i) => {
-    $(".appGrid").append(`<div class="appGrid__item"><div id="package${i}"><a class="card card--app"><img src="${package.icon}" onerror="this.src='${path.join(__dirname, "ui", "appstore", "404.png")}'" class="app__image"><div class="card__head">${package.title}</div><div class="card__body"><div class="app__desc">${package.version}</div><div class="app__author">${package.author}</div></div></a></div></div>`);
+    $(".appGrid").append(`<div class="appGrid__item"><div id="package${i}"><a class="card card--app"><img src="${package.icon}" onerror="this.src='data:image/png;base64,${fs.readFileSync(path.join(__dirname, "ui", "appstore", "404.png")).toString("base64")}'" class="app__image"><div class="card__head">${package.title}</div><div class="card__body"><div class="app__desc">${package.version}</div><div class="app__author">${package.author}</div></div></a></div></div>`);
     $(`#package${i}`).click((e) => {
       click(e.currentTarget.id.replace("package", ""));
     });
@@ -1424,7 +1424,7 @@ async function appstore(){
       }
     }
     $("#main label").show();
-    $("#image").get(0).setAttribute("src", path.join(__dirname, "ui", "appstore", "noscreen.png"));
+    $("#image").get(0).setAttribute("src", `data:image/png;base64,${fs.readFileSync(path.join(__dirname, "ui", "appstore", "noscreen.png")).toString("base64")}`));
   });
   $('#search').on('input',function(e){
     let search = e.currentTarget.value.toLowerCase();
