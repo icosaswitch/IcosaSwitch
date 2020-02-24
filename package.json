@@ -46,6 +46,7 @@
     "productName": "IcosaSwitch",
     "artifactName": "${productName}-${version}.${ext}",
     "copyright": "Copyright © 2020 IcosaSwitch",
+    "npmRebuild": false,
     "directories": {
       "buildResources": "build",
       "output": "dist"
