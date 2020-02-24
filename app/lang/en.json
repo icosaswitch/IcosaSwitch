@@ -23,6 +23,15 @@
   "nscbuilder": {
     "success": "You have successfully launched NSC Builder"
   },
+  "updater": {
+    "checking": "Checking for updates",
+    "downloaded": "Downloaded",
+    "available": "An update is available",
+    "install": "Install Update",
+    "dont": "Don't install",
+    "installing": "Installing",
+    "continue": "Continue"
+  },
   "imsp": {
     "give": "Give your serial number here (Example: XAW10074000000)",
     "unpatched": "Unpatched",
@@ -34,5 +43,14 @@
   "payload": {
     "success": "Your payload is correctly inject",
     "injecting": "Injecting"
+  },
+  "yuzu": {
+    "no": "No",
+    "nand": "Do you want to install a NAND ?",
+    "downloadsize": "Download size",
+    "firm": "Do you want to install a Firmware ?",
+    "download": "Download",
+    "speed": "Speed",
+    "estimated": "Estimated time"
   }
 }

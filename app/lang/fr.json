@@ -23,6 +23,15 @@
   "nscbuilder": {
     "success": "Vous avez lancé NSC Builder avec succès"
   },
+  "updater": {
+    "checking": "Recherche de mise à jour",
+    "downloaded": "Mise à jour téléchargée",
+    "available": "Une mise à jour est disponible",
+    "install": "Installer la mise à jour",
+    "dont": "Ne pas l'installer",
+    "installing": "Installation",
+    "continue": "Continuer"
+  },
   "imsp": {
     "give": "Indiquez ici votre numéro de série (Exemple: XAW10074000000)",
     "unpatched": "Non patchée",
@@ -34,5 +43,14 @@
   "payload": {
     "success": "Votre payload à été correctement injectée",
     "injecting": "Injection"
+  },
+  "yuzu": {
+    "no": "Non",
+    "nand": "Souhaitez-vous installer une NAND ?",
+    "downloadsize": "Download size",
+    "firm": "Souhaitez-vous installer un firmware ?",
+    "download": "Téléchargement",
+    "speed": "Vitesse",
+    "estimated": "Temps éstimé"
   }
 }

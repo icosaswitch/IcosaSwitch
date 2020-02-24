@@ -41,7 +41,7 @@ class YUZU {
 
       app.push(`<div class="app-cursor" style="left:86px"></div><input type="button" style="position: absolute;border:none;outline:none;background-color:transparent;top:0px;width:14px;height:1px;left:${app.length*276+168}px">`)
 
-      $("#q").html("Do you want to install a Firmware ?")
+      $("#q").html(options.lang.yuzu.firm);
       $(".applications").html(app.join(""));
 
       apps = $(".app");
