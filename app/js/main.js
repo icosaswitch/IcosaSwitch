@@ -1,5 +1,6 @@
 const $ = require("jquery");
-const {getCurrentWindow, shell, dialog} = require("electron").remote;
+const {remote, ipcRenderer} = require('electron');
+const {getCurrentWindow, shell, dialog} = remote;
 const ejs = require("ejs");
 const fs = require('fs');
 const path = require('path');
