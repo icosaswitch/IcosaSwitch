@@ -1,77 +1,29 @@
 {
-  "mainmenu": "Menu principal",
-  "downloading": "Téléchargement",
-  "extracting": "Extraction",
-  "error": "Une erreur est survenue",
-  "only": "Ce logiciel ne supporte que les distributions Windows, MacOS et Linux",
-  "options": {
+  "install": "Installation",
+  "download": "Téléchargement",
+  "error": "Une erreur s'est produite",
+  "finish": "Fini",
+  "settings": {
+    "title": "Paramètres",
     "lang": "Langue"
   },
-  "rcm": {
-    "title": "Connecter la switch en mode RCM",
-    "1": "1) Connecter la Switch en USB et l'éteindre",
-    "2": "2) Appliquer le JoyCon Haxx : PIN1 + PIN10 ou PIN9 + PIN10",
-    "3": "3) Maintenez \"Volume +\" et appuyez sur \"Power\".",
-    "done": "Lorsque c'est fait, continuer"
-  },
+  "rcm": "Connecter la switch en mode RCM<br><br>1) Connecter la Switch en USB et l'éteindre<br>2) Appliquer le JoyCon Haxx : PIN1 + PIN10 ou PIN9 + PIN10<br>3) Maintenez \"Volume +\" et appuyez sur \"Power\".",
   "drivers": {
-    "desc": "Cet outil installera les pilotes RCM pour votre switch",
-    "win": {
-      "how": "Comment voulez-vous installer les pilotes ?",
-      "auto": "Mode Automatique",
-      "device": "Gestionnaire de périphériques",
-      "autoadmin": "Acceptez l'autorisation d'administrateur et installez",
-      "autofinish": "Vous avez installé les pilotes avec succès",
-      "zadig": "<p>Sélectionner l'installation via Zadig et accepter la demande d'élévation des privilèges qui s'affichera éventuellement.<br>Dans la barre de menu, cliquer sur \"Options\" puis sur \"List All Devices\".<br>Dans la liste en haut de l'écran, sélectionner \"APX\" et dans la section \"WCID\", sélectionner \"libusbK (v3.0.7.0)\" (la version poura être différente) grâce au bouton \"+\" se trouvant juste à côté.<br>Enfin, cliquer sur \"Install drivers\" ou \"Replace Driver\".<br>Une fois le driver installé, Zadig peut être refermé.<\/p>",
-      "manager": "<p>Il est possible que les libellés que j'indique pour les différents boutons soient un peu différents selon la version de Windows utilisé, ceux que j'indique ici sont pour Windows 7.<br><br>Sélectionner l'installation via le gestionnaire de périphériques.<br>Normalement, un périphérique nommé \"APX\" dans la section \"autre périphériques\" devrait avoir un point d'exclammation jaune, sinifiant que le driver n'est pas installé. Faire un clique droit sur celui-ci et cliquer sur \"Mettre à jour le pilote...\".<br>Dans la fenêtre qui va s'ouvrir, cliquer sur \"Rechercher un pilote sur mon ordinateur\".<br>Sur l'écran suivant, cliquer sur le bouton \"Parcourir...\" et aller chercher le dossier \"%localappdata%\\IcosaSwitch\\devicemanager\" qui se trouve dans ce script. Il est également préférable de cocher la case \"Inclure les sous-dossiers\".<br>Une fois la configuration terminé, cliquer sur le bouton \"Suivant\" et le driver devrait s'installer.<br>Cliquer sur le bouton \"Terminer\" et refermer le gestionnaire de périphérique.<\/p>"
-    },
-    "darwin": {
-      "home": "<h3>Installer Homebrew<\/h3><p>Ouvrez le terminal et tapez la commande:<\/p><p>\/usr\/bin\/ruby -e \"$(curl -fsSL https:\/\/raw.githubusercontent.com\/Homebrew\/install\/master\/install)\"<\/p><input class=\"button\" type=\"button\" value=\"Quand c'est fini, continuer\" id=\"continue\"\/>",
-      "dep": "<h3>Installer les Dépendances<\/h3><p>Sur le terminal tapez les commandes:<\/p><p>brew install python libusb<br>python3 -mpip install pyusb<br>brew link --overwrite libusb<\/p><input class=\"button\" type=\"button\" value=\"Quand c'est fini, continuer\" id=\"continue\"\/>",
-      "success": "<p>Vous avez installé les pilotes avec succès<\/p>"
-    },
-    "linux": {
-      "dep": "<h3>Installer les Dépendances<\/h3><p>Ouvrez le terminal et tapez les commandes:<\/p><p>sudo apt install python3 libusb<br>python3 -mpip install pyusb<br>python3 -mpip install tkinter<\/p><input class=\"button\" type=\"button\" value=\"Quand c'est fini, continuer\" id=\"continue\"\/>",
-      "success": "<p>Vous avez installé les pilotes avec succès<\/p>"
-    }
+    "manager": "Il est possible que les libellés que j'indique pour les différents boutons soient un peu différents selon la version de Windows utilisé, ceux que j'indique ici sont pour Windows 7.<br><br>Sélectionner l'installation via le gestionnaire de périphériques.<br>Normalement, un périphérique nommé \"APX\" dans la section \"autre périphériques\" devrait avoir un point d'exclammation jaune, sinifiant que le driver n'est pas installé. Faire un clique droit sur celui-ci et cliquer sur \"Mettre à jour le pilote...\".<br>Dans la fenêtre qui va s'ouvrir, cliquer sur \"Rechercher un pilote sur mon ordinateur\".<br>Sur l'écran suivant, cliquer sur le bouton \"Parcourir...\" et aller chercher le dossier \"%localappdata%\\IcosaSwitch\\devicemanager\" qui se trouve dans ce script. Il est également préférable de cocher la case \"Inclure les sous-dossiers\".<br>Une fois la configuration terminé, cliquer sur le bouton \"Suivant\" et le driver devrait s'installer.<br>Cliquer sur le bouton \"Terminer\" et refermer le gestionnaire de périphérique.",
+    "zadig": "Sélectionner l'installation via Zadig et accepter la demande d'élévation des privilèges qui s'affichera éventuellement.<br>Dans la barre de menu, cliquer sur \"Options\" puis sur \"List All Devices\".<br>Dans la liste en haut de l'écran, sélectionner \"APX\" et dans la section \"WCID\", sélectionner \"libusbK (v3.0.7.0)\" (la version poura être différente) grâce au bouton \"+\" se trouvant juste à côté.<br>Enfin, cliquer sur \"Install drivers\" ou \"Replace Driver\".<br>Une fois le driver installé, Zadig peut être refermé."
   },
-  "payload": {
-    "desc": "Cet outil injectera un payload sur votre switch avec",
-    "how": "Comment voulez-vous injecter le payload",
-    "online": "En ligne",
-    "file": "Fichier local",
-    "select": "Selectionnez un fichier",
-    "please": "Veuillez sélectionner un fichier",
-    "inject": "Injecter",
-    "atmo": "Atmosphère",
-    "injecting": "Injection",
-    "cancel": "Annuler",
-    "success": "Votre payload est correctement injectée",
-    "cancell": "Vous avez annulé l'injection",
-    "biskey": "Vous avez réussi à récupérer vos clés BIS dans",
-    "biskeydesc": "Cet outil va récupérer les clés BIS de votre switch"
-  },
-  "sxoslicense": {
-    "desc": "Cet outil signera votre license SX OS (license-request.dat)",
-    "select": "Sélectionnez votre lisence-request.dat",
-    "license": "Votre licence ici",
-    "please": "Veuillez selectionner votre license-request.dat",
-    "64": "Votre fichier license-request.dat ne fait pas 64 octets",
-    "sign": "Signer",
-    "signing": "En cours",
-    "key": "La clé de licence n'est pas valide",
-    "already": "Clé de licence déjà signée",
-    "saved": "enregistré dans",
-    "explorer": "Ouvrir dans l'explorateur"
+  "sxos": {
+    "select": "Selectionnez le<br>license-request.dat",
+    "nofile": "Aucun fichier séléctionné",
+    "sixtyfour": "La taille du fichier doit être de 64 octets",
+    "sign": "Signe",
+    "license": "Entrez votre clé de licence",
+    "licensefile": "Fichier de licence créé!"
   },
   "nscbuilder": {
-    "checking": "Recherche de mise à jour",
-    "updates": "Mise à jour",
-    "launching": "Lancement",
     "success": "Vous avez lancé NSC Builder avec succès"
   },
   "imsp": {
-    "desc": "Cet outil permet de vérifier si votre Switch est patchée ou non.",
     "give": "Indiquez ici votre numéro de série (Exemple: XAW10074000000)",
     "unpatched": "Non patchée",
     "possibly": "Possiblement patchée",
@@ -79,28 +31,8 @@
     "unknown": "Numéro de série inconnu",
     "not": "Ce numéro de série ne provient pas d'une switch"
   },
-  "updater": {
-    "checking": "Recherche de mise à jour",
-    "downloaded": "Mise à jour téléchargée",
-    "available": "Une mise à jour est disponible",
-    "install": "Installer la mise à jour",
-    "dont": "Ne pas l'installer",
-    "installing": "Installation",
-    "continue": "Continuer"
-  },
-  "appstore": {
-    "loading": "Chargement",
-    "search": "Rechercher",
-    "download": "Télécharger",
-    "source": "Source",
-    "additional": "Informations complémentaires",
-    "changelog": "Changelog",
-    "return": "Retour",
-    "author": "Autheur",
-    "version": "Version",
-    "updated": "Mis à jour",
-    "filesize": "Taille du ZIP",
-    "extracted": "Taille du contenu",
-    "license": "Licence"
+  "payload": {
+    "success": "Votre payload à été correctement injectée",
+    "injecting": "Injection"
   }
 }

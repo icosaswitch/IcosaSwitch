@@ -22,7 +22,3 @@
 > npm install
 > npm start
 ```
-## Leak of the new design ;)
-
-<p align="center"><img src="https://github.com/Pharuxtan/IcosaSwitch/raw/master/design1.png" alt="design1"></p>
-<p align="center"><img src="https://github.com/Pharuxtan/IcosaSwitch/raw/master/design2.png" alt="design2"></p>

@@ -1,77 +1,29 @@
 {
-  "mainmenu": "Main Menu",
-  "downloading": "Downloading",
-  "extracting": "Extracting",
-  "only": "This software only supports Windows, MacOS and Linux Distributions",
+  "install": "Installation",
+  "download": "Downloading",
   "error": "An error occured",
-  "options": {
+  "finish": "Finish",
+  "settings": {
+    "title": "Settings",
     "lang": "Language"
   },
-  "rcm": {
-    "title": "Connect the Switch in RCM mode",
-    "1": "1) Connect the Switch to USB and shut down it.",
-    "2": "2) Apply the JoyCon Haxx : PIN1 + PIN10 or PIN9 + PIN10",
-    "3": "3) Maintain \"Volume +\" and press \"Power\"",
-    "done": "When done, continue"
-  },
+  "rcm": "Connect the Switch in RCM mode<br><br>1) Connect the Switch to USB and shut down it.<br>2) Apply the JoyCon Haxx : PIN1 + PIN10 or PIN9 + PIN10<br>3) Maintain \"Volume +\" and press \"Power\"",
   "drivers": {
-    "desc": "This tool will install RCM Drivers for your switch",
-    "win": {
-      "how": "How do you want to install the Drivers ?",
-      "auto": "Automatic Mode",
-      "device": "Device Manager",
-      "autoadmin": "Accept Administrator permission and install",
-      "autofinish": "You have successfully installed the drivers",
-      "zadig": "<p>Select the installation via Zadig and accept the privilege increase request that may appear.<br>In the menu bar, click on \"Options\" then on \"List All Devices\".<br>In the list at the top of the screen, select \"APX\" and in the \"WCID\" section, select \"libusbK (v3.0.7.0.0)\" (the version may be different) using the \"+\" button next to it.<br>Finally, click on \"Install drivers\" or \"Replace Driver\".<br>Once the driver is installed, Zadig can  be closed.<\/p>",
-      "manager": "<p>It is possible that the labels I indicate for the different buttons are a little different depending on the version of Windows used, the ones I indicate here are for Windows 7.<br><br>Select the installation via the device manager.<br>Normally, a device named \"APX\" in the \"other devices\" section should have a yellow exclamation point, sinifying that the driver is not installed. Right-click on it and click on \"Update driver...\".<br>In the window that will open, click on \"Search for a driver on my computer\".<br>On the next screen, click on the \"Browse...\" button and go to the \"%localappdata%\\IcosaSwitch\\devicemanager\" folder. It is also preferable to check the box \"Include subfolders\".<br>Once the configuration is complete, click on the \"Next\" button and the driver should be installed.<br>Click on the \"Finish\" button and close the device manager.<\/p>"
-    },
-    "darwin": {
-      "home": "<h3>Install Homebrew<\/h3><p>Open terminal and type command:<\/p><p>\/usr\/bin\/ruby -e \"$(curl -fsSL https:\/\/raw.githubusercontent.com\/Homebrew\/install\/master\/install)\"<\/p><input class=\"button\" type=\"button\" value=\"When finish, Continue\" id=\"continue\"\/>",
-      "dep": "<h3>Install Dependencies<\/h3><p>In the terminal type commands:<\/p><p>brew install python libusb<br>python3 -mpip install pyusb<br>brew link --overwrite libusb<\/p><input class=\"button\" type=\"button\" value=\"When finish, Continue\" id=\"continue\"\/>",
-      "success": "<p>You successfully installed drivers<\/p>"
-    },
-    "linux": {
-      "dep": "<h3>Install Dependencies<\/h3><p>Open the terminal and type commands:<\/p><p>sudo apt install python3 libusb<br>python3 -mpip install pyusb<br>python3 -mpip install tkinter<\/p><input class=\"button\" type=\"button\" value=\"When finish, Continue\" id=\"continue\"\/>",
-      "success": "<p>You successfully installed drivers<\/p>"
-    }
+    "manager": "It is possible that the labels I indicate for the different buttons are a little different depending on the version of Windows used, the ones I indicate here are for Windows 7.<br><br>Select the installation via the device manager.<br>Normally, a device named \"APX\" in the \"other devices\" section should have a yellow exclamation point, sinifying that the driver is not installed. Right-click on it and click on \"Update driver...\".<br>In the window that will open, click on \"Search for a driver on my computer\".<br>On the next screen, click on the \"Browse...\" button and go to the \"%localappdata%\\IcosaSwitch\\devicemanager\" folder. It is also preferable to check the box \"Include subfolders\".<br>Once the configuration is complete, click on the \"Next\" button and the driver should be installed.<br>Click on the \"Finish\" button and close the device manager.",
+    "zadig": "Select the installation via Zadig and accept the privilege increase request that may appear.<br>In the menu bar, click on \"Options\" then on \"List All Devices\".<br>In the list at the top of the screen, select \"APX\" and in the \"WCID\" section, select \"libusbK (v3.0.7.0.0)\" (the version may be different) using the \"+\" button next to it.<br>Finally, click on \"Install drivers\" or \"Replace Driver\".<br>Once the driver is installed, Zadig can  be closed."
   },
-  "payload": {
-    "desc": "This tool will Inject payload bin in your switch with",
-    "how": "How do you want to Inject payload",
-    "online": "Online",
-    "file": "Local File",
-    "select": "Select a file",
-    "please": "Please select a file",
-    "inject": "Inject",
-    "atmo": "Atmosphere",
-    "injecting": "Injecting",
-    "cancel": "Cancel",
-    "success": "Your payload is correctly inject",
-    "cancell": "You cancelled the injection",
-    "biskey": "You have successfully Dump your BIS Key in",
-    "biskeydesc": "This tool will Dump your Switch BIS Key"
-  },
-  "sxoslicense": {
-    "desc": "This tool will sign your SXOS license (license-request.dat)",
-    "select": "Select your license-request.dat",
-    "license": "Your license code here",
-    "please": "Please select your license-request.dat",
-    "64": "Your license-request.dat is not 64 bytes size",
-    "sign": "Sign",
-    "signing": "Signing",
-    "key": "The License key is not valid",
-    "already": "License key already signed",
-    "saved": "saved to",
-    "explorer": "Open in explorer"
+  "sxos": {
+    "select": "Select the<br>license-request.dat",
+    "nofile": "No file selected",
+    "sixtyfour": "The file length must be 64 bytes",
+    "sign": "Signing",
+    "license": "Enter your license key",
+    "licensefile": "License file created!"
   },
   "nscbuilder": {
-    "checking": "Checking Updates",
-    "updates": "Updating",
-    "launching": "Launching",
     "success": "You have successfully launched NSC Builder"
   },
   "imsp": {
-    "desc": "This tool let you know if your switch is patched or not",
     "give": "Give your serial number here (Example: XAW10074000000)",
     "unpatched": "Unpatched",
     "possibly": "Possibly Patched",
@@ -79,28 +31,8 @@
     "unknown": "Serial Number Unknown",
     "not": "Not a Switch Serial Number"
   },
-  "updater": {
-    "checking": "Checking for updates",
-    "downloaded": "Downloaded",
-    "available": "An update is available",
-    "install": "Install Update",
-    "dont": "Don't install",
-    "installing": "Installing",
-    "continue": "Continue"
-  },
-  "appstore": {
-    "loading": "Loading",
-    "search": "Search",
-    "download": "Download",
-    "source": "Source",
-    "additional": "Additional information",
-    "changelog": "Changelog",
-    "return": "Return",
-    "author": "Author",
-    "version": "Version",
-    "updated": "Updated",
-    "filesize": "ZIP size",
-    "extracted": "Extracted Size",
-    "license": "License"
+  "payload": {
+    "success": "Your payload is correctly inject",
+    "injecting": "Injecting"
   }
 }

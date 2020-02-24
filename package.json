@@ -1,6 +1,6 @@
 {
   "name": "IcosaSwitch",
-  "version": "1.8.1",
+  "version": "2.0.0",
   "productName": "IcosaSwitch",
   "description": "Tools for Switch Hacking",
   "main": "index.js",
@@ -8,7 +8,8 @@
     "start": "electron .",
     "dist:win": "electron-builder --win",
     "dist:linux": "electron-builder --linux",
-    "dist:darwin": "electron-builder --mac"
+    "dist:darwin": "electron-builder --mac",
+    "install": "electron-rebuild"
   },
   "repository": {
     "type": "git",
@@ -24,22 +25,26 @@
     "electron-updater": "^4.0.6",
     "fs": "0.0.1-security",
     "https-proxy-agent": "^3.0.1",
+    "icsa": "^1.4.2",
     "jquery": "^3.4.0",
     "node-fetch": "^2.6.0",
     "path": "^0.12.7",
-    "platform-folders": "^0.4.1",
     "pretty-size": "^2.0.0",
-    "url": "^0.11.0"
+    "prettysize": "^2.0.0",
+    "rimraf": "^3.0.2",
+    "url": "^0.11.0",
+    "usb": "^1.6.2"
   },
   "devDependencies": {
-    "electron": "^7.0.0",
-    "electron-builder": "^21.2.0"
+    "electron": "^7.1.11",
+    "electron-builder": "^21.2.0",
+    "electron-rebuild": "^1.10.0"
   },
   "build": {
     "appId": "icosaswitch",
     "productName": "IcosaSwitch",
     "artifactName": "${productName}-${version}.${ext}",
-    "copyright": "Copyright © 2019 IcosaSwitch",
+    "copyright": "Copyright © 2020 IcosaSwitch",
     "directories": {
       "buildResources": "build",
       "output": "dist"

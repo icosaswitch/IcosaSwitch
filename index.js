@@ -33,6 +33,7 @@ function initAutoUpdater(event) {
 }
 
 app.disableHardwareAcceleration();
+Menu.setApplicationMenu(null);
 
 app.on("ready", () => {
   ipcMain.on('autoUpdateAction', async (event, arg, data) => {
@@ -66,40 +67,34 @@ app.on("ready", () => {
           }
       }
   });
-  if(process.platform === "darwin"){
-    frame = new BrowserWindow({
-      width: 1280,
-      height: 720,
-      minWidth: 1280,
-      minHeight: 720,
-      frame: true,
-      icon: getPlatformIcon('icon'),
-      webPreferences: {
-          nodeIntegration: true
-      },
-      titleBarStyle: "hiddenInset",
-      backgroundColor: '#2f3640'
-    });
-  } else {
-    frame = new BrowserWindow({
-      width: 1280,
-      height: 720,
-      minWidth: 1280,
-      minHeight: 720,
-      frame: false,
-      icon: getPlatformIcon('icon'),
-      webPreferences: {
-          nodeIntegration: true
-      },
-      backgroundColor: '#2f3640'
-    });
-  }
+  frame = new BrowserWindow({
+    width: 1280,
+    height: 720,
+    minWidth: 1280,
+    minHeight: 720,
+    frame: false,
+    resizable: false,
+    icon: getPlatformIcon('icon'),
+    webPreferences: {
+      nodeIntegration: true,
+      //preload: path.join(__dirname, 'preload.js')
+    },
+    backgroundColor: '#2d2d2d'
+  });
 
   frame.loadURL(url.format({
     pathname: path.join(__dirname, 'app', 'app.ejs'),
     protocol: 'file:',
     slashes: true
   }));
+
+  globalShortcut.register('CommandOrControl+R', () => {
+    frame.loadURL(url.format({
+      pathname: path.join(__dirname, 'app', 'app.ejs'),
+      protocol: 'file:',
+      slashes: true
+    }));
+  })
 
   frame.on('closed', () => {
     frame = null;
