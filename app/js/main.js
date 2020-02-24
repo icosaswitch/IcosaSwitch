@@ -10,7 +10,7 @@ const pretty = require('prettysize');
 const Emitter = require('events').EventEmitter;
 const root = (process.platform == "win32") ? path.join(process.env.LOCALAPPDATA, "IcosaSwitch") : (process.platform == "darwin") ? process.env.HOME + '/Library/Application Support/IcosaSwitch' : path.join(process.env.HOME, '.config', 'IcosaSwitch');
 const {readICSAFile, writeICSADir} = require("icsa");
-const {exec} = require("child_process");
+const {exec, spawn} = require("child_process");
 const checkfolder = (folder) => {
   if(!fs.existsSync(folder)) fs.mkdirSync(folder);
 }
