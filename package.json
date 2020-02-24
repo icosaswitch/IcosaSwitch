@@ -9,7 +9,8 @@
     "dist:win": "electron-builder --win",
     "dist:linux": "electron-builder --linux",
     "dist:darwin": "electron-builder --mac",
-    "install": "electron-rebuild"
+    "install": "electron-rebuild",
+    "postinstall": "electron-builder install-app-deps"
   },
   "repository": {
     "type": "git",
