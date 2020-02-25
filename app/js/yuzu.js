@@ -134,9 +134,9 @@ class YUZU {
         let interval = setInterval(() => {
           var duration = ((new Date).getTime() - start) / 1000;
           var loaded = (downloaded - before) * 8;
-          var speed = (loaded / duration);
+          var speed = (loaded / duration) / 8;
           $("#speed").html(pretty(speed).toUpperCase());
-          let estimated = (downloadtotal-downloaded)/(speed/8);
+          let estimated = (downloadtotal-downloaded)/(speed);
           if(estimated < 60){
             estimated = parseInt(estimated)+"s";
           } else {
