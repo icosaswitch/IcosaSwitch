@@ -1,6 +1,6 @@
 {
   "name": "IcosaSwitch",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "productName": "IcosaSwitch",
   "description": "Tools for Switch Hacking",
   "main": "index.js",
