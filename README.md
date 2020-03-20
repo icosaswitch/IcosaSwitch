@@ -3,7 +3,7 @@
 <h1 align="center">IcosaSwitch</h1>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Version-2.0.0-%23404040?style=for-the-badge" alt="version">
+  <img src="https://img.shields.io/badge/Version-2.0.0-%23404040?style=for-the-badge" alt="version"> <img src="https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg" alt="license">
 </p>
 
 ## Download
@@ -22,3 +22,13 @@
 > npm install
 > npm start
 ```
+
+## License
+
+This work is licensed under a [Creative Commons Attribution-NonCommercial 4.0
+International License][cc-by-nc].
+
+[![CC BY-NC 4.0][cc-by-nc-image]][cc-by-nc]
+
+[cc-by-nc]: http://creativecommons.org/licenses/by-nc/4.0/
+[cc-by-nc-image]: https://licensebuttons.net/l/by-nc/4.0/88x31.png
