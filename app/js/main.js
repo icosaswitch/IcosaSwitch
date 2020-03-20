@@ -20,33 +20,19 @@ const FuzzySearch = require(`./js/fuzzy.js`);
 const removeDir = async function(dirPath){return new Promise(function(resolve, reject){if(fs.existsSync(dirPath)){return};var list=fs.readdirSync(dirPath);for(var i=0;i<list.length;i++){var filename=path.join(dirPath,list[i]);var stat=fs.statSync(filename);if(filename=="."||filename==".."){}else if(stat.isDirectory()){removeDir(filename)}else{fs.unlinkSync(filename)}};fs.rmdirSync(dirPath);resolve()})}
 let options = {
   init: function(){
-    if(!fs.existsSync(path.join(root, "config.json"))){
+    if(localStorage.getItem("lang") == null || localStorage.getItem("lang") != "fr" || localStorage.getItem("lang") != "en"){
       if(navigator.language === "fr"){
-        options.config = {
-          "lang": "fr"
-        }
-        options.lang = JSON.parse(fs.readFileSync(path.join(__dirname, "lang", "fr.json")));
+        localStorage.setItem("lang", "fr");
       } else {
-        options.config = {
-          "lang": "en"
-        }
-        options.lang = JSON.parse(fs.readFileSync(path.join(__dirname, "lang", "en.json")));
+        localStorage.setItem("lang", "en");
       }
-      fs.writeFileSync(path.join(root, "config.json"), JSON.stringify(options.config, null, 2));
-    } else {
-      options.config = JSON.parse(fs.readFileSync(path.join(root, "config.json"), "utf8"));
-      options.lang = JSON.parse(fs.readFileSync(path.join(__dirname, "lang", options.config.lang+".json")));
     }
+    options.lang = JSON.parse(fs.readFileSync(path.join(__dirname, "lang", `${localStorage.getItem("lang")}.json`)));
   },
-  save: function(){
-    fs.writeFileSync(path.join(root, "config.json"), JSON.stringify(options.config, null, 2));
-  },
-  config: {},
   lang: {},
   setLang: function(str){
-    options.config.lang = str;
-    options.lang = JSON.parse(fs.readFileSync(path.join(__dirname, "lang", options.config.lang+".json")));
-    options.save();
+    localStorage.setItem("lang", str);
+    options.lang = JSON.parse(fs.readFileSync(path.join(__dirname, "lang", str+".json")));
   }
 }
 options.init();

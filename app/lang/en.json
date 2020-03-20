@@ -3,6 +3,8 @@
   "download": "Downloading",
   "error": "An error occured",
   "finish": "Finish",
+  "license": "This work is licensed under a",
+  "licenselink": "",
   "settings": {
     "title": "Settings",
     "lang": "Language"

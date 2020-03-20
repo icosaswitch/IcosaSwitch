@@ -3,6 +3,8 @@
   "download": "Téléchargement",
   "error": "Une erreur s'est produite",
   "finish": "Fini",
+  "license": "Ce travail est sous licence",
+  "licenselink": "deed.fr",
   "settings": {
     "title": "Paramètres",
     "lang": "Langue"
