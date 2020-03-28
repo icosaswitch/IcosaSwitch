@@ -3,16 +3,16 @@
 <h1 align="center">IcosaSwitch</h1>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Version-2.0.0-%23404040?style=for-the-badge" alt="version"> <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img src="https://img.shields.io/badge/License-CC%20BY--NC%204.0-%23404040?style=for-the-badge" alt="license"></a>
+  <a rel="release" href="https://github.com/IcosaSwitch/IcosaSwitch/releases/tag/v2.0.1"><img src="https://img.shields.io/badge/Version-2.0.1-%23404040?style=for-the-badge" alt="version"></a> <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img src="https://img.shields.io/badge/License-CC%20BY--NC%204.0-%23404040?style=for-the-badge" alt="license"></a>
 </p>
 
 ## Download
 
 | Platform | File Download |
 | -------- | ---- |
-| Windows x64 | [`IcosaSwitch-2.0.0.exe`](https://github.com/Pharuxtan/IcosaSwitch/releases/download/v2.0.0/IcosaSwitch-2.0.0.exe) |
-| macOS | [`IcosaSwitch-2.0.0.dmg`](https://github.com/Pharuxtan/IcosaSwitch/releases/download/v2.0.0/IcosaSwitch-2.0.0.dmg) |
-| Linux x64 | [`IcosaSwitch-2.0.0.AppImage`](https://github.com/Pharuxtan/IcosaSwitch/releases/download/v2.0.0/IcosaSwitch-2.0.0.AppImage) |
+| Windows x64 | [`IcosaSwitch-2.0.1.exe`](https://github.com/Pharuxtan/IcosaSwitch/releases/download/v2.0.1/IcosaSwitch-2.0.1.exe) |
+| macOS | [`IcosaSwitch-2.0.1.dmg`](https://github.com/Pharuxtan/IcosaSwitch/releases/download/v2.0.1/IcosaSwitch-2.0.1.dmg) |
+| Linux x64 | [`IcosaSwitch-2.0.1.AppImage`](https://github.com/Pharuxtan/IcosaSwitch/releases/download/v2.0.1/IcosaSwitch-2.0.1.AppImage) |
 
 ## Build from source
 
