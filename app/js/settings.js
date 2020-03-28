@@ -31,11 +31,12 @@ class Settings {
                   break;
                 }
                 case 'update-not-available': {
-                  resolve();
+                  document.getElementById("app").innerHTML = '<p class="text">No update</p>';
+                  $("#return").show();
                   break;
                 }
                 case 'download-progress': {
-                  document.getElementById("app").innerHTML = '<p class="text">'+options.lang.downloading+' '+Math.round(info.percent)+'%</p>';
+                  document.getElementById("app").innerHTML = '<p class="text">'+options.lang.download+' '+Math.round(info.percent)+'%</p>';
                   break;
                 }
                 case 'update-downloaded': {
