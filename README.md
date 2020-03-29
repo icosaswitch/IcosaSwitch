@@ -6,6 +6,8 @@
   <a rel="release" href="https://github.com/IcosaSwitch/IcosaSwitch/releases/tag/v2.0.1"><img src="https://img.shields.io/badge/Version-2.0.1-%23404040?style=for-the-badge" alt="version"></a> <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img src="https://img.shields.io/badge/License-CC%20BY--NC%204.0-%23404040?style=for-the-badge" alt="license"></a>
 </p>
 
+# Icon by
+
 ## Download
 
 | Platform | File Download |
@@ -32,3 +34,8 @@ International License][cc-by-nc].
 
 [cc-by-nc]: http://creativecommons.org/licenses/by-nc/4.0/
 [cc-by-nc-image]: https://licensebuttons.net/l/by-nc/4.0/88x31.png
+
+## IcosaSwitch Team
+
+ - Pharuxtan: Fondator/Developer
+ - Pikatsuto: UX/UI Designer
