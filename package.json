@@ -72,10 +72,12 @@
       "icon": "build/icon.icns"
     },
     "dmg": {
-      "backgroundColor": "#2f3640",
+      "background": "build/background.png",
       "icon": "build/icon.icns",
+      "iconTextSize": 15,
+      "iconSize": 100,
       "window": {
-        "width": 550,
+        "width": 541,
         "height": 400
       }
     },
