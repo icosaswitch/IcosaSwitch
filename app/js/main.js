@@ -20,7 +20,7 @@ const FuzzySearch = require(`./js/fuzzy.js`);
 const removeDir = async function(dirPath){return new Promise(function(resolve, reject){if(fs.existsSync(dirPath)){return};var list=fs.readdirSync(dirPath);for(var i=0;i<list.length;i++){var filename=path.join(dirPath,list[i]);var stat=fs.statSync(filename);if(filename=="."||filename==".."){}else if(stat.isDirectory()){removeDir(filename)}else{fs.unlinkSync(filename)}};fs.rmdirSync(dirPath);resolve()})}
 let options = {
   init: function(){
-    if(localStorage.getItem("lang") == null || localStorage.getItem("lang") != "fr" || localStorage.getItem("lang") != "en"){
+    if(localStorage.getItem("lang") != "fr" && localStorage.getItem("lang") != "en"){
       if(navigator.language === "fr"){
         localStorage.setItem("lang", "fr");
       } else {
