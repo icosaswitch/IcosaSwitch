@@ -16,7 +16,7 @@
     "url": "git+https://github.com/IcosaSwitch/IcosaSwitch.git"
   },
   "author": "Pharuxtan",
-  "license": "MIT",
+  "license": "CC-BY-NC",
   "dependencies": {
     "cross-spawn": "^7.0.1",
     "decompress-zip": "^0.2.2",
