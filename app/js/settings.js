@@ -74,7 +74,7 @@ class Settings {
         let github = await fetch("https://api.github.com/repos/IcosaSwitch/IcosaSwitch/releases");
         github = await github.json();
         let ver = github[0].tag_name.replace("v", "");
-        let packagejson = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "package.json"), "utf8"));
+        let packagejson = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "..", "package.json"), "utf8"));
         let packagever = packagejson.version;
         if(packagever !== ver){
           let zip = "https://github.com/IcosaSwitch/IcosaSwitch/releases/download/v"+ver+"/IcosaSwitch-"+ver+".dmg";
