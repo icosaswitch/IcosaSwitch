@@ -54,5 +54,11 @@
     "download": "Téléchargement",
     "speed": "Vitesse",
     "estimated": "Temps éstimé"
+  },
+  "credits": {
+    "pharuxtan": "Fondateur/Développeur",
+    "pikatsuto": "Concepteur UX/UI",
+    "discord": "Serveur Discord",
+    "feature": "Quelque lien de credits"
   }
 }
