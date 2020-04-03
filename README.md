@@ -28,6 +28,10 @@
 > npm start
 ```
 
+## Discord
+
+[Click Here to go on the official support server](https://discord.gg/SE9BrdR)
+
 ## License
 
 This work is licensed under a [Creative Commons Attribution-NonCommercial 4.0
