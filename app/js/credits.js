@@ -9,7 +9,8 @@ class Credits {
       "https://github.com/julesontheroad/NSC_BUILDER",
       "https://github.com/rajkosto/biskeydump",
       "https://github.com/vgmoose/hb-appstore",
-      ["https://switchbru.com/appstore", "https://switchbru.com/appstore (Pwsincd, Vgmoose., Roman, Jaames)"]
+      ["https://switchbru.com/appstore", "https://switchbru.com/appstore (Pwsincd, Vgmoose, Roman, Jaames)"],
+      "https://yuzu-emu.org"
     ]
 
     $(".link").html(credits.map((val, n) => {
