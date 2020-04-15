@@ -92,8 +92,7 @@
     "files": [
       "!{dist,dev-app-update.yml,ulaunch,.github,icosaswitch.png,package-lock.json,README.md,.gitignore}"
     ],
-    "compression": "maximum",
-    "asar": true
+    "compression": "maximum"
   },
   "bugs": {
     "url": "https://github.com/IcosaSwitch/IcosaSwitch/issues"
