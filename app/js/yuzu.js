@@ -11,6 +11,8 @@ class YUZU {
     });
     let downloadtotal = 0;
     let download = [];
+    $("#k").html(options.lang.yuzu.load+"...");
+    $("#n").html(options.lang.yuzu.load+"...");
     const yuzu = await fetch("https://raw.githubusercontent.com/IcosaSwitch/Yuzu-NAND/master/yuzunand.json").then(res => res.json());
     $("#k").html(pretty(yuzu.keys[1]).toUpperCase());
     $("#n").html(pretty(yuzu.nand[1]).toUpperCase());
@@ -35,11 +37,11 @@ class YUZU {
       app = app.concat(firms.reverse().map(key => {return {"name":key,"size":yuzu.firm[key][1]}}));
 
       app = app.map((a, n) => {
-        if(n == 0) return `<div class="app" style="left:101px" id="${a.name}" n="${n}"><p class="app-text${(a.size !== null) ? "-size" : ""}">${a.name}</p>${(a.size !== null) ? `<p class="app-size">${pretty(a.size).toUpperCase()}</p>` : ""}</div>`;
-        return `<div class="app" style="left:${n*276+101}px" id="${a.name}" n="${n}"><p class="app-text${(a.size !== null) ? "-size" : ""}">${a.name}</p>${(a.size !== null) ? `<p class="app-size">${pretty(a.size).toUpperCase()}</p>` : ""}</div>`;
+        if(n == 0) return `<div class="app" style="left:98px" id="${a.name}" n="${n}"><p class="app-text${(a.size !== null) ? "-size" : ""}">${a.name}</p>${(a.size !== null) ? `<p class="app-size">${pretty(a.size).toUpperCase()}</p>` : ""}</div>`;
+        return `<div class="app" style="left:${n*276+98}px" id="${a.name}" n="${n}"><p class="app-text${(a.size !== null) ? "-size" : ""}">${a.name}</p>${(a.size !== null) ? `<p class="app-size">${pretty(a.size).toUpperCase()}</p>` : ""}</div>`;
       });
 
-      app.push(`<div class="app-cursor" style="left:86px"></div><input type="button" style="position: absolute;border:none;outline:none;background-color:transparent;top:0px;width:14px;height:1px;left:${app.length*276+168}px">`)
+      app.push(`<div class="app-cursor" style="left:83px"></div><input type="button" style="position: absolute;border:none;outline:none;background-color:transparent;top:0px;width:14px;height:1px;left:${app.length*276+168}px">`)
 
       $("#q").html(options.lang.yuzu.firm);
       $(".applications").html(app.join(""));
@@ -71,7 +73,7 @@ class YUZU {
         if(end) return;
         if(apps[i] == undefined) return;
         selected = i;
-        $(".app-cursor").get(0).setAttribute("style", `left:${i*276+86}px`);
+        $(".app-cursor").get(0).setAttribute("style", `left:${i*276+83}px`);
         let scroll = $(".applications").get(0).scrollLeft;
         if(i*276 > scroll){
           if(i*276-276*3 < scroll) return;

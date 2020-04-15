@@ -265,12 +265,19 @@ img {
 
 .app-image {
   position:absolute;
-  min-height: 80px;
-  max-height: 80px;
+  height: 80px;
   max-width: 256px;
   top: 40%;
   left: 50%;
   transform: translate(-50%, -60%);
+}
+
+.app-favorite {
+  position:absolute;
+  top: 5px;
+  right: 5px;
+  width: 30px;
+  height: 30px;
 }
 
 /* credits */
@@ -535,7 +542,7 @@ input.search {
   font-family:'OpenSans';
   font-size:20px;
   width: 90%;
-  height: 200px;
+  height: 185px;
 }
 
 .progress {

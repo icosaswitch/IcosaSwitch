@@ -46,11 +46,11 @@ class Inject {
     ];
 
     app = app.map((a, n) => {
-      if(n == 0) return `<div class="app" style="left:101px" id="${a.mode}" n="${n}"><p class="app-text${(a.icon !== null) ? "-image" : ""}">${a.name}</p>${(a.icon !== null) ? `<img src="${path.join(__dirname, "..", "icon", a.icon)}" class="app-image"/>` : ""}</div>`;
-      return `<div class="app" style="left:${n*276+101}px" id="${a.mode}" n="${n}"><p class="app-text${(a.icon !== null) ? "-image" : ""}">${a.name}</p>${(a.icon !== null) ? `<img src="${path.join(__dirname, "..", "icon", a.icon)}" class="app-image"/>` : ""}</div>`;
+      if(n == 0) return `<div class="app" style="left:98px" id="${a.mode}" n="${n}"><p class="app-text${(a.icon !== null) ? "-image" : ""}">${a.name}</p>${(a.icon !== null) ? `<img src="${path.join(__dirname, "..", "icon", a.icon)}" class="app-image"/>` : ""}</div>`;
+      return `<div class="app" style="left:${n*276+98}px" id="${a.mode}" n="${n}"><p class="app-text${(a.icon !== null) ? "-image" : ""}">${a.name}</p>${(a.icon !== null) ? `<img src="${path.join(__dirname, "..", "icon", a.icon)}" class="app-image"/>` : ""}</div>`;
     });
 
-    app.push(`<div class="app-cursor" style="left:86px"></div><input type="button" style="position: absolute;border:none;outline:none;background-color:transparent;top:0px;width:14px;height:1px;left:${app.length*276+168}px">`)
+    app.push(`<div class="app-cursor" style="left:83px"></div><input type="button" style="position: absolute;border:none;outline:none;background-color:transparent;top:0px;width:14px;height:1px;left:${app.length*276+168}px">`)
 
     $(".applications").html(app.join(""));
 
@@ -81,7 +81,7 @@ class Inject {
       if(end) return;
       if(apps[i] == undefined) return;
       selected = i;
-      $(".app-cursor").get(0).setAttribute("style", `left:${i*276+86}px`);
+      $(".app-cursor").get(0).setAttribute("style", `left:${i*276+83}px`);
       let scroll = $(".applications").get(0).scrollLeft;
       if(i*276 > scroll){
         if(i*276-276*3 < scroll) return;

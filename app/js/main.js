@@ -27,12 +27,19 @@ let options = {
         localStorage.setItem("lang", "en");
       }
     }
+    if(localStorage.getItem("favorites") == null) localStorage.setItem("favorites", "[]");
     options.lang = JSON.parse(fs.readFileSync(path.join(__dirname, "lang", `${localStorage.getItem("lang")}.json`)));
+    options.favorites = JSON.parse(localStorage.getItem("favorites"));
   },
   lang: {},
+  favorites: [],
   setLang: function(str){
     localStorage.setItem("lang", str);
     options.lang = JSON.parse(fs.readFileSync(path.join(__dirname, "lang", str+".json")));
+  },
+  setFav: function(arr){
+    localStorage.setItem("favorites", JSON.stringify(arr));
+    options.favorites = arr;
   }
 }
 options.init();

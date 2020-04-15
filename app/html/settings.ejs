@@ -1,6 +1,6 @@
 <p class="atitle"><%- options.lang.settings.title %></p>
 <div id="app">
-  <p class="text">Version 2.0.0</p><br><br>
+  <p class="text">Version <%- require("../package.json").version %></p><br><br>
   <p class="text" id="lang"><%- options.lang.settings.lang %></p>
   <section style="position:absolute;top:80px;left:50%;transform:translate(-50%)">
     <input class="btn" type="button" value="English" id="en" style="background-color: <% if(localStorage.getItem("lang") == "en"){ %>#707070<% } else { %>#505050<% } %>"/><input class="btn" type="button" value="Français" id="fr" style="background-color: <% if(localStorage.getItem("lang") == "fr"){ %>#707070<% } else { %>#505050<% } %>"/>

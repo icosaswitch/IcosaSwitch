@@ -48,6 +48,7 @@
   },
   "yuzu": {
     "no": "Non",
+    "load": "Chargement",
     "nand": "Souhaitez-vous installer une NAND ?",
     "downloadsize": "Download size",
     "firm": "Souhaitez-vous installer un firmware ?",
@@ -58,7 +59,6 @@
   "credits": {
     "pharuxtan": "Fondateur/Développeur",
     "pikatsuto": "Concepteur UX/UI",
-    "discord": "Serveur Discord",
     "feature": "Quelque lien de credits"
   }
 }
