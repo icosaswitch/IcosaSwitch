@@ -15,6 +15,8 @@ jobs:
           node-version: 12
       - run: npm i
       - run: npm run dist:win
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - run: mkdir dist/IcosaSwitch
       - run: move dist/IcosaSwitch-*.exe dist/IcosaSwitch/IcosaSwitch.exe
       - run: move dist/latest.yml dist/IcosaSwitch/latest.yml
@@ -32,6 +34,8 @@ jobs:
           node-version: 12
       - run: npm i
       - run: npm run dist:darwin
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - run: mv dist/IcosaSwitch-*.dmg dist/IcosaSwitch.dmg
       - uses: actions/upload-artifact@master
         with:
@@ -47,6 +51,8 @@ jobs:
           node-version: 12
       - run: npm i
       - run: npm run dist:linux
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - run: mkdir dist/IcosaSwitch
       - run: mv dist/IcosaSwitch-*.AppImage dist/IcosaSwitch/IcosaSwitch.AppImage
       - run: mv dist/latest-linux.yml dist/IcosaSwitch/latest-linux.yml
