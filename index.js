@@ -76,10 +76,8 @@ app.on("ready", () => {
     resizable: false,
     icon: getPlatformIcon('icon'),
     webPreferences: {
-      nodeIntegration: true,
-      //preload: path.join(__dirname, 'preload.js')
-    },
-    backgroundColor: '#2d2d2d'
+      nodeIntegration: true
+    }
   });
 
   frame.loadURL(url.format({

@@ -7,15 +7,37 @@ class Settings {
       options.setLang("en");
       document.getElementsByClassName("atitle")[0].innerHTML = "Settings";
       document.getElementById("lang").innerHTML = "Language";
-      document.getElementById("en").setAttribute("style", "background-color: #707070");
-      document.getElementById("fr").setAttribute("style", "background-color: #505050");
+      document.getElementById("theme").innerHTML = "Theme";
+      document.getElementById("light").setAttribute("value", "Light");
+      document.getElementById("dark").setAttribute("value", "Dark");
+      document.getElementById("en").setAttribute("style", `background-color: ${localStorage.getItem("color") !== "light" ? "#707070" : "#8f8f8f"}`);
+      document.getElementById("fr").setAttribute("style", `background-color: ${localStorage.getItem("color") !== "light" ? "#505050" : "#afafaf"}`);
     });
     $("#fr").click(() => {
       options.setLang("fr");
       document.getElementsByClassName("atitle")[0].innerHTML = "Paramètres";
       document.getElementById("lang").innerHTML = "Langue";
-      document.getElementById("en").setAttribute("style", "background-color: #505050");
-      document.getElementById("fr").setAttribute("style", "background-color: #707070");
+      document.getElementById("theme").innerHTML = "Thème";
+      document.getElementById("light").setAttribute("value", "Clair");
+      document.getElementById("dark").setAttribute("value", "Sombre");
+      document.getElementById("en").setAttribute("style", `background-color: ${localStorage.getItem("color") !== "light" ? "#505050" : "#afafaf"}`);
+      document.getElementById("fr").setAttribute("style", `background-color: ${localStorage.getItem("color") !== "light" ? "#707070" : "#8f8f8f"}`);
+    });
+    $("#dark").click(() => {
+      options.setColor("dark");
+      $("#bootstrap").get(0).setAttribute("href", "./css/bootstrap.css");
+      $("#en").get(0).setAttribute("style", $("#en").get(0).getAttribute("style").replace("afafaf", "505050").replace("8f8f8f", "707070"));
+      $("#fr").get(0).setAttribute("style", $("#fr").get(0).getAttribute("style").replace("afafaf", "505050").replace("8f8f8f", "707070"));
+      $("#dark").get(0).setAttribute("style", "background-color: #707070");
+      $("#light").get(0).setAttribute("style", "background-color: #505050");
+    });
+    $("#light").click(() => {
+      options.setColor("light");
+      $("#bootstrap").get(0).setAttribute("href", "./css/bootstraplight.css");
+      $("#en").get(0).setAttribute("style", $("#en").get(0).getAttribute("style").replace("505050", "afafaf").replace("707070", "8f8f8f"));
+      $("#fr").get(0).setAttribute("style", $("#fr").get(0).getAttribute("style").replace("505050", "afafaf").replace("707070", "8f8f8f"));
+      $("#dark").get(0).setAttribute("style", "background-color: #afafaf");
+      $("#light").get(0).setAttribute("style", "background-color: #8f8f8f");
     });
     $("#update").click(async () => {
       $("#return").hide();

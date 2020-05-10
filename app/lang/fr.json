@@ -7,7 +7,10 @@
   "licenselink": "deed.fr",
   "settings": {
     "title": "Paramètres",
-    "lang": "Langue"
+    "lang": "Langue",
+    "theme": "Thème",
+    "dark": "Sombre",
+    "light": "Clair"
   },
   "rcm": "Connecter la switch en mode RCM<br><br>1) Connecter la Switch en USB et l'éteindre<br>2) Appliquer le JoyCon Haxx : PIN1 + PIN10 ou PIN9 + PIN10<br>3) Maintenez \"Volume +\" et appuyez sur \"Power\".",
   "drivers": {

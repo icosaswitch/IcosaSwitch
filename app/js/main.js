@@ -28,11 +28,14 @@ let options = {
       }
     }
     if(localStorage.getItem("favorites") == null) localStorage.setItem("favorites", "[]");
+    if(localStorage.getItem("color") == null) localStorage.setItem("color", "dark");
     options.lang = JSON.parse(fs.readFileSync(path.join(__dirname, "lang", `${localStorage.getItem("lang")}.json`)));
     options.favorites = JSON.parse(localStorage.getItem("favorites"));
+    options.color = localStorage.getItem("color");
   },
   lang: {},
   favorites: [],
+  color: "",
   setLang: function(str){
     localStorage.setItem("lang", str);
     options.lang = JSON.parse(fs.readFileSync(path.join(__dirname, "lang", str+".json")));
@@ -40,11 +43,19 @@ let options = {
   setFav: function(arr){
     localStorage.setItem("favorites", JSON.stringify(arr));
     options.favorites = arr;
+  },
+  setColor: function(color){
+    localStorage.setItem("color", color);
+    options.color = color;
   }
 }
 options.init();
 
 $(() => {
+  if(options.color === "light"){
+    $("#bootstrap").get(0).setAttribute("href", "./css/bootstraplight.css");
+  }
+
   $("#close-window").click(() => {
     getCurrentWindow().close();
   });
