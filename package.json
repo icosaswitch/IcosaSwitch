@@ -33,12 +33,12 @@
     "prettysize": "^2.0.0",
     "rimraf": "^3.0.2",
     "url": "^0.11.0",
-    "usb": "^1.6.2"
+    "usb": "^1.7.2"
   },
   "devDependencies": {
-    "electron": "^7.1.11",
+    "electron": "^7.3.3",
     "electron-builder": "^21.2.0",
-    "electron-rebuild": "^1.10.0"
+    "electron-rebuild": "^3.2.3"
   },
   "build": {
     "appId": "icosaswitch",
@@ -90,7 +90,7 @@
       "category": "Utility"
     },
     "files": [
-      "!{dist,dev-app-update.yml,ulaunch,.github,icosaswitch.png,package-lock.json,README.md,.gitignore}"
+      "!{dist,dev-app-update.yml,ulaunch,.github,icosaswitch.png,soon.png,package-lock.json,README.md,.gitignore}"
     ],
     "compression": "maximum",
     "asar": false
