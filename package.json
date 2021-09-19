@@ -90,7 +90,7 @@
       "category": "Utility"
     },
     "files": [
-      "!{dist,dev-app-update.yml,ulaunch,.github,icosaswitch.png,package-lock.json,README.md,.gitignore}"
+      "!{dist,dev-app-update.yml,ulaunch,.github,icosaswitch.png,soon.png,package-lock.json,README.md,.gitignore}"
     ],
     "compression": "maximum",
     "asar": false
