@@ -1,6 +1,6 @@
-# IcosaSwitch is being rework to is version 3, after 17 month of inactivity
+# IcosaSwitch is being rework to his version 3, after 17 month of inactivity
 
-This new version will prioritize maintainability and offer a new look to IcosaSwitch. I hope you will like this new application when it'll be release, no ETA is planned but it will be released one day.
+This new version will prioritize maintainability and offer a new look to IcosaSwitch. I hope you will like this new application when it'll be released, no ETA is planned but it will be released one day.
 
 <p align="center"><img src="https://github.com/Pharuxtan/IcosaSwitch/raw/master/soon.png" alt="soon"></p>
 
