@@ -3,8 +3,14 @@
 <h1 align="center">IcosaSwitch</h1>
 
 <p align="center">
-  <a rel="release" href="https://github.com/IcosaSwitch/IcosaSwitch/releases/tag/v2.0.2"><img src="https://img.shields.io/badge/Version-2.0.2-%23404040?style=for-the-badge" alt="version"></a> <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img src="https://img.shields.io/badge/License-CC%20BY--NC%204.0-%23404040?style=for-the-badge" alt="license"></a>
+  <a rel="release" href="https://github.com/IcosaSwitch/IcosaSwitch/releases/tag/v2.1.0"><img src="https://img.shields.io/badge/Version-2.1.0-%23404040?style=for-the-badge" alt="version"></a> <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img src="https://img.shields.io/badge/License-CC%20BY--NC%204.0-%23404040?style=for-the-badge" alt="license"></a>
 </p>
+
+# IcosaSwitch is being rework to is version 3, after 17 month of inactivity
+
+This new version will prioritize maintainability and offer a new look to IcosaSwitch. I hope you will like this new application when it'll be release, no ETA is planned but it will be released one day.
+
+<p align="center"><img src="https://github.com/Pharuxtan/IcosaSwitch/raw/master/soon.png" alt="soon"></p>
 
 ## IcosaSwitch Team
 
@@ -15,9 +21,9 @@
 
 | Platform | File Download |
 | -------- | ---- |
-| Windows x64 | [`IcosaSwitch-2.0.2.exe`](https://github.com/Pharuxtan/IcosaSwitch/releases/download/v2.0.2/IcosaSwitch-2.0.2.exe) |
-| macOS | [`IcosaSwitch-2.0.2.dmg`](https://github.com/Pharuxtan/IcosaSwitch/releases/download/v2.0.2/IcosaSwitch-2.0.2.dmg) |
-| Linux x64 | [`IcosaSwitch-2.0.2.AppImage`](https://github.com/Pharuxtan/IcosaSwitch/releases/download/v2.0.2/IcosaSwitch-2.0.2.AppImage) |
+| Windows x64 | [`IcosaSwitch-2.1.0.exe`](https://github.com/Pharuxtan/IcosaSwitch/releases/download/v2.1.0/IcosaSwitch-2.1.0.exe) |
+| macOS | [`IcosaSwitch-2.1.0.dmg`](https://github.com/Pharuxtan/IcosaSwitch/releases/download/v2.1.0/IcosaSwitch-2.1.0.dmg) |
+| Linux x64 | [`IcosaSwitch-2.1.0.AppImage`](https://github.com/Pharuxtan/IcosaSwitch/releases/download/v2.1.0/IcosaSwitch-2.1.0.AppImage) |
 
 ## Build from source
 
@@ -27,10 +33,6 @@
 > npm install
 > npm start
 ```
-
-## Discord
-
-[Click Here to go on the official support server](https://discord.gg/SE9BrdR)
 
 ## License
 
